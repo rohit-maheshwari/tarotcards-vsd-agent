@@ -1,86 +1,30 @@
 export const tarotcards = [
     {
-        title: "The Scandal",
+        title: "The Rohit",
         image: "no_image.png",
         questions: [
         "What's the worst headline about your product you can imagine?"
-        ]
+        ],
     },
     {
         title: "The Scandal",
         image: "no_image.png",
         questions: [
         "What's the worst headline about your product you can imagine?"
-        ]
+        ],
     },
     {
-        title: "The Scandal",
+        title: "The Julie",
         image: "no_image.png",
         questions: [
         "What's the worst headline about your product you can imagine?"
-        ]
+        ],
     },
     {
-        title: "The Scandal",
+        title: "The Rock",
         image: "no_image.png",
         questions: [
         "What's the worst headline about your product you can imagine?"
-        ]
-    },
-    {
-        title: "The Scandal",
-        image: "no_image.png",
-        questions: [
-        "What's the worst headline about your product you can imagine?"
-        ]
-    },
-    {
-        title: "The Scandal",
-        image: "no_image.png",
-        questions: [
-        "What's the worst headline about your product you can imagine?"
-        ]
-    },
-    {
-        title: "The Scandal",
-        image: "no_image.png",
-        questions: [
-        "What's the worst headline about your product you can imagine?"
-        ]
-    },
-    {
-        title: "The Scandal",
-        image: "no_image.png",
-        questions: [
-        "What's the worst headline about your product you can imagine?"
-        ]
-    },
-    {
-        title: "The Scandal",
-        image: "no_image.png",
-        questions: [
-        "What's the worst headline about your product you can imagine?"
-        ]
-    },
-    {
-        title: "The Scandal",
-        image: "no_image.png",
-        questions: [
-        "What's the worst headline about your product you can imagine?"
-        ]
-    },
-    {
-        title: "The Scandal",
-        image: "no_image.png",
-        questions: [
-        "What's the worst headline about your product you can imagine?"
-        ]
-    },
-    {
-        title: "The Scandal",
-        image: "no_image.png",
-        questions: [
-        "What's the worst headline about your product you can imagine?"
-        ]
+        ],
     }
 ]

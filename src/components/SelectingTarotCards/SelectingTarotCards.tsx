@@ -1,23 +1,31 @@
 import React, { Component } from "react";
-import { TarotCard } from "../TarotCard/TarotCard";
+import { TarotCardComponent } from "../TarotCard/TarotCard";
 import { tarotcards } from "./tarotcards";
 import "./SelectingTarotCards.css";
 
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
 
+type TarotCardType = {
+  title: string,
+  image: string,
+  questions: string[]
+}
+
 type SelectingTarotCardsProps = {
   pageChange: (page: pages) => void;
+  selectedCards: TarotCardType[],
+  handleCardSelect: (card: TarotCardType) => void
 }
 
 type SelectingTarotCardsState = {
-    
+  
 }
 
 class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingTarotCardsState> {
   constructor(props: SelectingTarotCardsProps) {
     super(props);
 
-    this.state = { }
+    this.state = { selectedCards: this.props.selectedCards }
   }
 
   handleProjectDescriptionSubmit = (): void => {
@@ -25,13 +33,14 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
   }
 
   render = (): JSX.Element => {
+    {console.log(this.props.selectedCards);}
     return (
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
         <div className="TarotCardsContainer">
-          {tarotcards.map((card: any, key: number) => {
+          {tarotcards.map((card: TarotCardType, key: number) => {
             return (
-              <TarotCard key={key} title={card.title} image={card.image} questions={card.questions} />
+              <TarotCardComponent key={key} tarotcard={card} selectedCards={this.props.selectedCards} handleCardSelect={this.props.handleCardSelect}/>
             );
           })}
         </div>
