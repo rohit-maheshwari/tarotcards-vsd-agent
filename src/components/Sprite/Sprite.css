@@ -1,29 +1,52 @@
+.border{
+    border: 2px solid #000;
+}
 
-.speech-bubble {
+.round{
+    border-radius: 20px;
+      -webkit-border-radius: 20px;
+      -moz-border-radius: 20px;  
+}
+
+
+.talk-bubble.border.btm-right-in:before {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: auto;
+	right: -30px;
+  top: 30px;
+	bottom: auto;
+	border: 15px solid;
+	border-color: #000 transparent transparent #000;
+}
+
+.talk-bubble.btm-right-in:after{
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+  left: auto;
+	right: -25px;
+  top: 32px;
+	bottom: auto;
+	border: 20px solid;
+	border-color: white transparent transparent white;
+}
+
+
+.talk-bubble {
     height: 100px;
     width: 40%;
     position: relative;
     cursor:pointer;
-    border:2px solid black;
-    border-radius:10px;
     padding: 5px;
     margin: 0 auto;
     margin-top: 5%;
-  }
+	background-color: rgb(255, 255, 255);
+}
 
-  .speech-bubble:before {
-    content: "";
-    position: absolute;
-    top: calc(100% - 10px); /*i.e. half the height*/
-    left: 98.5%;
-    top: 70%;
-    height: 20px;
-    width: 20px;
-    background: #ffff;
-    transform: rotate(-45deg);
-    border-bottom:inherit;
-    border-right:inherit;
-  }
 
 .sprite-text {
     height: 100px;
@@ -39,5 +62,5 @@
     margin-top: 50px;
     margin-right: 10px;
     left: 75%;
-    bottom: 50px; /* Adjust the top position as needed */
+    bottom: 170px; /* Adjust the top position as needed */
 }
