@@ -3,7 +3,6 @@ import './App.css';
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
 import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarotCards';
 import Playground from './components/Playground/Playground';
-import Sprite from './components/Sprite/Sprite';
 
 type TarotCardType = {
   title: string,
@@ -74,7 +73,6 @@ class App extends Component<Props, AppState> {
     return (
     <div> 
         {mainPage} 
-        <Sprite page = {this.state.page} finished = {this.state.finished} /> 
     </div>);
   };
 

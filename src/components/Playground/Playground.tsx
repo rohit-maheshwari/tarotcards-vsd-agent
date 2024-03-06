@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Sprite from '../Sprite/Sprite';
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
 
 type Props = {
@@ -21,6 +21,7 @@ class Playground extends Component<Props, PlaygroundState> {
         return (
             <>
                 Playground Page Coming soon
+                <Sprite page = {"Playground"} finished = {true} /> 
             </>
         )
     };
