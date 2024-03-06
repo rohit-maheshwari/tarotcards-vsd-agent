@@ -1,0 +1,43 @@
+
+.speech-bubble {
+    height: 100px;
+    width: 40%;
+    position: relative;
+    cursor:pointer;
+    border:2px solid black;
+    border-radius:10px;
+    padding: 5px;
+    margin: 0 auto;
+    margin-top: 5%;
+  }
+
+  .speech-bubble:before {
+    content: "";
+    position: absolute;
+    top: calc(100% - 10px); /*i.e. half the height*/
+    left: 98.5%;
+    top: 70%;
+    height: 20px;
+    width: 20px;
+    background: #ffff;
+    transform: rotate(-45deg);
+    border-bottom:inherit;
+    border-right:inherit;
+  }
+
+.sprite-text {
+    height: 100px;
+    padding: 8px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.sprite-avatar {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin-top: 50px;
+    margin-right: 10px;
+    left: 75%;
+    bottom: 50px; /* Adjust the top position as needed */
+}

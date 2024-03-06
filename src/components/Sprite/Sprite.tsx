@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { spritedialogue } from "./spritedialogue";
-// keep a list of the icon ids we put in the symbol
-
-const sprite = ["Layer_1"];
-
-const text = ["Text while entering project description!", "Text while prompting for if user needs help", "Text prompting selection", "Text prompting editing"];
+import "./Sprite.css";
+import spriteavatar from "./sprite.svg";
 
 type pages =  "ProjectDescription" | "SelectingTarotCards" | "Playground";
 
@@ -19,11 +16,6 @@ type SpriteProps = {
     finished: boolean;
 }
 
-type SpriteDialogue = {
-    index: number;
-    dialogue: string;
-}
-
 class Sprite extends Component<SpriteProps, SpriteState> {
     constructor(props: SpriteProps) {
         super(props);
@@ -35,7 +27,6 @@ class Sprite extends Component<SpriteProps, SpriteState> {
             this.setState(this.calculateState(this.props));
         }
     }
-
 
     calculateState = (props: SpriteProps) : SpriteState => {
         let index = null;
@@ -58,17 +49,14 @@ class Sprite extends Component<SpriteProps, SpriteState> {
     render = () : JSX.Element => {
         return (
             <>
-            <svg width="500" height="500" viewBox="0 0 500 504">
-              <use href={`/sprite.svg#${"Layer_1"}`} />
-            </svg>
-            
-            <div className="TarotCardsContainer">
-                <div className="card-text">
-                    <p>{spritedialogue[this.state.index].dialogue}</p>
+                <div className="sprite-bubble">
+                    <div className="speech-bubble">
+                        <div className="sprite-text">{spritedialogue[this.state.index].dialogue}</div>
+                    </div>
                 </div>
-            </div>
-          </>
-          )
+                <img src={spriteavatar} alt="sprite avatar!" className="sprite-avatar" />
+            </>
+        )
     };
 }
 
