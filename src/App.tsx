@@ -50,7 +50,7 @@ class App extends Component<Props, AppState> {
   }
 
   handleFinishedChange = (finished: boolean) => {
-    this.setState({finished: true});
+    this.setState({finished: !this.state.finished}); // 
   }
 
   render = (): JSX.Element => {
