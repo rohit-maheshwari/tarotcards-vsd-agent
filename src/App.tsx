@@ -68,6 +68,7 @@ class App extends Component<Props, AppState> {
     }
   };
 
+
   handlePageChange = (page: pages): void => {
     this.setState({page: page});
   }
