@@ -3,7 +3,10 @@ import './App.css';
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
 import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarotCards';
 import Playground from './components/Playground/Playground';
-import Sprite from './components/Sprite/Sprite';
+
+type Props = {
+  page: pages
+}
 
 type TarotCardType = {
   title: string,
@@ -11,16 +14,12 @@ type TarotCardType = {
   questions: string[]
 }
 
-type Props = {
-  page: pages
-}
-
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground";
 
 type AppState = {
   page: pages,
-  finished: boolean,
-  selectedCards: TarotCardType[]
+  selectedCards: TarotCardType[],
+  finished: boolean // denotes if description is finished or not
 }
 
 class App extends Component<Props, AppState> {
@@ -28,7 +27,7 @@ class App extends Component<Props, AppState> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {page: "ProjectDescription", finished: false, selectedCards: []} // finished starts as false
+    this.state = {page: "ProjectDescription", selectedCards: [], finished: false}
   }
 
   handleCardSelect = (card: TarotCardType) => {
@@ -50,41 +49,27 @@ class App extends Component<Props, AppState> {
     }
   }
 
-  handlePageSelect = (): JSX.Element => {
-    let mainPage = null;
+  handleFinishedChange = (finished: boolean) => {
+    this.setState({finished: true});
+  }
+
+  render = (): JSX.Element => {
     if (this.state.page === "ProjectDescription") {
-      mainPage = <ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange}/>;
+      return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange}/>);
     }
     else if (this.state.page === "SelectingTarotCards") {
-      mainPage = <SelectingTarotCards selectedCards={this.state.selectedCards} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect}/>;
+      return (<SelectingTarotCards selectedCards={this.state.selectedCards} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect}/>);
     }
     else if (this.state.page === "Playground") {
-      mainPage = <Playground pageChange={this.handlePageChange}/>;
+      return (<Playground pageChange={this.handlePageChange}/>);
     }
     else {
       throw new Error("invalid page");
     }
-
-    return (mainPage);
   };
-
-  render = (): JSX.Element => {
-    let mainPage = this.handlePageSelect();
-
-    return (
-    <div> 
-        {mainPage} 
-        <Sprite page = {this.state.page} finished = {this.state.finished} /> 
-    </div>);
-  };
-
 
   handlePageChange = (page: pages): void => {
     this.setState({page: page});
-  }
-
-  handleFinishedChange = (finished: boolean) : void => {
-    this.setState({finished: finished});
   }
 }
 

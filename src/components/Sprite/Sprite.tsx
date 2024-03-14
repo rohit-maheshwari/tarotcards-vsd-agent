@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { spritedialogue } from "./spritedialogue";
 import "./Sprite.css";
-import spriteavatar from "./sprite.svg";
+import spriteavatar from "./aayilaSprite.svg";
 
 type pages =  "ProjectDescription" | "SelectingTarotCards" | "Playground";
 

@@ -1,5 +1,6 @@
 import React, { useState, Component } from "react";
 import './ProjectDescription.css';
+import Sprite from "../Sprite/Sprite";
 
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
 
@@ -69,6 +70,7 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
               DONE
               </button>
             </div>
+            <Sprite page={"ProjectDescription"} finished={false}/>
           </>
         )
       } else {
@@ -92,6 +94,7 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
               <button className="button" onClick={this.handleUserSubmit}>I can find some myself!</button>
               <button className="button" onClick={this.handleLLMSubmit}>Some help please!</button>
             </div>
+            <Sprite page={"ProjectDescription"} finished={true}/>
           </>
         )
       }

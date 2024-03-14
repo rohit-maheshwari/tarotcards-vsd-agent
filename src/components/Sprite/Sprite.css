@@ -56,10 +56,10 @@
 }
 
 .sprite-avatar {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     position: relative;
-    margin-top: 50px;
+    margin-top: 25px;
     margin-right: 10px;
     left: 75%;
     bottom: 170px; /* Adjust the top position as needed */

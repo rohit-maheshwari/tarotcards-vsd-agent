@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { TarotCardComponent } from "../TarotCard/TarotCard";
 import { tarotcards } from "./tarotcards";
 import "./SelectingTarotCards.css";
+import Sprite from "../Sprite/Sprite";
 
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
 
@@ -44,6 +45,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
             );
           })}
         </div>
+        <Sprite page={"ProjectDescription"} finished={true}/>
       </>
     )
   };
