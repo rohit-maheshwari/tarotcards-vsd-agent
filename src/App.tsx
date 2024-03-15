@@ -54,7 +54,7 @@ class App extends Component<Props, AppState> {
       return (<ProjectDescription pageChange={this.handlePageChange}/>);
     }
     else if (this.state.page === "SelectingTarotCards") {
-      return (<SelectingTarotCards selectedCards={this.state.selectedCards} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect}/>);
+      return (<SelectingTarotCards selectedCards={this.state.selectedCards} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit}/>);
     }
     else if (this.state.page === "Playground") {
       return (<Playground pageChange={this.handlePageChange}/>);
@@ -66,6 +66,11 @@ class App extends Component<Props, AppState> {
 
   handlePageChange = (page: pages): void => {
     this.setState({page: page});
+  }
+
+  handlePreselectSubmit = () => {
+    // BACKEND FETCH WILL BE HERE
+    this.setState({selectedCards: []});
   }
 }
 

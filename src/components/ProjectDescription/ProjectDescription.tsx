@@ -26,8 +26,8 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
       this.setState({ description: event.target.value });
     };
   
-    handleDoneSubmit = () => {
-      this.setState({finished: true});
+    handleButtonSubmit = () => {
+      this.setState({finished: !this.state.finished});
       console.log('Description submitted:', this.state.description);
       // You might want to do something with the description, like sending it to a server
     };
@@ -41,57 +41,36 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
     handleUserSubmit = () => {
       this.props.pageChange('SelectingTarotCards');
     }
-
-    handleLLMSubmit = () => {
-      this.props.pageChange('Playground');
-    }
   
 
     render = (): JSX.Element => {
-      if (!this.state.finished) {
-        return (
-          <>
-            <div className="projectDescription">
-              <textarea
-                value={this.state.description}
-                onChange={this.handleDescriptionChange}
-                className="projectDescriptionTextArea"
-                rows={4}
-                cols={50}
-              />
-              <button
-                onClick={this.handleDoneSubmit}
-                className="projectDescriptionButton"
-              >
-              DONE
-              </button>
-            </div>
-          </>
-        )
-      } else {
-        return (
-          <>
-            <div className="projectDescription">
-              <textarea readOnly={true}
-                value={this.state.description}
-                className="projectDescriptionTextArea"
-                rows={4}
-                cols={50}
-              />
-              <button
-                onClick={this.handleEditSubmit}
-                className="projectDescriptionButton"
-              >
-              EDIT
-              </button>
-            </div>
+      return (
+        <>
+          <div className="projectDescription">
+            <textarea
+              value={this.state.description}
+              onChange={this.handleDescriptionChange}
+              className="projectDescriptionTextArea"
+              rows={4}
+              cols={50}
+              readOnly={this.state.finished}
+            />
+            <button
+              onClick={this.handleButtonSubmit}
+              className="projectDescriptionButton"
+            >
+            {!this.state.finished ? "DONE" : "EDIT"}
+            </button>
+          </div>
+          {this.state.finished ?
             <div className="buttons">
-              <button className="button" onClick={this.handleUserSubmit}>I can find some myself!</button>
-              <button className="button" onClick={this.handleLLMSubmit}>Some help please!</button>
+              <button className="button" onClick={this.handleUserSubmit}>Show me the Tarot Cards!</button>
             </div>
-          </>
-        )
-      }
+           :
+            <div></div>
+          }
+        </>
+      )
     };
 }
 

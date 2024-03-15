@@ -14,7 +14,8 @@ type TarotCardType = {
 type SelectingTarotCardsProps = {
   pageChange: (page: pages) => void;
   selectedCards: TarotCardType[],
-  handleCardSelect: (card: TarotCardType) => void
+  handleCardSelect: (card: TarotCardType) => void,
+  handlePreselectSubmit: () => void
 }
 
 type SelectingTarotCardsState = {
@@ -33,10 +34,10 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
   }
 
   render = (): JSX.Element => {
-    {console.log(this.props.selectedCards);}
     return (
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
+        <button className="navbarButton" onClick={this.props.handlePreselectSubmit}>PRESELECT Some Related Tarot Cards...</button>
         <div className="TarotCardsContainer">
           {tarotcards.map((card: TarotCardType, key: number) => {
             return (
