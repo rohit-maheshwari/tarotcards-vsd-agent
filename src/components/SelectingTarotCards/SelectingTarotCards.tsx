@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { TarotCardComponent } from "../TarotCard/TarotCard";
 import { tarotcards } from "./tarotcards";
+import Sprite from '../Sprite/Sprite';
 import "./SelectingTarotCards.css";
 
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
@@ -42,9 +43,10 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
           {tarotcards.map((card: TarotCardType, key: number) => {
             return (
               <TarotCardComponent key={key} tarotcard={card} selectedCards={this.props.selectedCards} handleCardSelect={this.props.handleCardSelect}/>
-            );
+              );
           })}
         </div>
+        <Sprite page={"SelectingTarotCards"} finished = {true} />
       </>
     )
   };

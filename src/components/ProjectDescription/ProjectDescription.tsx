@@ -1,10 +1,12 @@
 import React, { useState, Component } from "react";
 import './ProjectDescription.css';
+import Sprite from '../Sprite/Sprite';
 
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
 
 type Props = {
   pageChange: (page: pages) => void;
+  finishedChange: (finished: boolean) => void;
 }
 
 type ProjectDescriptionState = {
@@ -21,19 +23,21 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
         finished: false
       };
     }
-  
+
     handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       this.setState({ description: event.target.value });
     };
   
-    handleButtonSubmit = () => {
-      this.setState({finished: !this.state.finished});
+    handleDoneSubmit = () => {
+      this.setState({finished: true});
+      this.props.finishedChange(true);
       console.log('Description submitted:', this.state.description);
       // You might want to do something with the description, like sending it to a server
     };
 
     handleEditSubmit = () => {
       this.setState({finished: false});
+      this.props.finishedChange(false);
       console.log('Description being edited');
       // You might want to do something with the description, like sending it to a server
     };
@@ -44,33 +48,51 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
   
 
     render = (): JSX.Element => {
-      return (
-        <>
-          <div className="projectDescription">
-            <textarea
-              value={this.state.description}
-              onChange={this.handleDescriptionChange}
-              className="projectDescriptionTextArea"
-              rows={4}
-              cols={50}
-              readOnly={this.state.finished}
-            />
-            <button
-              onClick={this.handleButtonSubmit}
-              className="projectDescriptionButton"
-            >
-            {!this.state.finished ? "DONE" : "EDIT"}
-            </button>
-          </div>
-          {this.state.finished ?
+      if (!this.state.finished) {
+        return (
+          <>
+            <div className="projectDescription">
+              <textarea
+                value={this.state.description}
+                onChange={this.handleDescriptionChange}
+                className="projectDescriptionTextArea"
+                rows={4}
+                cols={50}
+              />
+              <button
+                onClick={this.handleDoneSubmit}
+                className="projectDescriptionButton"
+              >
+              DONE
+              </button>
+            </div>
+            <Sprite page = {"ProjectDescription"} finished = {false} />;
+          </>
+        )
+      } else {
+        return (
+          <>
+            <div className="projectDescription">
+              <textarea readOnly={true}
+                value={this.state.description}
+                className="projectDescriptionTextArea"
+                rows={4}
+                cols={50}
+              />
+              <button
+                onClick={this.handleEditSubmit}
+                className="projectDescriptionButton"
+              >
+              EDIT
+              </button>
+            </div>
             <div className="buttons">
               <button className="button" onClick={this.handleUserSubmit}>Show me the Tarot Cards!</button>
             </div>
-           :
-            <div></div>
-          }
-        </>
-      )
+            <Sprite page = {"ProjectDescription"} finished = {true} />;
+          </>
+        )
+      }
     };
 }
 
