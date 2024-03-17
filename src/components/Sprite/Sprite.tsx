@@ -41,8 +41,8 @@ class Sprite extends Component<SpriteProps, SpriteState> {
         } else {
             index = 3;
         }
-        console.log("index num: ", index);
-        console.log("finsihed: ", this.props.finished);
+        // console.log("index num: ", index);
+        // console.log("finsihed: ", this.props.finished);
         return {index: index, page: this.props.page, finished: this.props.finished};
     }
 

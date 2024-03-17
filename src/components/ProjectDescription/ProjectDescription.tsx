@@ -31,14 +31,14 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
     handleDoneSubmit = () => {
       this.setState({finished: true});
       this.props.finishedChange(true);
-      console.log('Description submitted:', this.state.description);
+      // console.log('Description submitted:', this.state.description);
       // You might want to do something with the description, like sending it to a server
     };
 
     handleEditSubmit = () => {
       this.setState({finished: false});
       this.props.finishedChange(false);
-      console.log('Description being edited');
+      // console.log('Description being edited');
       // You might want to do something with the description, like sending it to a server
     };
 
