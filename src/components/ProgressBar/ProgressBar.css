@@ -1,0 +1,25 @@
+.completed-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #6200EA;
+    display: inline-block;
+    margin: 25px;
+  }
+
+.in-progress-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #ccc; /* Slightly grey color */
+    display: inline-block;
+    margin: 25px;
+  }
+
+  .circle-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: -150px;
+  }

@@ -8,19 +8,19 @@ export const spritedialogue = [
     {
         state: 1,
         dialogue: 
-        "Text while prompting for who selects the tarot cards"
+        "Text introducing the selection of tarot cards"
         ,
     },
     {
         state: 2,
         dialogue: 
-        "Text prompting selection"
+        "Text prompting selection of tarot cards"
         ,
     },
     {
         state: 3,
         dialogue: 
-        "Text prompting editing of the cards"
+        "Text prompting editing/customizing of the cards"
         ,
     }
 ]

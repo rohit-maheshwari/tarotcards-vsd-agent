@@ -6,7 +6,7 @@ import spriteavatar from "./aayilaSprite.svg";
 type pages =  "ProjectDescription" | "SelectingTarotCards" | "Playground";
 
 type SpriteState = {
-    index : number; // index correlating to the text the sprite will produce 
+    index: number; // index correlating to the text the sprite will produce 
     page: pages;
     finished: boolean;
 }
