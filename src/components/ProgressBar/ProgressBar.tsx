@@ -1,5 +1,6 @@
 import { Component, useState } from "react";
 import "./ProgressBar.css";
+import Tooltip from '@mui/material/Tooltip';
 import {tarotcards} from '../SelectingTarotCards/tarotcards';
 
 type TarotCardType = {
@@ -29,7 +30,7 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
     const tempDictionary = this.state.dictionary;
     for (let i: number = 0; i < this.props.allCards.length; i++) {
         const name = this.props.allCards[i].title;
-        tempDictionary[name] = <div key={name} className="in-progress-circle"></div>;
+        tempDictionary[name] = <Tooltip title={name}><div key={name} className="in-progress-circle"></div></Tooltip>;
     }
     this.setState({dictionary: tempDictionary});
   }
@@ -43,7 +44,7 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
         for (let i: number = 0; i < prevProps.selectedCards.length; i++) {
           if (!(this.props.selectedCards.includes(prevProps.selectedCards[i]))) {
             const name = prevProps.selectedCards[i].title;
-            tempDictionary[name] = <div key={name} className="in-progress-circle"></div>;
+            tempDictionary[name] = <Tooltip title={name}><div key={name} className="in-progress-circle"></div></Tooltip>;
           }
         }
       }
@@ -53,7 +54,7 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
         for (let i: number = 0; i < this.props.selectedCards.length; i++) {
           if (!(prevProps.selectedCards.includes(this.props.selectedCards[i]))) {
             const name = this.props.selectedCards[i].title;
-            tempDictionary[name] = <div key={name} className="completed-circle"></div>;
+            tempDictionary[name] = <Tooltip title={name}><div key={name} className="completed-circle"></div></Tooltip>;
           }
         }
       }
@@ -66,7 +67,7 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
       // for every selected card, if the title is in the dictionary right now, delete it and add a completed circle
       for (let i: number = 0; i < this.props.selectedCards.length; i++) {
         const name = this.props.selectedCards[i].title;
-        tempDictionary[name] = <div key={name} className="completed-circle"></div>;
+        tempDictionary[name] = <Tooltip title={name}><div key={name} className="completed-circle"></div></Tooltip>;
       }
     
     this.setState({dictionary: tempDictionary});
