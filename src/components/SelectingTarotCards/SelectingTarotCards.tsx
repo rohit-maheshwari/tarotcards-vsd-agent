@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import { TarotCardComponent } from "../TarotCard/TarotCard";
+import { FrontTarotCardComponent } from "../TarotCard/Front/FrontTarotCard";
 import { tarotcards } from "./tarotcards";
 import Sprite from '../Sprite/Sprite';
 import "./SelectingTarotCards.css";
 import ProgressBar from "../ProgressBar/ProgressBar";
+import { TarotCardComponent } from "../TarotCard/TarotCard";
 
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
 
 type TarotCardType = {
   title: string,
-  image: string,
+  frontimage: string,
+  backimage: string,
   questions: string[]
 }
 
@@ -20,12 +22,15 @@ type SelectingTarotCardsProps = {
   handlePreselectSubmit: () => void
 }
 
+type SelectingTarotCardsState = {
 
-class SelectingTarotCards extends Component<SelectingTarotCardsProps> {
+}
+
+class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingTarotCardsState> {
   constructor(props: SelectingTarotCardsProps) {
     super(props);
 
-    this.state = { selectedCards: this.props.selectedCards }
+    this.state = {  }
   }
 
   handleProjectDescriptionSubmit = (): void => {
@@ -45,7 +50,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps> {
           })}
         </div>
         <Sprite page={"SelectingTarotCards"} finished = {true} />
-        <ProgressBar selectedCards={this.props.selectedCards}/>
+        <ProgressBar allCards={tarotcards} selectedCards={this.props.selectedCards}/>
       </>
     )
   };
