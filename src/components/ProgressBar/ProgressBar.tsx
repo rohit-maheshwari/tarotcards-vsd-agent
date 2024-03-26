@@ -5,14 +5,14 @@ import {tarotcards} from '../SelectingTarotCards/tarotcards';
 
 type TarotCardType = {
   title: string,
-  frontimage: string,
-  backimage: string,
-  questions: string[]
+  image: string,
+  questions: string[],
+  color: string
 }
 
 type ProgressBarProps = {
-  selectedCards: TarotCardType[]
   allCards: typeof tarotcards
+  selectedCards: TarotCardType[]
 }
 
 type ProgressBarState = {
@@ -54,7 +54,8 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
         for (let i: number = 0; i < this.props.selectedCards.length; i++) {
           if (!(prevProps.selectedCards.includes(this.props.selectedCards[i]))) {
             const name = this.props.selectedCards[i].title;
-            tempDictionary[name] = <Tooltip title={name}><div key={name} className="completed-circle"></div></Tooltip>;
+            const color = this.props.selectedCards[i].color;
+            tempDictionary[name] = <Tooltip title={name}><div key={name} className="completed-circle" style={{backgroundColor: color}}></div></Tooltip>;
           }
         }
       }
@@ -67,7 +68,8 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
       // for every selected card, if the title is in the dictionary right now, delete it and add a completed circle
       for (let i: number = 0; i < this.props.selectedCards.length; i++) {
         const name = this.props.selectedCards[i].title;
-        tempDictionary[name] = <Tooltip title={name}><div key={name} className="completed-circle"></div></Tooltip>;
+        const color = this.props.selectedCards[i].color;
+        tempDictionary[name] = <Tooltip title={name}><div key={name} className="completed-circle" style={{backgroundColor: color}}></div></Tooltip>;
       }
     
     this.setState({dictionary: tempDictionary});
