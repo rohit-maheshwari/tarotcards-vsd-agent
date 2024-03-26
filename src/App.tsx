@@ -54,21 +54,6 @@ class App extends Component<Props, AppState> {
     this.setState({finished: !this.state.finished}); // 
   }
 
-  render = (): JSX.Element => {
-    if (this.state.page === "ProjectDescription") {
-      return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange}/>);
-    }
-    else if (this.state.page === "SelectingTarotCards") {
-      return (<SelectingTarotCards selectedCards={this.state.selectedCards} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit}/>);
-    }
-    else if (this.state.page === "Playground") {
-      return (<Playground pageChange={this.handlePageChange}/>);
-    }
-    else {
-      throw new Error("invalid page");
-    }
-  };
-
 
   handlePageChange = (page: pages): void => {
     this.setState({page: page});
@@ -79,6 +64,55 @@ class App extends Component<Props, AppState> {
     console.log('preselecting...');
     this.setState({selectedCards: []});
   }
+
+  handleButtonClick = async () => {
+    const requestData = {
+      // Your request payload
+      key: 'value',
+    };
+
+    try {
+      // const response = await fetch('https://your-api-endpoint.com/post', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     // Add any other headers your API requires
+      //   },
+      //   body: JSON.stringify(requestData),
+      // });
+      const response = await fetch('http://localhost:3000/get', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      console.log('Response:', responseData);
+    } catch (error) {
+      console.error('Request failed:', error);
+    }
+  }
+
+  render = (): JSX.Element => {
+    // if (this.state.page === "ProjectDescription") {
+    //   return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange}/>);
+    // }
+    // else if (this.state.page === "SelectingTarotCards") {
+    //   return (<SelectingTarotCards selectedCards={this.state.selectedCards} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit}/>);
+    // }
+    // else if (this.state.page === "Playground") {
+    //   return (<Playground pageChange={this.handlePageChange}/>);
+    // }
+    // else {
+    //   throw new Error("invalid page");
+    // }
+    return (<button onClick={this.handleButtonClick}>Send POST Request</button>)
+  };
 }
 
 export default App;
