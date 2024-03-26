@@ -10,9 +10,9 @@ type Props = {
 
 type TarotCardType = {
   title: string,
-  frontimage: string,
-  backimage: string,
-  questions: string[]
+  image: string,
+  questions: string[],
+  color: string
 }
 
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground";
@@ -76,6 +76,7 @@ class App extends Component<Props, AppState> {
 
   handlePreselectSubmit = () => {
     // BACKEND FETCH WILL BE HERE
+    console.log('preselecting...');
     this.setState({selectedCards: []});
   }
 }

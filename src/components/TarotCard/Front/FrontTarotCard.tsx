@@ -3,16 +3,13 @@ import "./FrontTarotCard.css";
 
 type TarotCardType = {
     title: string,
-    frontimage: string,
-    backimage: string,
-    questions: string[]
+    image: string,
+    questions: string[],
+    color: string
 }
 
 type TarotCardProps = {
-    tarotcard: TarotCardType,
-    handleCardSelect: (card: TarotCardType) => void,
-    selectedCards: TarotCardType[],
-    flipCard: () => void
+    tarotcard: TarotCardType
 }
 
 type TarotCardState = {
@@ -24,14 +21,9 @@ export class FrontTarotCardComponent extends Component <TarotCardProps, TarotCar
         super(props);
     }
 
-    funcCalls = (): void => {
-        this.props.handleCardSelect(this.props.tarotcard);
-        this.props.flipCard();
-    }
-
     render = (): JSX.Element => {
         return (
-            <img className="card-front" src={this.props.tarotcard.frontimage} alt={this.props.tarotcard.title} onClick={() => this.funcCalls()} />
+            <img className="card-front" src={this.props.tarotcard.image} alt={this.props.tarotcard.title} />
         );
     };
 };
