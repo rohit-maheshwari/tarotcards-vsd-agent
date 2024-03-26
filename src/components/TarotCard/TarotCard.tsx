@@ -5,58 +5,53 @@ import { BackTarotCardComponent } from "./Back/BackTarotCard";
 
 type TarotCardType = {
     title: string,
-    frontimage: string,
-    backimage: string,
-    questions: string[]
+    image: string,
+    questions: string[],
+    color: string,
   }
 
 type TarotCardProps = {
     key: number | undefined,
     tarotcard: TarotCardType,
     handleCardSelect: (card: TarotCardType) => void,
-    selectedCards: TarotCardType[]
+    selectedCards: TarotCardType[],
+    showComponent: boolean,
 }
 
 type TarotCardState = {
-    isFlipped: boolean
+    isFlipping: boolean
 }
 
 export class TarotCardComponent extends Component <TarotCardProps, TarotCardState> {
     constructor(props: TarotCardProps) {
         super(props);
 
-        this.state = { isFlipped: false }
-    }
-
-    isCardSelected = (currCard: TarotCardType): boolean => {
-
-        for (let card of this.props.selectedCards) {
-            if (card === currCard) {
-                return true;
-            }
-        }
-
-        return false;
+        this.state = { isFlipping: false }
     }
 
     flipCard = () => {
-        this.setState({ isFlipped: !this.state.isFlipped });
+        this.setState({ isFlipping: true });
+
+        setTimeout(() => {
+            this.props.handleCardSelect(this.props.tarotcard);
+        }, 300);
+
+        setTimeout(() => {
+            this.setState({ isFlipping: false });
+        }, 300);
     }
 
     render = (): JSX.Element => {
-
         return (
-            <div
-                className={`flip-card ${
-                    this.state.isFlipped ? "flipped" : ""
-                }`}
-            >
-                <div className="flip-card-inner">
-                    <FrontTarotCardComponent tarotcard={this.props.tarotcard} handleCardSelect={this.props.handleCardSelect} selectedCards={this.props.selectedCards} flipCard={this.flipCard} />
-                    <BackTarotCardComponent tarotcard={this.props.tarotcard} handleCardSelect={this.props.handleCardSelect} selectedCards={this.props.selectedCards} flipCard={this.flipCard} />
+            <div className={`card ${this.state.isFlipping ? 'half-flipped' : ''}`} onClick={this.flipCard}>
+                {this.props.showComponent ?
+                    <FrontTarotCardComponent tarotcard={this.props.tarotcard} />
+                :
+                <div className="card-back">
+                    <BackTarotCardComponent tarotcard={this.props.tarotcard} />
                 </div>
+                }
             </div>
-
         )
         
     };

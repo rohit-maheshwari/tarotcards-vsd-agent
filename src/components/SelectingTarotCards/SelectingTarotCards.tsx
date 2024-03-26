@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { FrontTarotCardComponent } from "../TarotCard/Front/FrontTarotCard";
 import { tarotcards } from "./tarotcards";
 import Sprite from '../Sprite/Sprite';
 import "./SelectingTarotCards.css";
@@ -9,9 +8,9 @@ type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
 
 type TarotCardType = {
   title: string,
-  frontimage: string,
-  backimage: string,
-  questions: string[]
+  image: string,
+  questions: string[],
+  color: string
 }
 
 type SelectingTarotCardsProps = {
@@ -43,9 +42,12 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
         <button className="navbarButton" onClick={this.props.handlePreselectSubmit}>PRESELECT Some Related Tarot Cards...</button>
         <div className="TarotCardsContainer">
           {tarotcards.map((card: TarotCardType, key: number) => {
+            let showComponent = null;
+            this.props.selectedCards.includes(card) ? showComponent = false : showComponent = true;
+            console.log(showComponent);
             return (
-              <TarotCardComponent key={key} tarotcard={card} selectedCards={this.props.selectedCards} handleCardSelect={this.props.handleCardSelect}/>
-              );
+              <TarotCardComponent key={key} tarotcard={card} selectedCards={this.props.selectedCards} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent}/>
+            );
           })}
         </div>
         <Sprite page={"SelectingTarotCards"} finished = {true} />
