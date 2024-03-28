@@ -84,14 +84,14 @@ class App extends Component<Props, AppState> {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
       });
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
 
-      const responseData = await response.json();
+      const responseData = await response;
       console.log('Response:', responseData);
     } catch (error) {
       console.error('Request failed:', error);
