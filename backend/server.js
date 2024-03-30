@@ -5,17 +5,17 @@ const app = express();
 const Item = require('./models/Item');
 
 const cors = require('cors');
-const recordRoute = require('./routes/record');
-const getRoute = require('./routes/get')
+const recordRoute = require('./routes/record.js');
+const getRoute = require('./routes/get.js');
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000; //||process.env.PORT;
 
 // Middleware
 app.use(bodyParser.json());
 
 app.use(cors());
-app.use(recordRoute)
-app.use(getRoute);
+app.use('/', recordRoute);
+app.use('/', getRoute);
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://juliey12:dtlPRaYpILjhfozk@vsdproject.mpaaajh.mongodb.net/Node-API?retryWrites=true&w=majority&appName=VSDProject', {

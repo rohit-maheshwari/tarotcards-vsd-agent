@@ -1,4 +1,4 @@
-import { Component, useState, useEffect } from 'react';
+import { Component } from 'react';
 import './App.css';
 /*
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
@@ -74,30 +74,64 @@ class App extends Component<Props, AppState> {
       description: "Project Description", 
       cards: [3, 2, 1], 
       card_responses: ["card3", "card2", "card1"], 
+      user_id: 12345678910, 
+      session_id: 3 
+    };
+
+    fetch ('/record', {
+      method: 'POST',
+      body: JSON.stringify(requestData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => this.doButtonClickResponse(res))
+    .catch(() => this.doError("/record: Failed to connect to server"));
+  }
+
+  doButtonClickResponse = (res: Response) => {
+    if (res.status === 200) {
+      alert("Successfully saved!");
+    } else {
+      this.doError("/record: Failed to connect to server with code: " + res.status);
+    }
+  }
+
+  doError = (errMessage: string) => {
+    console.log("Error at: " + errMessage);
+  } 
+
+/*
+  handleButtonClick = async () => {
+    const requestData = {
+      // Your request payload
+      time_stamp: 3, 
+      description: "Project Description", 
+      cards: [3, 2, 1], 
+      card_responses: ["card3", "card2", "card1"], 
       user_id: 3, 
       session_id: 3 
     };
 
     try {
-      const settings = {
-          method: 'POST',
-          headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-          }
-      };
-      try {
-          const fetchResponse = await fetch('http://localhost:3000/record', settings);
-          const data = await fetchResponse.json();
-          return data;
-      } catch (e) {
-          return e;
-      } 
-      //console.log('Response:', responseData);
+      const response = await fetch('/record', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const responseData = await response;
+      console.log('Response:', responseData);
     } catch (error) {
       console.error('Request failed:', error);
     }
   }
+*/
 
   render = (): JSX.Element => {
     // if (this.state.page === "ProjectDescription") {
@@ -145,3 +179,19 @@ export default App;
       //   },
       //   body: JSON.stringify(requestData),
       // });*/
+
+
+      /*const settings = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          }
+      };
+      try {
+          const fetchResponse = await fetch('http://localhost:3000/record', settings);
+          const data = await fetchResponse.json();
+          return data;
+      } catch (e) {
+          return e;
+      } 
+      */
