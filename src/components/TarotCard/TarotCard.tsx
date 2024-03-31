@@ -7,8 +7,9 @@ type TarotCardType = {
     title: string,
     image: string,
     questions: string[],
-    color: string,
-  }
+    color: string
+}
+
 
 type TarotCardProps = {
     key: number | undefined,
@@ -34,11 +35,11 @@ export class TarotCardComponent extends Component <TarotCardProps, TarotCardStat
 
         setTimeout(() => {
             this.props.handleCardSelect(this.props.tarotcard);
-        }, 300);
+        }, 150);
 
         setTimeout(() => {
             this.setState({ isFlipping: false });
-        }, 300);
+        }, 150);
     }
 
     render = (): JSX.Element => {
@@ -52,7 +53,7 @@ export class TarotCardComponent extends Component <TarotCardProps, TarotCardStat
                 </div>
                 }
             </div>
-        )
+        );
         
     };
 };

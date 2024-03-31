@@ -1,10 +1,11 @@
 
 .card {
-    width: 200px;
-    height: 300px;
-    transition: transform 0.6s;
+    width: 300px;
+    height: 450px;
+    transition: transform 0.3s;
     transform-style: preserve-3d;
     cursor: pointer;
+    margin: 1rem 0rem ;
 }
 
 .card-front {
