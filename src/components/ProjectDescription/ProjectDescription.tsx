@@ -1,10 +1,12 @@
 import React, { useState, Component } from "react";
 import './ProjectDescription.css';
+import Sprite from '../Sprite/Sprite';
 
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
 
 type Props = {
   pageChange: (page: pages) => void;
+  finishedChange: (finished: boolean) => void;
 }
 
 type ProjectDescriptionState = {
@@ -21,29 +23,27 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
         finished: false
       };
     }
-  
+
     handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       this.setState({ description: event.target.value });
     };
   
     handleDoneSubmit = () => {
       this.setState({finished: true});
-      console.log('Description submitted:', this.state.description);
+      this.props.finishedChange(true);
+      // console.log('Description submitted:', this.state.description);
       // You might want to do something with the description, like sending it to a server
     };
 
     handleEditSubmit = () => {
       this.setState({finished: false});
-      console.log('Description being edited');
+      this.props.finishedChange(false);
+      // console.log('Description being edited');
       // You might want to do something with the description, like sending it to a server
     };
 
     handleUserSubmit = () => {
       this.props.pageChange('SelectingTarotCards');
-    }
-
-    handleLLMSubmit = () => {
-      this.props.pageChange('Playground');
     }
   
 
@@ -66,6 +66,7 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
               DONE
               </button>
             </div>
+            <Sprite page = {"ProjectDescription"} finished = {false} />;
           </>
         )
       } else {
@@ -86,9 +87,9 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
               </button>
             </div>
             <div className="buttons">
-              <button className="button" onClick={this.handleUserSubmit}>I can find some myself!</button>
-              <button className="button" onClick={this.handleLLMSubmit}>Some help please!</button>
+              <button className="button" onClick={this.handleUserSubmit}>Show me the Tarot Cards!</button>
             </div>
+            <Sprite page = {"ProjectDescription"} finished = {true} />;
           </>
         )
       }

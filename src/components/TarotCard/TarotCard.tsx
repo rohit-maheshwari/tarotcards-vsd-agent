@@ -1,60 +1,59 @@
 import React, { Component } from "react";
 import "./TarotCard.css";
+import { FrontTarotCardComponent } from "./Front/FrontTarotCard";
+import { BackTarotCardComponent } from "./Back/BackTarotCard";
 
 type TarotCardType = {
     title: string,
     image: string,
-    questions: string[]
+    questions: string[],
+    color: string
 }
 
+
 type TarotCardProps = {
-    key: number,
+    key: number | undefined,
     tarotcard: TarotCardType,
     handleCardSelect: (card: TarotCardType) => void,
-    selectedCards: TarotCardType[]
+    selectedCards: TarotCardType[],
+    showComponent: boolean,
 }
 
 type TarotCardState = {
-
+    isFlipping: boolean
 }
 
 export class TarotCardComponent extends Component <TarotCardProps, TarotCardState> {
     constructor(props: TarotCardProps) {
         super(props);
+
+        this.state = { isFlipping: false }
     }
 
-    isCardSelected = (currCard: TarotCardType): boolean => {
+    flipCard = () => {
+        this.setState({ isFlipping: true });
 
-        for (let card of this.props.selectedCards) {
-            if (card === currCard) {
-                return true;
-            }
-        }
+        setTimeout(() => {
+            this.props.handleCardSelect(this.props.tarotcard);
+        }, 150);
 
-        return false;
+        setTimeout(() => {
+            this.setState({ isFlipping: false });
+        }, 150);
     }
 
     render = (): JSX.Element => {
-        if (!this.isCardSelected(this.props.tarotcard)) {
-            return (
-                <button className="card" onClick={() => this.props.handleCardSelect(this.props.tarotcard)}>
-                    <h3>{this.props.tarotcard.title}</h3>
-                    <div className="card-text">
-                        <p>{this.props.tarotcard.questions[0]}</p>
-                    </div>
-                </button>
-            );
-        } else {
-            return (
-                <button className="card" onClick={() => this.props.handleCardSelect(this.props.tarotcard)}>
-                    <p className="selectedIndicator">Selected</p>
-                    <h3>{this.props.tarotcard.title}</h3>
-                    <div className="card-text">
-                        <p>{this.props.tarotcard.questions[0]}</p>
-                    </div>
-                </button>
-            );
-        }
+        return (
+            <div className={`card ${this.state.isFlipping ? 'half-flipped' : ''}`} onClick={this.flipCard}>
+                {this.props.showComponent ?
+                    <FrontTarotCardComponent tarotcard={this.props.tarotcard} />
+                :
+                <div className="card-back">
+                    <BackTarotCardComponent tarotcard={this.props.tarotcard} />
+                </div>
+                }
+            </div>
+        );
         
     };
 };
