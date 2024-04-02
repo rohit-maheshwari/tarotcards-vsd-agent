@@ -8,7 +8,10 @@ const cors = require('cors');
 const recordRoute = require('./routes/record.js');
 const getRoute = require('./routes/get.js');
 
-const PORT = 3000; //||process.env.PORT;
+const env = require("../environment.json");
+MONGO_URI = env.MONGO_URI;
+
+const PORT =  env.BACKEND.PORT || 8000;
 
 // Middleware
 app.use(bodyParser.json());
@@ -18,7 +21,8 @@ app.use('/', recordRoute);
 app.use('/', getRoute);
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://juliey12:dtlPRaYpILjhfozk@vsdproject.mpaaajh.mongodb.net/Node-API?retryWrites=true&w=majority&appName=VSDProject', {
+
+mongoose.connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
