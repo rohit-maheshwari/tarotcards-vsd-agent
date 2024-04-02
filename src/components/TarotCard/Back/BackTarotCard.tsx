@@ -14,7 +14,7 @@ type Answers = {
 
 
 type TarotCardProps = {
-    tarotcard: TarotCardType
+    tarotcard: TarotCardType,
 }
 
 type TarotCardState = {
@@ -51,8 +51,8 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
 
     handleButtonClick = async () => {
         if (!this.state.finished) {
-            let res = window.confirm("are you sure?");
-            if (res) {
+            let userCheck = window.confirm("are you sure?");
+            if (userCheck) {
                 this.setState({finished : !this.state.finished});
 
                 const requestData = {
@@ -66,7 +66,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                 };
         
                 fetch ('/record', {
-                    method: 'POST',
+                    method: 'PUT',
                     body: JSON.stringify(requestData),
                     headers: {
                     'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                 .catch(() => this.doError("/record: Failed to connect to server"));
             }
         } else {
-            this.setState({finished: !this.state.finished})
+            this.setState({finished: !this.state.finished});
         }
     }
 
