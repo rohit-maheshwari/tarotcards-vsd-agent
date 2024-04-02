@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { tarotcards } from "./tarotcards";
 import Sprite from '../Sprite/Sprite';
 import "./SelectingTarotCards.css";
+import ProgressBar from "../ProgressBar/ProgressBar";
 import { TarotCardComponent } from "../TarotCard/TarotCard";
 
 type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
@@ -36,10 +37,10 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
   }
 
   render = (): JSX.Element => {
+    {console.log(this.props.selectedCards);}
     return (
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
-        <button className="navbarButton" onClick={this.props.handlePreselectSubmit}>PRESELECT Some Related Tarot Cards...</button>
         <div className="TarotCardsContainer">
           {tarotcards.map((card: TarotCardType, key: number) => {
             let showComponent = null;
@@ -51,6 +52,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
           })}
         </div>
         <Sprite page={"SelectingTarotCards"} finished = {true} />
+        <ProgressBar allCards={tarotcards} selectedCards={this.props.selectedCards}/>
       </>
     )
   };

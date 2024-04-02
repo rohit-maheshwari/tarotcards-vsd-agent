@@ -21,6 +21,8 @@
     color: white; 
     font-size: 14px;
     margin-left: 100px;
+    position: absolute;
+    top: 5%;
     font-weight: bold; 
     cursor: pointer;
 }
