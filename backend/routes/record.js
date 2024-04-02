@@ -4,21 +4,39 @@ const Item = require('../models/Item');
 //router.use(express.json());
 ///
 // POST: Create a new item
-router.post('/record', async (req, res) => {
+router.put('/record', async (req, res) => {
   try {
-    const newItem = new Item({
-      time_stamp: new Date().getTime(),
-      description: req.body.description,
-      card: req.body.card,
-      card_responses: req.body.card_responses,
-      user_id: req.body.user_id,
-      session_id: req.body.session_id
+    const { description, card, card_responses, user_id, session_id } = req.body;
+    const item = await Item.findOne({ user_id: req.body.user_id, card: req.body.card });
+    if (!item) { //POST
+      let date = new Date();
+      const newItem = new Item({
+        time_stamp: date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),
+        description: description,
+        card: card,
+        card_responses: card_responses,
+        user_id: user_id,
+        session_id: session_id
+      });
+      await newItem.save();
+      console.log('Item saved successfully');
+      res.status(200).json({
+        message: "Item saved successfully"
     });
-    await newItem.save();
-    console.log('Item saved successfully');
-    res.status(200).json({
-      message: "Item saved successfully"
-    });
+    } else { // PUT
+      let date = new Date();
+      const editedItem = {
+        time_stamp: date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),
+        card_responses: card_responses,
+        session_id: session_id
+      };
+      const result = await Item.findOneAndUpdate({ user_id: user_id, card: card }, { $set: editedItem }, { new: true });
+      if (result) {
+        res.send(`User with ID: ${user_id} has been updated with new card title: ${card}`);
+      } else {
+        res.status(404).send(`User with ID: ${user_id} not found`);
+      }
+    }
   } catch (err) {
       console.error('error: ' + err);
       res.status(400).json({
@@ -27,4 +45,8 @@ router.post('/record', async (req, res) => {
   )}
 });
 
+
 module.exports = router;
+
+
+

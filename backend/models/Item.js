@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // TODO: Figure out the schema of the item that we want to insert to the database
 const ItemSchema = mongoose.Schema({
     time_stamp: {
-        type: Number,
+        type: String,
     }, 
     description: {
         type: String,
