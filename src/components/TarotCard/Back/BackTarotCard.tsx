@@ -42,10 +42,6 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
           }));
     };
 
-    handleInputClick = (event: any) => {
-        event.stopPropagation();
-    }
-
     handleButtonClick = async () => {
         const requestData = {
             // Your request payload
@@ -85,12 +81,12 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
             <div className="card-back" style={{backgroundColor: this.props.tarotcard.color}}>
                 <h1>{this.props.tarotcard.title}</h1>
                 <h3>{this.props.tarotcard.questions[0]}</h3>
-                <input onClick={this.handleInputClick} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[0], e.target.value)} placeholder="Enter answer here"/>
+                <input onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[0], e.target.value)} placeholder="Enter answer here"/>
                 {this.props.tarotcard.questions.slice(1,).map((s: string, index: number) => {
                     return (
                         <div>
                             <p>{s}</p>
-                            <input key={index} onClick={this.handleInputClick} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[index+1], e.target.value)} placeholder="Enter answer here"/>
+                            <input key={index} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[index+1], e.target.value)} placeholder="Enter answer here"/>
                         </div>
                     )
                 })}

@@ -27,12 +27,19 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
   }
 
   componentDidMount() {
+    console.log('here')
     const tempDictionary = this.state.dictionary;
+    const selectedCardNames = this.props.selectedCards.map((obj: TarotCardType) => obj.title);
     for (let i: number = 0; i < this.props.allCards.length; i++) {
         const name = this.props.allCards[i].title;
-        tempDictionary[name] = <Tooltip title={name}><div key={name} className="in-progress-circle"></div></Tooltip>;
+        if (selectedCardNames.includes(name)) {
+          tempDictionary[name] = <Tooltip title={name}><div key={name} className="completed-circle" style={{backgroundColor: this.props.allCards[i].color}}></div></Tooltip>;
+        } else {
+          tempDictionary[name] = <Tooltip title={name}><div key={name} className="in-progress-circle"></div></Tooltip>;
+        }
     }
     this.setState({dictionary: tempDictionary});
+    
   }
 
 

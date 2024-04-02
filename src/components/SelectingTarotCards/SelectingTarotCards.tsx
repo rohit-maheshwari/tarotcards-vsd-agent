@@ -47,7 +47,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
             this.props.selectedCards.includes(card) ? showComponent = false : showComponent = true;
             console.log(showComponent);
             return (
-              <TarotCardComponent key={key} tarotcard={card} selectedCards={this.props.selectedCards} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent}/>
+              <TarotCardComponent key={key} tarotcard={card} selectedCards={this.props.selectedCards} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} />
             );
           })}
         </div>
