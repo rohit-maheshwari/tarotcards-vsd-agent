@@ -9,7 +9,7 @@ router.post('/record', async (req, res) => {
     const newItem = new Item({
       time_stamp: new Date().getTime(),
       description: req.body.description,
-      cards: req.body.cards,
+      card: req.body.card,
       card_responses: req.body.card_responses,
       user_id: req.body.user_id,
       session_id: req.body.session_id

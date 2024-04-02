@@ -2,10 +2,9 @@
 .card {
     width: 300px;
     height: 450px;
+    margin: 1rem auto 3rem auto;
     transition: transform 0.3s;
     transform-style: preserve-3d;
-    cursor: pointer;
-    margin: 1rem 0rem ;
 }
 
 .card-front {
@@ -22,4 +21,12 @@
 
 .half-flipped {
     transform: rotateY(90deg);
+}
+
+
+.flipbtn {
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    width: 10%
 }

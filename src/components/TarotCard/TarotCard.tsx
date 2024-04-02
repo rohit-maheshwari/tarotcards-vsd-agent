@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./TarotCard.css";
 import { FrontTarotCardComponent } from "./Front/FrontTarotCard";
 import { BackTarotCardComponent } from "./Back/BackTarotCard";
+import flip from "./flipbutton.svg";
 
 type TarotCardType = {
     title: string,
@@ -44,7 +45,10 @@ export class TarotCardComponent extends Component <TarotCardProps, TarotCardStat
 
     render = (): JSX.Element => {
         return (
-            <div className={`card ${this.state.isFlipping ? 'half-flipped' : ''}`} onClick={this.flipCard}>
+            <div className={`card ${this.state.isFlipping ? 'half-flipped' : ''}`}>
+                <div className="flipbuttoncontainer">
+                    <img className={`flipbtn ${this.state.isFlipping ? 'half-flipped' : ''}`} src={flip} onClick={this.flipCard} />
+                </div>
                 {this.props.showComponent ?
                     <FrontTarotCardComponent tarotcard={this.props.tarotcard} />
                 :

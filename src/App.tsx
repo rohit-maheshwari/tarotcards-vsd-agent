@@ -65,39 +65,39 @@ class App extends Component<Props, AppState> {
     this.setState({selectedCards: []});
   }
 
-  handleButtonClick = async () => {
-    const requestData = {
-      // Your request payload
-      time_stamp: 3, 
-      description: "Project Description", 
-      cards: [3, 2, 1], 
-      card_responses: ["card3", "card2", "card1"], 
-      user_id: 12345678910, 
-      session_id: 3 
-    };
+  // handleButtonClick = async () => {
+  //   const requestData = {
+  //     // Your request payload
+  //     time_stamp: 3, 
+  //     description: "Project Description", 
+  //     cards: [3, 2, 1], 
+  //     card_responses: ["card3", "card2", "card1"], 
+  //     user_id: 12345678910, 
+  //     session_id: 3 
+  //   };
 
-    fetch ('/record', {
-      method: 'POST',
-      body: JSON.stringify(requestData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((res) => this.doButtonClickResponse(res))
-    .catch(() => this.doError("/record: Failed to connect to server"));
-  }
+  //   fetch ('/record', {
+  //     method: 'POST',
+  //     body: JSON.stringify(requestData),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //   .then((res) => this.doButtonClickResponse(res))
+  //   .catch(() => this.doError("/record: Failed to connect to server"));
+  // }
 
-  doButtonClickResponse = (res: Response) => {
-    if (res.status === 200) {
-      alert("Successfully saved!");
-    } else {
-      this.doError("/record: Failed to connect to server with code: " + res.status);
-    }
-  }
+  // doButtonClickResponse = (res: Response) => {
+  //   if (res.status === 200) {
+  //     alert("Successfully saved!");
+  //   } else {
+  //     this.doError("/record: Failed to connect to server with code: " + res.status);
+  //   }
+  // }
 
-  doError = (errMessage: string) => {
-    console.log("Error at: " + errMessage);
-  } 
+  // doError = (errMessage: string) => {
+  //   console.log("Error at: " + errMessage);
+  // } 
 
 /*
   handleButtonClick = async () => {

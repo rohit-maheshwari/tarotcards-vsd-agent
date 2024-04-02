@@ -9,12 +9,11 @@ const ItemSchema = mongoose.Schema({
         type: String,
         required: [true, "Please enter a project description"]
     },
-    cards: {
-        type: Array,
+    card: {
+        type: String,
     },
     card_responses: {
-        type: Array,
-        
+        type: {},
     },
     user_id: {
         type: Number,
