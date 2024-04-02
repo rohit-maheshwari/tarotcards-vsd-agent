@@ -8,26 +8,35 @@ type TarotCardType = {
     color: string
 }
 
+type Answers = {
+    [key: string]: string;
+}
+
 
 type TarotCardProps = {
     tarotcard: TarotCardType
 }
 
 type TarotCardState = {
-    answers: {}
+    responses: {}
 }
 
 export class BackTarotCardComponent extends Component <TarotCardProps, TarotCardState> {
     constructor(props: TarotCardProps) {
         super(props);
 
-        this.state = { answers: {} }
+        this.state = { 
+            responses: this.props.tarotcard.questions.reduce((acc: Answers, cur: string) => {
+                acc[cur] = '';
+                return acc;
+            }, {}) 
+        }
     }
 
     handleAnswerChange = (question: string, answer: string) => {
         this.setState(prevState => ({
-            answers: {
-              ...prevState.answers,
+            responses: {
+              ...prevState.responses,
               [question]: answer
             }
           }));
@@ -37,10 +46,41 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
         event.stopPropagation();
     }
 
-    render = (): JSX.Element => {
-        
-        console.log(this.state.answers);
+    handleButtonClick = async () => {
+        const requestData = {
+            // Your request payload
+            time_stamp: 3, 
+            description: "Project Description", 
+            card: this.props.tarotcard.title,
+            card_responses: this.state.responses, 
+            user_id: 12345678910, 
+            session_id: 3 
+        };
 
+        fetch ('/record', {
+            method: 'POST',
+            body: JSON.stringify(requestData),
+            headers: {
+            'Content-Type': 'application/json',
+            },
+        })
+        .then((res) => this.doButtonClickResponse(res))
+        .catch(() => this.doError("/record: Failed to connect to server"));
+    }
+
+    doButtonClickResponse = (res: Response) => {
+        if (res.status === 200) {
+            alert("Successfully saved!");
+        } else {
+            this.doError("/record: Failed to connect to server with code: " + res.status);
+        }
+    }
+
+    doError = (errMessage: string) => {
+        console.log("Error at: " + errMessage);
+    } 
+
+    render = (): JSX.Element => {
         return (
             <div className="card-back" style={{backgroundColor: this.props.tarotcard.color}}>
                 <h1>{this.props.tarotcard.title}</h1>
@@ -50,10 +90,11 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                     return (
                         <div>
                             <p>{s}</p>
-                            <input onClick={this.handleInputClick} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[index+1], e.target.value)} placeholder="Enter answer here"/>
+                            <input key={index} onClick={this.handleInputClick} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[index+1], e.target.value)} placeholder="Enter answer here"/>
                         </div>
                     )
                 })}
+                <button className="done-btn" onClick={this.handleButtonClick}>Done</button>
             </div>
         );
     };
