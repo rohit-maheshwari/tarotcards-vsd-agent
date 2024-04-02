@@ -18,7 +18,8 @@ type TarotCardProps = {
 }
 
 type TarotCardState = {
-    responses: {}
+    responses: {},
+    finished: boolean
 }
 
 export class BackTarotCardComponent extends Component <TarotCardProps, TarotCardState> {
@@ -29,7 +30,8 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
             responses: this.props.tarotcard.questions.reduce((acc: Answers, cur: string) => {
                 acc[cur] = '';
                 return acc;
-            }, {}) 
+            }, {}),
+            finished: false
         }
     }
 
@@ -40,6 +42,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
               [question]: answer
             }
           }));
+        
     };
 
     handleInputClick = (event: any) => {
@@ -47,30 +50,40 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
     }
 
     handleButtonClick = async () => {
-        const requestData = {
-            // Your request payload
-            time_stamp: 3, 
-            description: "Project Description", 
-            card: this.props.tarotcard.title,
-            card_responses: this.state.responses, 
-            user_id: 12345678910, 
-            session_id: 3 
-        };
+        if (!this.state.finished) {
+            let res = window.confirm("are you sure?");
+            if (res) {
+                this.setState({finished : !this.state.finished});
 
-        fetch ('/record', {
-            method: 'POST',
-            body: JSON.stringify(requestData),
-            headers: {
-            'Content-Type': 'application/json',
-            },
-        })
-        .then((res) => this.doButtonClickResponse(res))
-        .catch(() => this.doError("/record: Failed to connect to server"));
+                const requestData = {
+                    // Your request payload
+                    time_stamp: 3, 
+                    description: "Project Description", 
+                    card: this.props.tarotcard.title,
+                    card_responses: this.state.responses, 
+                    user_id: 12345678910, 
+                    session_id: 3 
+                };
+        
+                fetch ('/record', {
+                    method: 'POST',
+                    body: JSON.stringify(requestData),
+                    headers: {
+                    'Content-Type': 'application/json',
+                    },
+                })
+                .then((res) => this.doButtonClickResponse(res))
+                .catch(() => this.doError("/record: Failed to connect to server"));
+            }
+        } else {
+            this.setState({finished: !this.state.finished})
+        }
     }
 
     doButtonClickResponse = (res: Response) => {
         if (res.status === 200) {
             alert("Successfully saved!");
+            
         } else {
             this.doError("/record: Failed to connect to server with code: " + res.status);
         }
@@ -85,16 +98,16 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
             <div className="card-back" style={{backgroundColor: this.props.tarotcard.color}}>
                 <h1>{this.props.tarotcard.title}</h1>
                 <h3>{this.props.tarotcard.questions[0]}</h3>
-                <input onClick={this.handleInputClick} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[0], e.target.value)} placeholder="Enter answer here"/>
+                <textarea key={0} onClick={this.handleInputClick} readOnly={this.state.finished} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[0], e.target.value)} placeholder="Enter answer here"/>
                 {this.props.tarotcard.questions.slice(1,).map((s: string, index: number) => {
                     return (
                         <div>
                             <p>{s}</p>
-                            <input key={index} onClick={this.handleInputClick} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[index+1], e.target.value)} placeholder="Enter answer here"/>
+                            <textarea key={index} onClick={this.handleInputClick} readOnly={this.state.finished} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[index+1], e.target.value)} placeholder="Enter answer here"/>
                         </div>
                     )
                 })}
-                <button className="done-btn" onClick={this.handleButtonClick}>Done</button>
+                <button className="done-btn" onClick={this.handleButtonClick}>{this.state.finished ? 'EDIT' : 'DONE'}</button>
             </div>
         );
     };
