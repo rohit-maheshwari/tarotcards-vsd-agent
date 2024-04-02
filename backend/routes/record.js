@@ -6,8 +6,9 @@ const Item = require('../models/Item');
 // POST: Create a new item
 router.post('/record', async (req, res) => {
   try {
+    let date = new Date();
     const newItem = new Item({
-      time_stamp: new Date().getTime(),
+      time_stamp: date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),
       description: req.body.description,
       cards: req.body.cards,
       card_responses: req.body.card_responses,
