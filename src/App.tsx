@@ -1,10 +1,8 @@
 import { Component } from 'react';
 import './App.css';
-/*
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
 import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarotCards';
 import Playground from './components/Playground/Playground';
-*/
 
 type Props = {
   page: pages
@@ -134,19 +132,19 @@ class App extends Component<Props, AppState> {
 */
 
   render = (): JSX.Element => {
-    // if (this.state.page === "ProjectDescription") {
-    //   return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange}/>);
-    // }
-    // else if (this.state.page === "SelectingTarotCards") {
-    //   return (<SelectingTarotCards selectedCards={this.state.selectedCards} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit}/>);
-    // }
-    // else if (this.state.page === "Playground") {
-    //   return (<Playground pageChange={this.handlePageChange}/>);
-    // }
-    // else {
-    //   throw new Error("invalid page");
-    // }
-    return (<button onClick={this.handleButtonClick}>Send POST Request</button>)
+    if (this.state.page === "ProjectDescription") {
+      return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange}/>);
+    }
+    else if (this.state.page === "SelectingTarotCards") {
+      return (<SelectingTarotCards selectedCards={this.state.selectedCards} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit}/>);
+    }
+    else if (this.state.page === "Playground") {
+      return (<Playground pageChange={this.handlePageChange}/>);
+    }
+    else {
+      throw new Error("invalid page");
+    }
+    //return (<button onClick={this.handleButtonClick}>Send POST Request</button>)
   };
 }
 
