@@ -22,22 +22,32 @@ type SelectingTarotCardsProps = {
 }
 
 type SelectingTarotCardsState = {
-
+  finishedCards: {[key: string]: boolean}
 }
 
 class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingTarotCardsState> {
   constructor(props: SelectingTarotCardsProps) {
     super(props);
 
-    this.state = {  }
+    this.state = { 
+      finishedCards: tarotcards.reduce((acc: {[key: string]: boolean}, obj: TarotCardType) => {
+        acc[obj.title] = false; // UPDATE THIS (Fix the whether card is finished or not depending on server data @Julie12Yu @rohit-maheshwari @rrrrrrockpang)
+        return acc;
+    }, {}), }
   }
 
   handleProjectDescriptionSubmit = (): void => {
     this.props.pageChange("ProjectDescription");
   }
 
+  updateCard = (card: TarotCardType): void => {
+    // update state of finished card
+    const newMap = this.state.finishedCards;
+    newMap[card.title] = !newMap[card.title];
+    this.setState({finishedCards: newMap});
+  }
+
   render = (): JSX.Element => {
-    {console.log(this.props.selectedCards);}
     return (
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
@@ -45,14 +55,13 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
           {tarotcards.map((card: TarotCardType, key: number) => {
             let showComponent = null;
             this.props.selectedCards.includes(card) ? showComponent = false : showComponent = true;
-            console.log(showComponent);
             return (
-              <TarotCardComponent key={key} tarotcard={card} selectedCards={this.props.selectedCards} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} />
+              <TarotCardComponent key={key} tarotcard={card} selectedCards={this.props.selectedCards} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} finishedCards={this.state.finishedCards} updateCard={this.updateCard}/>
             );
           })}
         </div>
         <Sprite page={"SelectingTarotCards"} finished = {true} />
-        <ProgressBar allCards={tarotcards} selectedCards={this.props.selectedCards}/>
+        <ProgressBar allCards={tarotcards} finishedCards={this.state.finishedCards}/>
       </>
     )
   };

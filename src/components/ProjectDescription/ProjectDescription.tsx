@@ -66,7 +66,7 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
               DONE
               </button>
             </div>
-            <Sprite page = {"ProjectDescription"} finished = {false} />;
+            <Sprite page = {"ProjectDescription"} finished = {false} />
           </>
         )
       } else {
@@ -89,7 +89,7 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
             <div className="buttons">
               <button className="button" onClick={this.handleUserSubmit}>Show me the Tarot Cards!</button>
             </div>
-            <Sprite page = {"ProjectDescription"} finished = {true} />;
+            <Sprite page = {"ProjectDescription"} finished = {true} />
           </>
         )
       }

@@ -8,18 +8,14 @@ type TarotCardType = {
     color: string
 }
 
-type Answers = {
-    [key: string]: string;
-}
-
-
 type TarotCardProps = {
     tarotcard: TarotCardType,
+    finishedCards: {[key: string]: boolean},
+    updateCard: (card: TarotCardType) => void;
 }
 
 type TarotCardState = {
-    responses: {},
-    finished: boolean
+    responses: {}
 }
 
 export class BackTarotCardComponent extends Component <TarotCardProps, TarotCardState> {
@@ -27,16 +23,11 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
         super(props);
 
         this.state = { 
-            responses: this.props.tarotcard.questions.reduce((acc: Answers, cur: string) => {
+            responses: this.props.tarotcard.questions.reduce((acc: {[key: string]: string}, cur: string) => {
                 acc[cur] = '';
                 return acc;
-            }, {}),
-            finished: false
+            }, {})
         }
-    }
-
-    handleInputClick = (event: any) => {
-        event.stopPropagation();
     }
 
     handleAnswerChange = (question: string, answer: string) => {
@@ -50,10 +41,10 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
     };
 
     handleButtonClick = async () => {
-        if (!this.state.finished) {
+        if (!this.props.finishedCards[this.props.tarotcard.title]) {
             let userCheck = window.confirm("are you sure?");
             if (userCheck) {
-                this.setState({finished : !this.state.finished});
+                this.props.updateCard(this.props.tarotcard);
 
                 const requestData = {
                     // Your request payload
@@ -76,7 +67,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                 .catch(() => this.doError("/record: Failed to connect to server"));
             }
         } else {
-            this.setState({finished: !this.state.finished});
+            this.props.updateCard(this.props.tarotcard);
         }
     }
 
@@ -98,16 +89,16 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
             <div className="card-back" style={{backgroundColor: this.props.tarotcard.color}}>
                 <h1>{this.props.tarotcard.title}</h1>
                 <h3>{this.props.tarotcard.questions[0]}</h3>
-                <textarea key={0} onClick={this.handleInputClick} readOnly={this.state.finished} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[0], e.target.value)} placeholder="Enter answer here"/>
+                <textarea key={0} readOnly={this.props.finishedCards[this.props.tarotcard.title]} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[0], e.target.value)} placeholder="Enter answer here"/>
                 {this.props.tarotcard.questions.slice(1,).map((s: string, index: number) => {
                     return (
                         <div>
                             <p>{s}</p>
-                            <textarea key={index} onClick={this.handleInputClick} readOnly={this.state.finished} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[index+1], e.target.value)} placeholder="Enter answer here"/>
+                            <textarea key={index} readOnly={this.props.finishedCards[this.props.tarotcard.title]} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[index+1], e.target.value)} placeholder="Enter answer here"/>
                         </div>
                     )
                 })}
-                <button className="done-btn" onClick={this.handleButtonClick}>{this.state.finished ? 'EDIT' : 'DONE'}</button>
+                <button className="done-btn" onClick={this.handleButtonClick}>{this.props.finishedCards[this.props.tarotcard.title] ? 'EDIT' : 'DONE'}</button>
             </div>
         );
     };

@@ -11,13 +11,14 @@ type TarotCardType = {
     color: string
 }
 
-
 type TarotCardProps = {
     key: number | undefined,
     tarotcard: TarotCardType,
     handleCardSelect: (card: TarotCardType) => void,
     selectedCards: TarotCardType[],
     showComponent: boolean,
+    finishedCards: {[key: string]: boolean},
+    updateCard: (card: TarotCardType) => void;
 }
 
 type TarotCardState = {
@@ -53,7 +54,7 @@ export class TarotCardComponent extends Component <TarotCardProps, TarotCardStat
                     <FrontTarotCardComponent tarotcard={this.props.tarotcard} />
                 :
                 <div className="card-back">
-                    <BackTarotCardComponent tarotcard={this.props.tarotcard} />
+                    <BackTarotCardComponent tarotcard={this.props.tarotcard} finishedCards={this.props.finishedCards} updateCard={this.props.updateCard}/>
                 </div>
                 }
             </div>
