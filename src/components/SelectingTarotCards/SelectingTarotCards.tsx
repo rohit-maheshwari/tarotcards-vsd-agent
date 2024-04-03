@@ -5,7 +5,7 @@ import "./SelectingTarotCards.css";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { TarotCardComponent } from "../TarotCard/TarotCard";
 
-type pages = "ProjectDescription" | "SelectingTarotCards" | "Playground"
+type pages = "ProjectDescription" | "SelectingTarotCards";
 
 type TarotCardType = {
   title: string,
@@ -56,7 +56,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
             let showComponent = null;
             this.props.selectedCards.includes(card) ? showComponent = false : showComponent = true;
             return (
-              <TarotCardComponent key={key} tarotcard={card} selectedCards={this.props.selectedCards} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} finishedCards={this.state.finishedCards} updateCard={this.updateCard}/>
+              <TarotCardComponent key={key} tarotcard={card} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} finishedCards={this.state.finishedCards} updateCard={this.updateCard}/>
             );
           })}
         </div>

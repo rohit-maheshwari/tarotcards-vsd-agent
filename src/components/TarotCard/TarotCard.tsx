@@ -15,7 +15,6 @@ type TarotCardProps = {
     key: number | undefined,
     tarotcard: TarotCardType,
     handleCardSelect: (card: TarotCardType) => void,
-    selectedCards: TarotCardType[],
     showComponent: boolean,
     finishedCards: {[key: string]: boolean},
     updateCard: (card: TarotCardType) => void;
