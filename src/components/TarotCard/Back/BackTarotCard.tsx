@@ -33,32 +33,34 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
     };
 
     handleButtonClick = async () => {
-        if (!this.props.finishedCards[this.props.tarotcard.title]) {
+        if (!this.props.finishedCards[this.props.tarotcard.title]) { // if button is going from "done" -> "edit"
             let userCheck = window.confirm("are you sure?");
             if (userCheck) {
-                this.props.updateCard(this.props.tarotcard);
-
-                const requestData = {
-                    // Your request payload
-                    time_stamp: 3, 
-                    description: "Project Description", 
-                    card: this.props.tarotcard.title,
-                    card_response: this.state.response,
-                    user_id: 12345678910, 
-                    session_id: 3 
-                };
-        
-                fetch ('/record', {
-                    method: 'PUT',
-                    body: JSON.stringify(requestData),
-                    headers: {
-                    'Content-Type': 'application/json',
-                    },
-                })
-                .then((res) => this.doButtonClickResponse(res))
-                .catch(() => this.doError("/record: Failed to connect to server"));
+                if (this.state.response !== "") {
+                    this.props.updateCard(this.props.tarotcard);
+                    const requestData = {
+                        // Your request payload
+                        time_stamp: 3, 
+                        description: "Project Description", 
+                        card: this.props.tarotcard.title,
+                        card_response: this.state.response,
+                        user_id: 12345678910, 
+                        session_id: 3 
+                    };
+                    fetch ('/record', {
+                        method: 'PUT',
+                        body: JSON.stringify(requestData),
+                        headers: {
+                        'Content-Type': 'application/json',
+                        },
+                    })
+                    .then((res) => this.doButtonClickResponse(res))
+                    .catch(() => this.doError("/record: Failed to connect to server"));
+                } else {
+                    console.log('deleting');
+                }
             }
-        } else {
+        } else { // if button is going from "edit" -> "done"
             this.props.updateCard(this.props.tarotcard);
         }
     }
@@ -66,7 +68,6 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
     doButtonClickResponse = (res: Response) => {
         if (res.status === 200) {
             alert("Successfully saved!");
-            
         } else {
             this.doError("/record: Failed to connect to server with code: " + res.status);
         }
