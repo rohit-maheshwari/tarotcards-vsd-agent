@@ -12,7 +12,7 @@ const ItemSchema = mongoose.Schema({
     card: {
         type: String,
     },
-    card_responses: {
+    card_response: {
         type: String,
     },
     user_id: {
