@@ -24,7 +24,8 @@ type SelectingTarotCardsProps = {
 }
 
 type SelectingTarotCardsState = {
-  finishedCards: {[key: string]: boolean}
+  finishedCards: {[key: string]: boolean},
+  initialResponses: {[key: string]: string}
 }
 
 class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingTarotCardsState> {
@@ -33,9 +34,34 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
 
     this.state = { 
       finishedCards: tarotcards.reduce((acc: {[key: string]: boolean}, obj: TarotCardType) => {
-        acc[obj.title] = false; // UPDATE THIS (Fix the whether card is finished or not depending on server data @Julie12Yu @rohit-maheshwari @rrrrrrockpang)
-        return acc;
-    }, {}), }
+          acc[obj.title] = false; // UPDATE THIS (Fix the whether card is finished or not depending on server data @Julie12Yu @rohit-maheshwari @rrrrrrockpang)
+          return acc;
+      }, {}),
+      initialResponses: {}
+    }
+  }
+
+  componentDidMount(): void {
+      const requestData = {
+        user_id: 12345678910
+      }
+      fetch ('/get', {
+        method: 'GET',
+        body: JSON.stringify(requestData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => this.handleGetFillCards(res))
+      .catch(() => this.getError("/record: Failed to connect to server"));
+  }
+
+  handleGetFillCards = (res: Response): void => {
+
+  }
+
+  getError = (error: string) => {
+    
   }
 
   handleProjectDescriptionSubmit = (): void => {
@@ -67,7 +93,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
             let showComponent = null;
             this.props.selectedCards.includes(card) ? showComponent = false : showComponent = true;
             return (
-              <TarotCardComponent key={key} tarotcard={card} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} finishedCards={this.state.finishedCards} updateCard={this.updateCard}/>
+              <TarotCardComponent key={key} tarotcard={card} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} finishedCards={this.state.finishedCards} updateCard={this.updateCard} initialResponse={this.state.initialResponses[card.title]}/>
             );
           })}
         </div>

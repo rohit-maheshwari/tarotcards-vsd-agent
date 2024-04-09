@@ -17,7 +17,8 @@ type TarotCardProps = {
     handleCardSelect: (card: TarotCardType) => void,
     showComponent: boolean,
     finishedCards: {[key: string]: boolean},
-    updateCard: (card: TarotCardType) => void;
+    updateCard: (card: TarotCardType) => void,
+    initialResponse: string
 }
 
 type TarotCardState = {
@@ -53,7 +54,7 @@ export class TarotCardComponent extends Component <TarotCardProps, TarotCardStat
                     <FrontTarotCardComponent tarotcard={this.props.tarotcard} />
                 :
                 <div className="card-back">
-                    <BackTarotCardComponent tarotcard={this.props.tarotcard} finishedCards={this.props.finishedCards} updateCard={this.props.updateCard}/>
+                    <BackTarotCardComponent tarotcard={this.props.tarotcard} finishedCards={this.props.finishedCards} updateCard={this.props.updateCard} initialResponse={this.props.initialResponse}/>
                 </div>
                 }
             </div>
