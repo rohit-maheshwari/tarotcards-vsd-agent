@@ -28,6 +28,26 @@ type TarotCardType = {
     color: string
 }
 
+type ProgressBarPDFState = {
+
+}
+
+type ProgressBarPDFProps = {
+
+}
+
+class ProgressBarPDF extends Component<ProgressBarPDFProps, ProgressBarPDFState> {
+    constructor(props: ProgressBarPDFProps) {
+        super(props);
+    }
+
+    render = (): JSX.Element => {
+        return (
+            <Text style={styles.pageNumber} render={({ pageNumber, totalPages }) => (`hello`)} fixed></Text>
+        )
+    };
+}
+
 type DocState = {
 
 }
@@ -64,7 +84,7 @@ class Doc extends Component<DocProps, DocState> {
                         <View style={styles.breakable2} wrap={false} />
                         <View style={styles.breakable3} wrap={false} />
                     </View>
-                    <Text style={styles.pageNumber}><ProgressBar allCards={this.props.allCards} finishedCards={this.props.finishedCards} /></Text>
+                    <ProgressBarPDF />
                 </Page>
             </Document>
         )
