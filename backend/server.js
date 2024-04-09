@@ -7,6 +7,7 @@ const Item = require('./models/Item');
 const cors = require('cors');
 const recordRoute = require('./routes/record.js');
 const getRoute = require('./routes/get.js');
+const deleteRoute = require('./routes/delete.js');
 
 const env = require("../environment.json");
 MONGO_URI = env.MONGO_URI || "";
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use('/', recordRoute);
 app.use('/', getRoute);
-
+app.use('/', deleteRoute);
 // Connect to MongoDB
 
 mongoose.connect(MONGO_URI, {
