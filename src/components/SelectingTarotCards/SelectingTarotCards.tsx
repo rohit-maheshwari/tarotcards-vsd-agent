@@ -53,11 +53,15 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
     return (
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
-        <PDFDownloadLink document={<Doc allCards={tarotcards} finishedCards={this.state.finishedCards}/>} fileName="tarotcards.pdf">
-          {({ blob, url, loading, error }) =>
-            loading ? 'Loading document...' : 'Download now!'
-          }
-        </PDFDownloadLink>
+        <button className="navbarButton" style={{ float: 'right', marginRight: '100px' }}>
+          <PDFDownloadLink document={<Doc allCards={tarotcards} finishedCards={this.state.finishedCards}/>} fileName="tarotcards.pdf" style={{ textDecoration: 'none', color: 'white'}}>
+            {({ blob, url, loading, error }) =>
+              loading ? 'Loading document...' : 'DOWNLOAD PDF'
+            }
+          </PDFDownloadLink>
+        </button>
+        <Sprite page={"SelectingTarotCards"} finished = {true} />
+        <ProgressBar allCards={tarotcards} finishedCards={this.state.finishedCards}/>
         <div className="TarotCardsContainer">
           {tarotcards.map((card: TarotCardType, key: number) => {
             let showComponent = null;
@@ -67,8 +71,6 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
             );
           })}
         </div>
-        <Sprite page={"SelectingTarotCards"} finished = {true} />
-        <ProgressBar allCards={tarotcards} finishedCards={this.state.finishedCards}/>
       </>
     )
   };
