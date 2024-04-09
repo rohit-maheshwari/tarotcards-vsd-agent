@@ -30,9 +30,9 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
     for (let i: number = 0; i < this.props.allCards.length; i++) {
         const name = this.props.allCards[i].title;
         if (this.props.finishedCards[this.props.allCards[i]?.title]) {
-          circles.push(<Tooltip title={name}><div key={name} className="completed-circle" style={{backgroundColor: this.props.allCards[i].color}}></div></Tooltip>);
+          circles.push(<div key={name} className="completed-circle" style={{backgroundColor: this.props.allCards[i].color}}></div>);
         } else {
-          circles.push(<Tooltip title={name}><div key={name} className="in-progress-circle"></div></Tooltip>);
+          circles.push(<div key={name} className="in-progress-circle"></div>);
         }
     }
     return (

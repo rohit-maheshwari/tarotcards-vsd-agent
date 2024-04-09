@@ -13,7 +13,7 @@ const ItemSchema = mongoose.Schema({
         type: String,
     },
     card_responses: {
-        type: {},
+        type: String,
     },
     user_id: {
         type: Number,
