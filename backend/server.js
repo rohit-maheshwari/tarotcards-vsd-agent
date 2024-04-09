@@ -9,7 +9,7 @@ const recordRoute = require('./routes/record.js');
 const getRoute = require('./routes/get.js');
 
 const env = require("../environment.json");
-MONGO_URI = env.MONGO_URI;
+MONGO_URI = env.MONGO_URI || "";
 
 const PORT =  env.BACKEND.PORT || 8000;
 
