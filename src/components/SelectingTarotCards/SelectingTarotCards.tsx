@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import React, { Component, Profiler } from "react";
 import { tarotcards } from "./tarotcards";
 import Sprite from '../Sprite/Sprite';
 import "./SelectingTarotCards.css";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import { TarotCardComponent } from "../TarotCard/TarotCard";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import Doc from './PDF/PDF';
 
 type pages = "ProjectDescription" | "SelectingTarotCards";
 
@@ -40,11 +42,6 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
     this.props.pageChange("ProjectDescription");
   }
 
-  handlePDFSubmit = () : void => {
-    console.log('exporting to pdf...');
-    // send request to server to export to pdf (should do this on server because server has all the answers to the questions)
-  }
-
   updateCard = (card: TarotCardType): void => {
     // update state of finished card
     const newMap = this.state.finishedCards;
@@ -56,7 +53,11 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
     return (
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
-        {/* <button className="navbarButton" onClick={this.handlePDFSubmit}>Test PDF</button> */}
+        <PDFDownloadLink document={<Doc allCards={tarotcards} finishedCards={this.state.finishedCards}/>} fileName="tarotcards.pdf">
+          {({ blob, url, loading, error }) =>
+            loading ? 'Loading document...' : 'Download now!'
+          }
+        </PDFDownloadLink>
         <div className="TarotCardsContainer">
           {tarotcards.map((card: TarotCardType, key: number) => {
             let showComponent = null;
