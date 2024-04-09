@@ -43,7 +43,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                     time_stamp: 3, 
                     description: "Project Description", 
                     card: this.props.tarotcard.title,
-                    card_responses: this.state.response, 
+                    card_response: this.state.response,
                     user_id: 12345678910, 
                     session_id: 3 
                 };

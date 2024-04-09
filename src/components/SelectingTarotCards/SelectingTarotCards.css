@@ -3,14 +3,13 @@
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-    justify-content: center; 
-    align-items: center; 
-    color: white; 
+    justify-content: center;
+    align-items: center;
+    color: white;
     font-size: 14px;
     margin-left: 100px;
-    position: absolute;
     top: 5%;
-    font-weight: bold; 
+    font-weight: bold;
     cursor: pointer;
 }
 
@@ -24,5 +23,5 @@
     border: 2px solid #000;
     border-radius: 20px;
     overflow-y: auto;
-    max-height: 525px;
+    max-height: 575px;
 }
