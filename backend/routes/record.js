@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Item = require('../models/Item');
-//router.use(express.json());
-///
+
 // POST: Create a new item
 router.put('/record', async (req, res) => {
   try {
