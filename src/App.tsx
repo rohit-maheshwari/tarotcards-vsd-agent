@@ -66,7 +66,6 @@ class App extends Component<Props, AppState> {
 
 
   render = (): JSX.Element => {
-    
     if (this.state.page === "ProjectDescription") {
       return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange}/>);
     }
@@ -76,7 +75,6 @@ class App extends Component<Props, AppState> {
     else {
       throw new Error("invalid page");
     }
-
   };
 }
 

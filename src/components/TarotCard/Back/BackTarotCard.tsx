@@ -15,7 +15,7 @@ type TarotCardProps = {
 }
 
 type TarotCardState = {
-    responses: {}
+    response: string
 }
 
 export class BackTarotCardComponent extends Component <TarotCardProps, TarotCardState> {
@@ -23,20 +23,12 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
         super(props);
 
         this.state = { 
-            responses: this.props.tarotcard.questions.reduce((acc: {[key: string]: string}, cur: string) => {
-                acc[cur] = '';
-                return acc;
-            }, {})
+            response: ''
         }
     }
 
-    handleAnswerChange = (question: string, answer: string) => {
-        this.setState(prevState => ({
-            responses: {
-              ...prevState.responses,
-              [question]: answer
-            }
-          }));
+    handleAnswerChange = (answer: string) => {
+        this.setState({response: answer});
         
     };
 
@@ -51,7 +43,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                     time_stamp: 3, 
                     description: "Project Description", 
                     card: this.props.tarotcard.title,
-                    card_responses: this.state.responses, 
+                    card_responses: this.state.response, 
                     user_id: 12345678910, 
                     session_id: 3 
                 };
@@ -89,15 +81,14 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
             <div className="card-back" style={{backgroundColor: this.props.tarotcard.color}}>
                 <h1>{this.props.tarotcard.title}</h1>
                 <h3>{this.props.tarotcard.questions[0]}</h3>
-                <textarea key={0} readOnly={this.props.finishedCards[this.props.tarotcard.title]} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[0], e.target.value)} placeholder="Enter answer here"/>
                 {this.props.tarotcard.questions.slice(1,).map((s: string, index: number) => {
                     return (
                         <div>
                             <p>{s}</p>
-                            <textarea key={index} readOnly={this.props.finishedCards[this.props.tarotcard.title]} onChange={(e) => this.handleAnswerChange(this.props.tarotcard.questions[index+1], e.target.value)} placeholder="Enter answer here"/>
                         </div>
                     )
                 })}
+                <textarea rows={5} cols={30} readOnly={this.props.finishedCards[this.props.tarotcard.title]} onChange={(e) => this.handleAnswerChange(e.target.value)} placeholder="Enter answer here"/> <br />
                 <button className="done-btn" onClick={this.handleButtonClick}>{this.props.finishedCards[this.props.tarotcard.title] ? 'EDIT' : 'DONE'}</button>
             </div>
         );
