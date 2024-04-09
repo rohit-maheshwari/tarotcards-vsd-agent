@@ -43,7 +43,7 @@ class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
   render = (): JSX.Element => {
     // console.log("Selected cards:", this.props.selectedCards);
     // console.log("Dictionary:", this.state.dictionary);
-    console.log("finished cards: ", this.props.finishedCards);
+    // console.log("finished cards: ", this.props.finishedCards);
     return (
       <div className="circle-container">
         {this.handleDrawCircles()}

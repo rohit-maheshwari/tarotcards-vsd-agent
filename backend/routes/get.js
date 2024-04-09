@@ -13,7 +13,7 @@ router.get("/get", async (req, res) => {
       filledCards.push(doc);
     }
     console.log(filledCards);
-    res.status(200).json({ message: "This is a response from /get" });
+    res.status(200).json({ cardData: filledCards });
   });
 
 module.exports = router;

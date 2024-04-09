@@ -42,26 +42,35 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
   }
 
   componentDidMount(): void {
-      const requestData = {
-        user_id: 12345678910
-      }
-      fetch ('/get', {
+    const user_id = 12345678910;
+      fetch('/get?uid=' + user_id, {
         method: 'GET',
-        body: JSON.stringify(requestData),
         headers: {
           'Content-Type': 'application/json',
         },
       })
       .then((res) => this.handleGetFillCards(res))
-      .catch(() => this.getError("/record: Failed to connect to server"));
+      .catch(() => this.getError("/get: Failed to connect to server"));
   }
 
-  handleGetFillCards = (res: Response): void => {
-
+  handleGetFillCards = (res: any): void => {
+    res.json()
+    .then((data: any) => {
+      let parseResponsesMap: {[key: string]: string} = {}
+      let parseFinishedMap: {[key: string]: boolean} = {}
+      for (let cardObj of data.cardData) {
+        parseResponsesMap[cardObj.card] = cardObj.card_response
+        parseFinishedMap[cardObj.card] = cardObj.finished
+      } 
+      this.setState({finishedCards: parseFinishedMap, initialResponses: parseResponsesMap})
+    })
+    .catch((error: string) => {
+      console.error("Error parsing JSON: ", error);
+    });
   }
 
   getError = (error: string) => {
-    
+    console.log(error);
   }
 
   handleProjectDescriptionSubmit = (): void => {

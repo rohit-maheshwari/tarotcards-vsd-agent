@@ -15,6 +15,9 @@ const ItemSchema = mongoose.Schema({
     card_response: {
         type: String,
     },
+    finished: {
+        type: Boolean,
+    },
     user_id: {
         type: Number,
     },

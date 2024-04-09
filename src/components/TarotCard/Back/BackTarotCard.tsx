@@ -24,7 +24,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
         super(props);
 
         this.state = { 
-            response: this.props.initialResponse
+            response: this.props.initialResponse || ''
         }
     }
 
@@ -36,17 +36,18 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
     handleButtonClick = async () => {
         if (!this.props.finishedCards[this.props.tarotcard.title]) { // if button is going from "done" -> "edit"
             let userCheck = window.confirm("are you sure?");
-            const requestData = {
-                // Your request payload
-                time_stamp: 3, 
-                description: "Project Description", 
-                card: this.props.tarotcard.title,
-                card_response: this.state.response,
-                user_id: 12345678910, 
-                session_id: 3 
-            };
+            console.log(this.state.response);
             if (userCheck) {
-                
+                const requestData = {
+                    // Your request payload
+                    time_stamp: 3, 
+                    description: "Project Description", 
+                    card: this.props.tarotcard.title,
+                    card_response: this.state.response,
+                    finished: !this.props.finishedCards[this.props.tarotcard.title],
+                    user_id: 12345678910, 
+                    session_id: 3 
+                };
                 if (this.state.response !== "") {
                     this.props.updateCard(this.props.tarotcard);
                     fetch ('/record', {
@@ -62,12 +63,11 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                     console.log(requestData.user_id);
                     fetch ('/delete', {
                         method: 'Delete',
-                        body: JSON.stringify({uid: requestData.user_id}),
+                        body: JSON.stringify({uid: requestData.user_id, card: requestData.card}),
                         headers: {
                             'Content-Type': 'application/json',
                             },
                     })
-                    console.log('deleting');
 
                 }
             }
@@ -89,6 +89,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
     } 
 
     render = (): JSX.Element => {
+        console.log(this.state.response)
         return (
             <div className="card-back" style={{backgroundColor: this.props.tarotcard.color}}>
                 <h1>{this.props.tarotcard.title}</h1>
@@ -100,7 +101,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                         </div>
                     )
                 })}
-                <textarea rows={5} cols={30} readOnly={this.props.finishedCards[this.props.tarotcard.title]} onChange={(e) => this.handleAnswerChange(e.target.value)} placeholder="Enter answer here"/> <br />
+                <textarea rows={5} cols={30} readOnly={this.props.finishedCards[this.props.tarotcard.title]} onChange={(e) => this.handleAnswerChange(e.target.value)} placeholder="Enter answer here" value={this.state.response} ></textarea> <br />
                 <button className="done-btn" onClick={this.handleButtonClick}>{this.props.finishedCards[this.props.tarotcard.title] ? 'EDIT' : 'DONE'}</button>
             </div>
         );

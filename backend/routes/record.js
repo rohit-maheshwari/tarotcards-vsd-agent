@@ -5,7 +5,7 @@ const Item = require('../models/Item');
 // POST: Create a new item
 router.put('/record', async (req, res) => {
   try {
-    const { description, card, card_response, user_id, session_id } = req.body;
+    const { description, card, card_response, finished, user_id, session_id } = req.body;
     const item = await Item.findOne({ user_id: req.body.user_id, card: req.body.card });
     if (!item) { //POST
       let date = new Date();
@@ -14,6 +14,7 @@ router.put('/record', async (req, res) => {
         description: description,
         card: card,
         card_response: card_response,
+        finished: finished,
         user_id: user_id,
         session_id: session_id
       });
@@ -27,6 +28,7 @@ router.put('/record', async (req, res) => {
       const editedItem = {
         time_stamp: date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),
         card_response: card_response,
+        finished: finished,
         session_id: session_id
       };
       const result = await Item.findOneAndUpdate({ user_id: user_id, card: card }, { $set: editedItem }, { new: true });
