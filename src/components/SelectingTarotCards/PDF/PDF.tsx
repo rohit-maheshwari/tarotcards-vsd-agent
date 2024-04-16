@@ -1,41 +1,9 @@
 import { Component } from 'react';
-import { Page, Text, View, Document, Image, StyleSheet } from '@react-pdf/renderer';
+import { Page, Text, View, Document, Image, Line, Svg } from '@react-pdf/renderer';
 import { tarotcards } from "../tarotcards";
+import { styles } from "./PDFstyles";
 
 const image = require('../../../images/FrontTarotCards/Scandal.png')
-
-const styles = StyleSheet.create({
-    page: {
-      padding: 60,
-      flexDirection: 'column',
-    },
-    card: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: 10,
-    },
-    imageContainer: {
-      width: '30%',
-      marginRight: 10,
-    },
-    image: {
-      width: '100%',
-      height: 'auto',
-    },
-    textContainer: {
-      flexDirection: 'column',
-      width: '80%',
-      justifyContent: 'center',
-    },
-    question: {
-      fontSize: 12,
-      marginBottom: 5,
-    },
-    response: {
-      fontSize: 12,
-      marginTop: 5,
-    },
-});
 
 type TarotCardType = {
     title: string,
@@ -83,6 +51,8 @@ class Doc extends Component<DocProps, DocState> {
             <Document>
                 <Page style={styles.page} size="A4" wrap>
                     <View>
+                        <Text style={styles.title}>Project Title</Text>
+                        <Svg height="20" width="475"><Line x1={0} x2={475} y1={0} y2={0} strokeWidth={2} stroke="rgb(0, 0, 0)"/></Svg>
                         {f.map((card: TarotCardType, index: number) => {
                             return (
                                 <View key={index} style={styles.card}>
