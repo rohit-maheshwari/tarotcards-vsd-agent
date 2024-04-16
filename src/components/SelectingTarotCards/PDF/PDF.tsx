@@ -18,6 +18,7 @@ type DocState = {
 
 type DocProps = {
     allCards: TarotCardType[],
+    description: string,
     finishedCards: {[key: string]: boolean},
     responses: {[key: string]: string}
 }
@@ -52,6 +53,8 @@ class Doc extends Component<DocProps, DocState> {
                 <Page style={styles.page} size="A4" wrap>
                     <View>
                         <Text style={styles.title}>Project Title</Text>
+                        <Svg height="20" width="475"><Line x1={0} x2={475} y1={0} y2={0} strokeWidth={2} stroke="rgb(0, 0, 0)"/></Svg>
+                        <Text style={styles.description}>{this.props.description}</Text>
                         <Svg height="20" width="475"><Line x1={0} x2={475} y1={0} y2={0} strokeWidth={2} stroke="rgb(0, 0, 0)"/></Svg>
                         {f.map((card: TarotCardType, index: number) => {
                             return (

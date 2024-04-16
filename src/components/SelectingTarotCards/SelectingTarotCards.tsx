@@ -20,7 +20,8 @@ type SelectingTarotCardsProps = {
   pageChange: (page: pages) => void;
   selectedCards: TarotCardType[],
   handleCardSelect: (card: TarotCardType) => void,
-  handlePreselectSubmit: () => void
+  handlePreselectSubmit: () => void,
+  description: string
 }
 
 type SelectingTarotCardsState = {
@@ -90,7 +91,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
         <button className="navbarButton" style={{ float: 'right', marginRight: '100px' }}>
-          <PDFDownloadLink document={<Doc allCards={tarotcards} finishedCards={this.state.finishedCards} responses={this.state.initialResponses}/>} fileName="tarotcards.pdf" style={{ textDecoration: 'none', color: 'white'}}>
+          <PDFDownloadLink document={<Doc allCards={tarotcards} description={this.props.description} finishedCards={this.state.finishedCards} responses={this.state.initialResponses}/>} fileName="tarotcards.pdf" style={{ textDecoration: 'none', color: 'white'}}>
             {({ blob, url, loading, error }) =>
               loading ? 'Loading document...' : 'DOWNLOAD PDF'
             }

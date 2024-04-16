@@ -18,6 +18,7 @@ type pages = "ProjectDescription" | "SelectingTarotCards";
 
 type AppState = {
   page: pages,
+  description: string,
   selectedCards: TarotCardType[],
   finished: boolean // denotes if description is finished or not
 }
@@ -27,7 +28,7 @@ class App extends Component<Props, AppState> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {page: "ProjectDescription", selectedCards: [], finished: false}
+    this.state = {page: "ProjectDescription", description: "", selectedCards: [], finished: false}
   }
 
   handleCardSelect = (card: TarotCardType) => {
@@ -50,9 +51,12 @@ class App extends Component<Props, AppState> {
   }
 
   handleFinishedChange = (finished: boolean) => {
-    this.setState({finished: !this.state.finished}); // 
+    this.setState({finished: !this.state.finished});
   }
 
+  handleTextChange = (description: string) => {
+    this.setState({description: description});
+  }
 
   handlePageChange = (page: pages): void => {
     this.setState({page: page});
@@ -67,10 +71,10 @@ class App extends Component<Props, AppState> {
 
   render = (): JSX.Element => {
     if (this.state.page === "ProjectDescription") {
-      return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange}/>);
+      return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange} descriptionChange={this.handleTextChange}/>);
     }
     else if (this.state.page === "SelectingTarotCards") {
-      return (<SelectingTarotCards selectedCards={this.state.selectedCards} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit}/>);
+      return (<SelectingTarotCards selectedCards={this.state.selectedCards} description={this.state.description} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit}/>);
     }
     else {
       throw new Error("invalid page");

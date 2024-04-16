@@ -10,6 +10,11 @@ export const styles = StyleSheet.create({
         fontSize: 25,
         textAlign: 'center'
     },
+    description: {
+      fontSize: 11,
+      top: -3,
+      marginBottom: 10,
+    },
     card: {
       flexDirection: 'row',
       marginBottom: 10,

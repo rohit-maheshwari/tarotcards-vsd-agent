@@ -7,6 +7,7 @@ type pages = "ProjectDescription" | "SelectingTarotCards";
 type Props = {
   pageChange: (page: pages) => void;
   finishedChange: (finished: boolean) => void;
+  descriptionChange: (description: string) => void;
 }
 
 type ProjectDescriptionState = {
@@ -30,6 +31,7 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
   
     handleSubmit = () => {
       this.setState({finished: !this.state.finished});
+      this.props.descriptionChange(this.state.description);
       this.props.finishedChange(this.state.finished);
     };
 
