@@ -34,7 +34,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
 
     this.state = { 
       finishedCards: tarotcards.reduce((acc: {[key: string]: boolean}, obj: TarotCardType) => {
-          acc[obj.title] = false; // UPDATE THIS (Fix the whether card is finished or not depending on server data @Julie12Yu @rohit-maheshwari @rrrrrrockpang)
+          acc[obj.title] = false;
           return acc;
       }, {}),
       initialResponses: {}
@@ -43,14 +43,14 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
 
   componentDidMount(): void {
     const user_id = 12345678910;
-      fetch('/get?uid=' + user_id, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((res) => this.handleGetFillCards(res))
-      .catch(() => this.getError("/get: Failed to connect to server"));
+    fetch('/get?uid=' + user_id, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => this.handleGetFillCards(res))
+    .catch(() => this.getError("/get: Failed to connect to server"));
   }
 
   handleGetFillCards = (res: any): void => {
@@ -85,11 +85,12 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
   }
 
   render = (): JSX.Element => {
+    console.log(this.state.finishedCards)
     return (
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
         <button className="navbarButton" style={{ float: 'right', marginRight: '100px' }}>
-          <PDFDownloadLink document={<Doc allCards={tarotcards} finishedCards={this.state.finishedCards}/>} fileName="tarotcards.pdf" style={{ textDecoration: 'none', color: 'white'}}>
+          <PDFDownloadLink document={<Doc allCards={tarotcards} finishedCards={this.state.finishedCards} responses={this.state.initialResponses}/>} fileName="tarotcards.pdf" style={{ textDecoration: 'none', color: 'white'}}>
             {({ blob, url, loading, error }) =>
               loading ? 'Loading document...' : 'DOWNLOAD PDF'
             }
