@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./TarotCard.css";
 import { FrontTarotCardComponent } from "./Front/FrontTarotCard";
 import { BackTarotCardComponent } from "./Back/BackTarotCard";
+import flip from "./flipbutton.svg";
 
 type TarotCardType = {
     title: string,
@@ -10,13 +11,16 @@ type TarotCardType = {
     color: string
 }
 
-
 type TarotCardProps = {
+    title: string,
+    description: string,
     key: number | undefined,
     tarotcard: TarotCardType,
     handleCardSelect: (card: TarotCardType) => void,
-    selectedCards: TarotCardType[],
     showComponent: boolean,
+    finishedCards: {[key: string]: boolean},
+    updateCard: (card: TarotCardType) => void,
+    initialResponse: string
 }
 
 type TarotCardState = {
@@ -44,12 +48,15 @@ export class TarotCardComponent extends Component <TarotCardProps, TarotCardStat
 
     render = (): JSX.Element => {
         return (
-            <div className={`card ${this.state.isFlipping ? 'half-flipped' : ''}`} onClick={this.flipCard}>
+            <div className={`card ${this.state.isFlipping ? 'half-flipped' : ''}`}>
+                <div className="flipbuttoncontainer">
+                    <img className={`flipbtn ${this.state.isFlipping ? 'half-flipped' : ''}`} src={flip} onClick={this.flipCard} />
+                </div>
                 {this.props.showComponent ?
                     <FrontTarotCardComponent tarotcard={this.props.tarotcard} />
                 :
                 <div className="card-back">
-                    <BackTarotCardComponent tarotcard={this.props.tarotcard} />
+                    <BackTarotCardComponent title={this.props.title} description={this.props.description} tarotcard={this.props.tarotcard} finishedCards={this.props.finishedCards} updateCard={this.props.updateCard} initialResponse={this.props.initialResponse}/>
                 </div>
                 }
             </div>

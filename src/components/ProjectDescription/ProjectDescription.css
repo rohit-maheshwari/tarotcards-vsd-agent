@@ -1,4 +1,4 @@
-.projectDescription { 
+.project { 
     font-family: sans-serif;
     position: relative;
     width: 75%;
@@ -9,6 +9,18 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     margin-left: auto;
     margin-right: auto;
+}
+
+.projectTitleTextArea { 
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-size: 20px;
+    resize: none;
 }
 
 .projectDescriptionTextArea { 
