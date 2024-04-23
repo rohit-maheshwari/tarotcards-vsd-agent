@@ -12,6 +12,8 @@ type TarotCardType = {
 }
 
 type TarotCardProps = {
+    title: string,
+    description: string,
     key: number | undefined,
     tarotcard: TarotCardType,
     handleCardSelect: (card: TarotCardType) => void,
@@ -54,7 +56,7 @@ export class TarotCardComponent extends Component <TarotCardProps, TarotCardStat
                     <FrontTarotCardComponent tarotcard={this.props.tarotcard} />
                 :
                 <div className="card-back">
-                    <BackTarotCardComponent tarotcard={this.props.tarotcard} finishedCards={this.props.finishedCards} updateCard={this.props.updateCard} initialResponse={this.props.initialResponse}/>
+                    <BackTarotCardComponent title={this.props.title} description={this.props.description} tarotcard={this.props.tarotcard} finishedCards={this.props.finishedCards} updateCard={this.props.updateCard} initialResponse={this.props.initialResponse}/>
                 </div>
                 }
             </div>

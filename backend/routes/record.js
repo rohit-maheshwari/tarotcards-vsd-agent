@@ -5,12 +5,13 @@ const Item = require('../models/Item');
 // POST: Create a new item
 router.put('/record', async (req, res) => {
   try {
-    const { description, card, card_response, finished, user_id, session_id } = req.body;
+    const { title, description, card, card_response, finished, user_id, session_id } = req.body;
     const item = await Item.findOne({ user_id: req.body.user_id, card: req.body.card });
     if (!item) { //POST
       let date = new Date();
       const newItem = new Item({
         time_stamp: date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),
+        title: title,
         description: description,
         card: card,
         card_response: card_response,
@@ -27,6 +28,8 @@ router.put('/record', async (req, res) => {
       let date = new Date();
       const editedItem = {
         time_stamp: date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),
+        title: title,
+        description: description,
         card_response: card_response,
         finished: finished,
         session_id: session_id

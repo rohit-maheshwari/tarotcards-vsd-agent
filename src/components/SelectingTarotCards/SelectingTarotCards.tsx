@@ -21,6 +21,7 @@ type SelectingTarotCardsProps = {
   selectedCards: TarotCardType[],
   handleCardSelect: (card: TarotCardType) => void,
   handlePreselectSubmit: () => void,
+  title: string,
   description: string
 }
 
@@ -91,7 +92,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
         <button className="navbarButton" style={{ float: 'right', marginRight: '100px' }}>
-          <PDFDownloadLink document={<Doc allCards={tarotcards} description={this.props.description} finishedCards={this.state.finishedCards} responses={this.state.initialResponses}/>} fileName="tarotcards.pdf" style={{ textDecoration: 'none', color: 'white'}}>
+          <PDFDownloadLink document={<Doc allCards={tarotcards} title={this.props.title} description={this.props.description} finishedCards={this.state.finishedCards} responses={this.state.initialResponses}/>} fileName="tarotcards.pdf" style={{ textDecoration: 'none', color: 'white'}}>
             {({ blob, url, loading, error }) =>
               loading ? 'Loading document...' : 'DOWNLOAD PDF'
             }
@@ -104,7 +105,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
             let showComponent = null;
             this.props.selectedCards.includes(card) ? showComponent = false : showComponent = true;
             return (
-              <TarotCardComponent key={key} tarotcard={card} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} finishedCards={this.state.finishedCards} updateCard={this.updateCard} initialResponse={this.state.initialResponses[card.title]}/>
+              <TarotCardComponent title={this.props.title} description={this.props.description} key={key} tarotcard={card} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} finishedCards={this.state.finishedCards} updateCard={this.updateCard} initialResponse={this.state.initialResponses[card.title]}/>
             );
           })}
         </div>

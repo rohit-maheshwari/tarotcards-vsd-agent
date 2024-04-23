@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
 const ItemSchema = mongoose.Schema({
     time_stamp: {
         type: String,
-    }, 
+    },
+    title: {
+        type: String,
+    },
     description: {
         type: String,
         required: [true, "Please enter a project description"]

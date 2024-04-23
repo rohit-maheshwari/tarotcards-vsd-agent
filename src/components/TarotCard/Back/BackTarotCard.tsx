@@ -9,6 +9,8 @@ type TarotCardType = {
 }
 
 type TarotCardProps = {
+    title: string,
+    description: string,
     tarotcard: TarotCardType,
     finishedCards: {[key: string]: boolean},
     updateCard: (card: TarotCardType) => void;
@@ -34,20 +36,22 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
     };
 
     handleButtonClick = async () => {
+        console.log(this.props.title);
         if (!this.props.finishedCards[this.props.tarotcard.title]) { // if button is going from "done" -> "edit"
             let userCheck = window.confirm("are you sure?");
             console.log(this.state.response);
+            const requestData = {
+                // Your request payload
+                time_stamp: 3, 
+                title: this.props.title,
+                description: this.props.description, 
+                card: this.props.tarotcard.title,
+                card_response: this.state.response,
+                finished: !this.props.finishedCards[this.props.tarotcard.title],
+                user_id: 12345678910, 
+                session_id: 3 
+            };
             if (userCheck) {
-                const requestData = {
-                    // Your request payload
-                    time_stamp: 3, 
-                    description: "Project Description", 
-                    card: this.props.tarotcard.title,
-                    card_response: this.state.response,
-                    finished: !this.props.finishedCards[this.props.tarotcard.title],
-                    user_id: 12345678910, 
-                    session_id: 3 
-                };
                 if (this.state.response !== "") {
                     this.props.updateCard(this.props.tarotcard);
                     fetch ('/record', {
@@ -62,8 +66,8 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                 } else {
                     console.log(requestData.user_id);
                     fetch ('/delete', {
-                        method: 'Delete',
-                        body: JSON.stringify({uid: requestData.user_id, card: requestData.card}),
+                        method: 'DELETE',
+                        body: JSON.stringify(requestData),
                         headers: {
                             'Content-Type': 'application/json',
                             },

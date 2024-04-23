@@ -1,6 +1,7 @@
 import { Font, StyleSheet } from '@react-pdf/renderer'
 
-export const styles = StyleSheet.create({
+export const styles = StyleSheet.create(
+  {
     page: {
       padding: 60,
       flexDirection: 'column',
@@ -39,4 +40,32 @@ export const styles = StyleSheet.create({
       fontSize: 11,
       marginTop: 5,
     },
-});
+  }
+);
+
+/*
+
+FIREBASE
+
+{
+  [
+    {
+      user_id: 1234
+      cards: [
+        {title: scandal, responses: me1},
+        {title: mother nature, responses: me2}
+      ],
+      title: rassar,
+      description: rassar,
+    }
+  ]
+}
+
+
+MONGODB
+
+user_id, title, card, responses
+1234, rassar, scandal, me1
+1234, rassar, mother nature, me2
+
+*/

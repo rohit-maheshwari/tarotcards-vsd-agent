@@ -5,14 +5,16 @@ import Sprite from '../Sprite/Sprite';
 type pages = "ProjectDescription" | "SelectingTarotCards";
 
 type Props = {
-  pageChange: (page: pages) => void;
-  finishedChange: (finished: boolean) => void;
-  descriptionChange: (description: string) => void;
+  pageChange: (page: pages) => void,
+  finishedChange: (finished: boolean) => void,
+  titleChange: (title: string) => void,
+  descriptionChange: (description: string) => void,
 }
 
 type ProjectDescriptionState = {
-    description: string;
-    finished: boolean;
+  title: string,
+  description: string,
+  finished: boolean,
 }
 
 class ProjectDescription extends Component<Props, ProjectDescriptionState> {
@@ -20,10 +22,15 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
       super(props);
   
       this.state = {
+        title: 'RASSAR',
         description: 'RASSAR is a prototype that identifies, categorizes, and localizes indoor accessibility and safety issues using LiDAR camera data, machine learning, and AR.',
         finished: false
       };
     }
+
+    handleTitleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      this.setState({ title: event.target.value });
+    };
 
     handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       this.setState({ description: event.target.value });
@@ -31,6 +38,7 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
   
     handleSubmit = () => {
       this.setState({finished: !this.state.finished});
+      this.props.titleChange(this.state.title);
       this.props.descriptionChange(this.state.description);
       this.props.finishedChange(this.state.finished);
     };
@@ -44,7 +52,15 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
 
       return (
         <>
-          <div className="projectDescription">
+          <div className="project">
+            <textarea 
+              readOnly={this.state.finished}
+              value={this.state.title}
+              onChange={this.handleTitleChange}
+              className="projectTitleTextArea"
+              rows={1}
+              cols={50}
+            />
             <textarea
               readOnly={this.state.finished}
               value={this.state.description}

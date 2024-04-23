@@ -18,6 +18,7 @@ type pages = "ProjectDescription" | "SelectingTarotCards";
 
 type AppState = {
   page: pages,
+  title: string,
   description: string,
   selectedCards: TarotCardType[],
   finished: boolean // denotes if description is finished or not
@@ -28,7 +29,7 @@ class App extends Component<Props, AppState> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {page: "ProjectDescription", description: "", selectedCards: [], finished: false}
+    this.state = {page: "ProjectDescription", title: "", description: "", selectedCards: [], finished: false}
   }
 
   handleCardSelect = (card: TarotCardType) => {
@@ -54,7 +55,11 @@ class App extends Component<Props, AppState> {
     this.setState({finished: !this.state.finished});
   }
 
-  handleTextChange = (description: string) => {
+  handleTitleChange = (title: string) => {
+    this.setState({title: title});
+  }
+
+  handleDescriptionChange = (description: string) => {
     this.setState({description: description});
   }
 
@@ -71,10 +76,10 @@ class App extends Component<Props, AppState> {
 
   render = (): JSX.Element => {
     if (this.state.page === "ProjectDescription") {
-      return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange} descriptionChange={this.handleTextChange}/>);
+      return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange} titleChange={this.handleTitleChange} descriptionChange={this.handleDescriptionChange}/>);
     }
     else if (this.state.page === "SelectingTarotCards") {
-      return (<SelectingTarotCards selectedCards={this.state.selectedCards} description={this.state.description} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit}/>);
+      return (<SelectingTarotCards selectedCards={this.state.selectedCards} title={this.state.title} description={this.state.description} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit}/>);
     }
     else {
       throw new Error("invalid page");
