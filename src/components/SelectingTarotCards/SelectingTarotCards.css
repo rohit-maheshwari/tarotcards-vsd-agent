@@ -1,27 +1,15 @@
-.page {
-    font-family: Arial, sans-serif;
-    padding: 20px;
-    text-align: center;
-}
-
-.header {
-    background-color: #eeeeee;
-    padding: 10px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
 .navbarButton {
     background-color: #6200EA;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-    justify-content: center; 
-    align-items: center; 
-    color: white; 
+    justify-content: center;
+    align-items: center;
+    color: white;
     font-size: 14px;
     margin-left: 100px;
-    font-weight: bold; 
+    top: 5%;
+    font-weight: bold;
     cursor: pointer;
 }
 
@@ -31,9 +19,9 @@
     justify-content: center;
     margin: 1.5% 1.5%;
     gap: 3%;
-    padding: 20px;
+    padding: 0px 20px;
     border: 2px solid #000;
     border-radius: 20px;
     overflow-y: auto;
-    max-height: 450px;
+    max-height: 575px;
 }
