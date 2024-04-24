@@ -13,7 +13,7 @@ type TarotCardProps = {
     description: string,
     tarotcard: TarotCardType,
     finishedCards: {[key: string]: boolean},
-    updateCard: (card: TarotCardType) => void;
+    updateCard: (card: TarotCardType, response: string) => void;
     initialResponse: string,
 }
 
@@ -53,7 +53,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
             };
             if (userCheck) {
                 if (this.state.response !== "") {
-                    this.props.updateCard(this.props.tarotcard);
+                    this.props.updateCard(this.props.tarotcard, this.state.response);
                     fetch ('/record', {
                         method: 'PUT',
                         body: JSON.stringify(requestData),
@@ -76,7 +76,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                 }
             }
         } else { // if button is going from "edit" -> "done"
-            this.props.updateCard(this.props.tarotcard);
+            this.props.updateCard(this.props.tarotcard, this.state.response);
         }
     }
 

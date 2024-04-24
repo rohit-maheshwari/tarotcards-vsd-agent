@@ -27,7 +27,7 @@ type SelectingTarotCardsProps = {
 
 type SelectingTarotCardsState = {
   finishedCards: {[key: string]: boolean},
-  initialResponses: {[key: string]: string}
+  responses: {[key: string]: string}
 }
 
 class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingTarotCardsState> {
@@ -39,7 +39,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
           acc[obj.title] = false;
           return acc;
       }, {}),
-      initialResponses: {}
+      responses: {}
     }
   }
 
@@ -64,7 +64,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
         parseResponsesMap[cardObj.card] = cardObj.card_response
         parseFinishedMap[cardObj.card] = cardObj.finished
       } 
-      this.setState({finishedCards: parseFinishedMap, initialResponses: parseResponsesMap})
+      this.setState({finishedCards: parseFinishedMap, responses: parseResponsesMap})
     })
     .catch((error: string) => {
       console.error("Error parsing JSON: ", error);
@@ -79,11 +79,13 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
     this.props.pageChange("ProjectDescription");
   }
 
-  updateCard = (card: TarotCardType): void => {
+  updateCard = (card: TarotCardType, response: string): void => {
     // update state of finished card
-    const newMap = this.state.finishedCards;
-    newMap[card.title] = !newMap[card.title];
-    this.setState({finishedCards: newMap});
+    const newFinishedCards = this.state.finishedCards;
+    newFinishedCards[card.title] = !newFinishedCards[card.title];
+    const newResponses = this.state.responses;
+    newResponses[card.title] = response;
+    this.setState({finishedCards: newFinishedCards, responses: newResponses});
   }
 
   render = (): JSX.Element => {
@@ -92,7 +94,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>
         <button className="navbarButton" style={{ float: 'right', marginRight: '100px' }}>
-          <PDFDownloadLink document={<Doc allCards={tarotcards} title={this.props.title} description={this.props.description} finishedCards={this.state.finishedCards} responses={this.state.initialResponses}/>} fileName="tarotcards.pdf" style={{ textDecoration: 'none', color: 'white'}}>
+          <PDFDownloadLink document={<Doc allCards={tarotcards} title={this.props.title} description={this.props.description} finishedCards={this.state.finishedCards} responses={this.state.responses}/>} fileName="tarotcards.pdf" style={{ textDecoration: 'none', color: 'white'}}>
             {({ blob, url, loading, error }) =>
               loading ? 'Loading document...' : 'DOWNLOAD PDF'
             }
@@ -105,7 +107,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
             let showComponent = null;
             this.props.selectedCards.includes(card) ? showComponent = false : showComponent = true;
             return (
-              <TarotCardComponent title={this.props.title} description={this.props.description} key={key} tarotcard={card} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} finishedCards={this.state.finishedCards} updateCard={this.updateCard} initialResponse={this.state.initialResponses[card.title]}/>
+              <TarotCardComponent title={this.props.title} description={this.props.description} key={key} tarotcard={card} handleCardSelect={this.props.handleCardSelect} showComponent={showComponent} finishedCards={this.state.finishedCards} updateCard={this.updateCard} initialResponse={this.state.responses[card.title]}/>
             );
           })}
         </div>

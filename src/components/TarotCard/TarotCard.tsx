@@ -19,7 +19,7 @@ type TarotCardProps = {
     handleCardSelect: (card: TarotCardType) => void,
     showComponent: boolean,
     finishedCards: {[key: string]: boolean},
-    updateCard: (card: TarotCardType) => void,
+    updateCard: (card: TarotCardType, response: string) => void,
     initialResponse: string
 }
 
