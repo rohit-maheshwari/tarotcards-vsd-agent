@@ -54,7 +54,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
             if (userCheck) {
                 if (this.state.response !== "") {
                     this.props.updateCard(this.props.tarotcard, this.state.response);
-                    fetch ('/record', {
+                    fetch ('/api/record', {
                         method: 'PUT',
                         body: JSON.stringify(requestData),
                         headers: {
@@ -65,7 +65,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                     .catch(() => this.doError("/record: Failed to connect to server"));
                 } else {
                     console.log(requestData.user_id);
-                    fetch ('/delete', {
+                    fetch ('/api/delete', {
                         method: 'DELETE',
                         body: JSON.stringify(requestData),
                         headers: {

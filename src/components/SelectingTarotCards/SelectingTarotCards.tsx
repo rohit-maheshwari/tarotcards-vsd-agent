@@ -45,7 +45,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
 
   componentDidMount(): void {
     const user_id = 12345678910;
-    fetch('/get?uid=' + user_id, {
+    fetch('/api/get?uid=' + user_id, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

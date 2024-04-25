@@ -5,7 +5,6 @@ entrypoint: node backend/server.js
 env_variables:
   NODE_ENV: 'production'
   MONGO_URI: "mongodb+srv://juliey12:dtlPRaYpILjhfozk@vsdproject.mpaaajh.mongodb.net/Node-API?retryWrites=true&w=majority&appName=VSDProject"
-  BACKEND_PORT: 8000
 
 handlers:
 - url: /api/.*
