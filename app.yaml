@@ -1,6 +1,6 @@
 runtime: nodejs18
 
-entrypoint: node backend/app.js
+entrypoint: node backend/server.js
 
 env_variables:
   NODE_ENV: 'production'

@@ -100,7 +100,6 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
             }
           </PDFDownloadLink>
         </button>
-        <Sprite page={"SelectingTarotCards"} finished = {true} />
         <ProgressBar allCards={tarotcards} finishedCards={this.state.finishedCards}/>
         <div className="TarotCardsContainer">
           {tarotcards.map((card: TarotCardType, key: number) => {
@@ -111,6 +110,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
             );
           })}
         </div>
+        <Sprite page={"SelectingTarotCards"} finished = {true} />
       </>
     )
   };
