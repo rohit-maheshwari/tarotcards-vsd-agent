@@ -9,10 +9,13 @@ const recordRoute = require('./routes/record.js');
 const getRoute = require('./routes/get.js');
 const deleteRoute = require('./routes/delete.js');
 
-const env = require("../environment.json");
-MONGO_URI = env.MONGO_URI || "";
+// const env = require("../environment.json");
+// MONGO_URI = env.MONGO_URI || "";
+MONGO_URI = process.env.MONGO_URI || "";
 
-const PORT =  env.BACKEND.PORT || 8000;
+// const PORT =  env.BACKEND.PORT || 8000;
+PORT = process.env.BACKEND_PORT || 8000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Middleware
 app.use(bodyParser.json());
