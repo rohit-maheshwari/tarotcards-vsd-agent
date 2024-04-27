@@ -21,8 +21,14 @@ const ItemSchema = mongoose.Schema({
     finished: {
         type: Boolean,
     },
+    user_name: {
+        type: String,
+    },
+    user_email: {
+        type: String,
+    },
     user_id: {
-        type: Number,
+        type: String,
     },
     session_id: {
         type: Number,

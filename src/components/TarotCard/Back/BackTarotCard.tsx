@@ -15,6 +15,7 @@ type TarotCardProps = {
     finishedCards: {[key: string]: boolean},
     updateCard: (card: TarotCardType, response: string) => void;
     initialResponse: string,
+    user: any
 }
 
 type TarotCardState = {
@@ -48,7 +49,9 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                 card: this.props.tarotcard.title,
                 card_response: this.state.response,
                 finished: !this.props.finishedCards[this.props.tarotcard.title],
-                user_id: 12345678910, 
+                user_name: this.props.user.name,
+                user_email: this.props.user.email,
+                user_id: this.props.user.googleId,
                 session_id: 3 
             };
             if (userCheck) {

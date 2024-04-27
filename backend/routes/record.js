@@ -5,7 +5,7 @@ const Item = require('../models/Item');
 // POST: Create a new item
 router.put('/record', async (req, res) => {
   try {
-    const { title, description, card, card_response, finished, user_id, session_id } = req.body;
+    const { title, description, card, card_response, finished, user_name, user_email, user_id, session_id } = req.body;
     const item = await Item.findOne({ user_id: req.body.user_id, card: req.body.card });
     if (!item) { //POST
       let date = new Date();
@@ -16,6 +16,8 @@ router.put('/record', async (req, res) => {
         card: card,
         card_response: card_response,
         finished: finished,
+        user_name: user_name,
+        user_email: user_email,
         user_id: user_id,
         session_id: session_id
       });

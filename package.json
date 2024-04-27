@@ -2,10 +2,12 @@
   "name": "tarotcards-vsd-agent",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8000/",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.14",
+    "@react-oauth/google": "^0.12.1",
     "@react-pdf/renderer": "^3.4.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -16,6 +18,8 @@
     "axios": "^1.6.8",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "gapi-script": "^1.2.0",
+    "google-auth-library": "^9.9.0",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.4",
     "node": "^18.20.0",
@@ -55,6 +59,8 @@
     ]
   },
   "devDependencies": {
+    "@types/gapi": "^0.0.47",
+    "@types/gapi.auth2": "^0.0.60",
     "@types/react": "^18.2.65"
   }
 }

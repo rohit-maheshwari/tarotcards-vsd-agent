@@ -9,6 +9,7 @@ type Props = {
   finishedChange: (finished: boolean) => void,
   titleChange: (title: string) => void,
   descriptionChange: (description: string) => void,
+  user: any
 }
 
 type ProjectDescriptionState = {
