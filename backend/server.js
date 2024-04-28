@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
-const Item = require('./models/Item');
 
 const cors = require('cors');
 const recordRoute = require('./routes/record.js');
