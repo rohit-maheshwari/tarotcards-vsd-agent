@@ -7,6 +7,9 @@ import { TarotCardComponent } from "../TarotCard/TarotCard";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Doc from './PDF/PDF';
 
+// const env = require('../../environment.json')
+// const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
+
 type pages = "ProjectDescription" | "SelectingTarotCards";
 
 type TarotCardType = {
@@ -46,7 +49,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
 
   componentDidMount(): void {
     const googleId = this.props.user.googleId;
-    fetch('/api/get?uid=' + googleId, {
+    fetch(`/api/get?uid=${googleId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +60,6 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
   }
 
   handleGetFillCards = (res: any): void => {
-    console.log(res);
     res.json()
     .then((data: any) => {
       let parseResponsesMap: {[key: string]: string} = {}
@@ -87,7 +89,6 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
   }
 
   render = (): JSX.Element => {
-    console.log(this.state.finishedCards)
     return (
       <>
         <button className="navbarButton" onClick={this.handleProjectDescriptionSubmit}>EDIT PROJECT DESCRIPTION</button>

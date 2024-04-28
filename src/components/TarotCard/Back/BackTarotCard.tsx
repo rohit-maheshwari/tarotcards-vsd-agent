@@ -1,5 +1,7 @@
 import React, { Component, useState } from "react";
 import "./BackTarotCard.css";
+// const env = require('../../../environment.json');
+// const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT;
 
 type TarotCardType = {
     title: string,
@@ -57,7 +59,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
             if (userCheck) {
                 if (this.state.response !== "") {
                     this.props.updateCard(this.props.tarotcard, this.state.response);
-                    fetch ('/api/record', {
+                    fetch (`/api/record`, {
                         method: 'PUT',
                         body: JSON.stringify(requestData),
                         headers: {
@@ -67,8 +69,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                     .then((res) => this.doButtonClickResponse(res))
                     .catch(() => this.doError("/record: Failed to connect to server"));
                 } else {
-                    console.log(requestData.user_id);
-                    fetch ('/api/delete', {
+                    fetch (`/api/delete`, {
                         method: 'DELETE',
                         body: JSON.stringify(requestData),
                         headers: {
@@ -96,7 +97,6 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
     } 
 
     render = (): JSX.Element => {
-        console.log(this.state.response)
         return (
             <div className="card-back" style={{backgroundColor: this.props.tarotcard.color}}>
                 <h1>{this.props.tarotcard.title}</h1>

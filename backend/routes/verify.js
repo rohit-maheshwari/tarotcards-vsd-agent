@@ -1,7 +1,8 @@
 const { OAuth2Client } = require('google-auth-library');
-const env = require('../../src/environment.json');
-const googleClientID = env.GOOGLE_CLIENT_ID;
-const client = new OAuth2Client(googleClientID);
+// const env = require('../../src/environment.json');
+// const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
+GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
+const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 const express = require('express');
 const Item = require('../models/Item');
 const router = express.Router();
@@ -9,7 +10,7 @@ const router = express.Router();
 async function verify(token) {
   const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: googleClientID, 
+      audience: GOOGLE_CLIENT_ID, 
   }).catch((error) => console.log(error));
   const payload = ticket.getPayload();
   const googleId = payload['sub'];

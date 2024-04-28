@@ -5,6 +5,7 @@ entrypoint: node backend/server.js
 env_variables:
   NODE_ENV: 'production'
   MONGO_URI: "mongodb+srv://juliey12:dtlPRaYpILjhfozk@vsdproject.mpaaajh.mongodb.net/Node-API?retryWrites=true&w=majority&appName=VSDProject"
+  GOOGLE_CLIENT_ID: "1085439417248-q595p4kuj6prlp6tqnrj371kn7vaust7.apps.googleusercontent.com"
 
 handlers:
 - url: /api/.*

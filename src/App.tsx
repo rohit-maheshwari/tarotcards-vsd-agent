@@ -2,8 +2,9 @@ import { Component } from 'react';
 import './App.css';
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
 import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarotCards';
-const env = require('./environment.json')
-const googleClientId = env.GOOGLE_CLIENT_ID;
+const env = require('./environment.json');
+// const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
+// const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
 
 type Props = {
   page: pages
@@ -31,6 +32,7 @@ type AppState = {
 class App extends Component<Props, AppState> {
 
   auth: gapi.auth2.GoogleAuth;
+  GOOGLE_CLIENT_ID: string;
 
   constructor(props: Props) {
     super(props);
@@ -38,6 +40,7 @@ class App extends Component<Props, AppState> {
     this.state = {loggedIn: false, user: null, page: "ProjectDescription", title: "", description: "", selectedCards: [], finished: false}
 
     this.auth = {} as gapi.auth2.GoogleAuth;
+    this.GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
   }
 
   componentDidMount() {
@@ -52,7 +55,7 @@ class App extends Component<Props, AppState> {
 
   initClient = () => {
     window.gapi.client.init({
-        clientId: googleClientId,
+        clientId: this.GOOGLE_CLIENT_ID,
         scope: 'email',
         plugin_name: 'TarotCardsVSD'
     }).then(() => {
@@ -71,12 +74,12 @@ class App extends Component<Props, AppState> {
 
   updateSigninStatus = (loggedIn: boolean) => {
     if (loggedIn) {
-      console.log('The user is signed in');
-          // You can access user profile info with:
-          // this.auth.currentUser.get().getBasicProfile();
+      // console.log('The user is signed in');
+      // You can access user profile info with:
+      // this.auth.currentUser.get().getBasicProfile();
       this.setState({loggedIn: true})
     } else {
-      console.log('The user is not signed in');
+      // console.log('The user is not signed in');
       this.setState({loggedIn: false, user: null})
     }
   }
@@ -89,8 +92,7 @@ class App extends Component<Props, AppState> {
     // should never send "this.auth.currentUser.get().getBasicProfile().getID()" to backend
     // instead, get idToken and then send that to backend
     const idToken = this.auth.currentUser.get().getAuthResponse().id_token;
-    console.log(idToken);
-    fetch('/api/verify?idToken=' + idToken, {
+    fetch(`/api/verify?idToken=${idToken}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -103,13 +105,12 @@ class App extends Component<Props, AppState> {
   handleVerifiedUser = (res: any) => {
     res.json()
     .then((data: any) => {
-      console.log(data.userInfo);
       this.setState({loggedIn: true, user: data.userInfo})
     })
   }
 
   handleLogout = () => {
-    this.auth.signOut().then().catch((error: any) => console.log(error));
+    this.auth.signOut().then(this.updateSigninStatus(false)).catch((error: any) => console.log(error));
   }
 
 
@@ -157,9 +158,8 @@ class App extends Component<Props, AppState> {
 
 
   render = (): JSX.Element => {
-    console.log(this.state.user);
+    // console.log(this.state.user);
     if (this.state.loggedIn) {
-      console.log('user logged in')
       // return (<button onClick={this.handleLogout}>Sign Out</button>);
       if (this.state.page === "ProjectDescription") {
         return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange} titleChange={this.handleTitleChange} descriptionChange={this.handleDescriptionChange} user={this.state.user}/>);
@@ -171,7 +171,6 @@ class App extends Component<Props, AppState> {
         throw new Error("invalid page");
       }
     } else {
-      console.log('user logged out')
       return (<button onClick={this.handleLogin}>Sign In with Google</button>)
     }
     

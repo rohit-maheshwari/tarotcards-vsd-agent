@@ -10,13 +10,12 @@ const getRoute = require('./routes/get.js');
 const deleteRoute = require('./routes/delete.js');
 const verifyRoute = require('./routes/verify.js');
 
-const env = require("../src/environment.json");
-const MONGO_URI = env.MONGO_URI || "";
-// MONGO_URI = process.env.MONGO_URI || "";
+// const env = require("../src/environment.json");
+// const MONGO_URI = env.MONGO_URI || "";
+MONGO_URI = process.env.MONGO_URI || "";
 
-const PORT =  env.BACKEND.PORT || 8000;
-// PORT = process.env.PORT || process.env.BACKEND_PORT || 8000;
-// app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// const PORT =  env.BACKEND.PORT || 8000;
+PORT = process.env.PORT || process.env.BACKEND_PORT || 8000;
 
 // Middleware
 app.use(bodyParser.json());
@@ -26,6 +25,8 @@ app.use('/api', recordRoute);
 app.use('/api', verifyRoute);
 app.use('/api', getRoute);
 app.use('/api', deleteRoute);
+
+
 // Connect to MongoDB
 
 mongoose.connect(MONGO_URI, {
