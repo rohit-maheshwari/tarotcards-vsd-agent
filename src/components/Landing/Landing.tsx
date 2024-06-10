@@ -107,7 +107,7 @@ class Landing extends Component<Props, LandingState> {
         <>
           <h3>PEACE is a place where you proactively export and anticipate consequences and ethics.</h3>
           <button onClick={this.handleLogin}>Sign In with Google</button>
-          <button onClick={() => this.props.pageChange("Projects")}>Guest</button>
+          <button onClick={() => this.props.pageChange("ProjectDescription")}>Guest</button>
         </>
       : 
         <Projects pageChange={this.props.pageChange}></Projects>
