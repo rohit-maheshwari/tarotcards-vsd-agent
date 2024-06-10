@@ -1,6 +1,5 @@
 import React, { useState, Component } from "react";
 import './ProjectDescription.css';
-import Sprite from '../Sprite/Sprite';
 
 type pages = "ProjectDescription" | "SelectingTarotCards";
 
@@ -22,8 +21,8 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
       super(props);
   
       this.state = {
-        title: 'RASSAR',
-        description: 'RASSAR is a prototype that identifies, categorizes, and localizes indoor accessibility and safety issues using LiDAR camera data, machine learning, and AR.',
+        title: 'Amazing Project 1.0',
+        description: 'Amazing Project Description',
         finished: false
       };
     }
@@ -52,7 +51,9 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
 
       return (
         <>
+          <h3 className="announce">Enter title and description of your project! This will help us generate your export later!</h3>
           <div className="project">
+            <p>Title</p>
             <textarea 
               readOnly={this.state.finished}
               value={this.state.title}
@@ -61,6 +62,7 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
               rows={1}
               cols={50}
             />
+            <p>Description</p>
             <textarea
               readOnly={this.state.finished}
               value={this.state.description}
@@ -81,7 +83,6 @@ class ProjectDescription extends Component<Props, ProjectDescriptionState> {
               <button className="button" onClick={this.handleUserSubmit}>Show me the Tarot Cards!</button>
             </div>
           }
-          <Sprite page = {"ProjectDescription"} finished = {this.state.finished} />
         </>
       );
     };
