@@ -8,8 +8,7 @@ type Props = {
   pageChange: (page: pages) => void,
   finishedChange: (finished: boolean) => void,
   titleChange: (title: string) => void,
-  descriptionChange: (description: string) => void,
-  user: any
+  descriptionChange: (description: string) => void
 }
 
 type ProjectDescriptionState = {
