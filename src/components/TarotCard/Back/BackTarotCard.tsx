@@ -69,9 +69,8 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                     .then((res) => this.doButtonClickResponse(res))
                     .catch(() => this.doError("/record: Failed to connect to server"));
                 } else {
-                    fetch (`/api/delete`, {
+                    fetch (`/api/delete?uid=${requestData.user_id}&card=${requestData.card}`, {
                         method: 'DELETE',
-                        body: JSON.stringify(requestData),
                         headers: {
                             'Content-Type': 'application/json',
                             },

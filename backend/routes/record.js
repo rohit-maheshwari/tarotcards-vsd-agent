@@ -7,7 +7,7 @@ router.put('/record', async (req, res) => {
   try {
     const { title, description, card, card_response, finished, user_name, user_email, user_id, session_id } = req.body;
     const item = await Item.findOne({ user_id: req.body.user_id, card: req.body.card });
-    if (!item) { //POST
+    if (!item) { // POST
       let date = new Date();
       const newItem = new Item({
         time_stamp: date.toLocaleDateString() + ' ' + date.toLocaleTimeString(),

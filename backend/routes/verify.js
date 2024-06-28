@@ -1,7 +1,7 @@
 const { OAuth2Client } = require('google-auth-library');
-// const env = require('../../src/environment.json');
-// const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
-GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
+const env = require('../../src/environment.json');
+const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
+// GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 const express = require('express');
 const Item = require('../models/Item');

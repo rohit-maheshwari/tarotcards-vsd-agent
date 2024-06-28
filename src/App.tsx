@@ -99,7 +99,7 @@ class App extends Component<Props, AppState> {
       },
     })
     .then((res) => this.handleVerifiedUser(res))
-    .catch(() => console.log("/get: Failed to connect to server"));
+    .catch(() => console.log("/verify: Failed to connect to server"));
   }
 
   handleVerifiedUser = (res: any) => {
