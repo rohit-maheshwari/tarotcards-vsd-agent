@@ -48,16 +48,21 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
   }
 
   componentDidMount(): void {
-    const googleId = this.props.user.googleId;
-    fetch(`/api/cards?uid=${googleId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((res) => this.handleGetFillCards(res))
-    .catch(() => console.log("/cards: Failed to connect to server"));
+    if (this.props.user == null) {
+      this.setState({finishedCards: {}, responses: {}});
+    } else {
+      const googleId = this.props.user.googleId;
+      fetch(`/api/get?uid=${googleId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => this.handleGetFillCards(res))
+      .catch(() => console.log("/get: Failed to connect to server"));
+    }
   }
+  
 
   handleGetFillCards = (res: any): void => {
     res.json()

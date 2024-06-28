@@ -1,7 +1,10 @@
 import { Component } from 'react';
 import './App.css';
+import Landing from './components/Landing/Landing';
+import Projects from './components/Projects/Projects';
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
 import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarotCards';
+
 const env = require('./environment.json');
 // const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
 // const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
@@ -17,7 +20,7 @@ type TarotCardType = {
   color: string
 }
 
-type pages = "ProjectDescription" | "SelectingTarotCards";
+export type pages = "Landing" | "Projects" | "ProjectDescription" | "SelectingTarotCards" | "ReviewReorder" | "Export";
 
 type AppState = {
   loggedIn: boolean,
@@ -37,7 +40,7 @@ class App extends Component<Props, AppState> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {loggedIn: false, user: null, page: "ProjectDescription", title: "", description: "", selectedCards: [], finished: false}
+    this.state = {loggedIn: false, user: null, page: "Landing", title: "", description: "", selectedCards: [], finished: false}
 
     this.auth = {} as gapi.auth2.GoogleAuth;
     this.GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -156,22 +159,26 @@ class App extends Component<Props, AppState> {
     this.setState({selectedCards: []});
   }
 
+  handleUpdateUser = (_loggedIn: boolean, _user: any) =>{
+    this.setState({loggedIn: _loggedIn, user: _user})
+  }
+
 
   render = (): JSX.Element => {
-    // console.log(this.state.user);
-    if (this.state.loggedIn) {
-      // return (<button onClick={this.handleLogout}>Sign Out</button>);
-      if (this.state.page === "ProjectDescription") {
-        return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange} titleChange={this.handleTitleChange} descriptionChange={this.handleDescriptionChange} user={this.state.user}/>);
-      }
-      else if (this.state.page === "SelectingTarotCards") {
-        return (<SelectingTarotCards selectedCards={this.state.selectedCards} title={this.state.title} description={this.state.description} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit} user={this.state.user}/>);
-      }
-      else {
-        throw new Error("invalid page");
-      }
-    } else {
-      return (<button onClick={this.handleLogin}>Sign In with Google</button>)
+    if (this.state.page === "Landing") {
+      return (<Landing pageChange={this.handlePageChange} updateUser={this.handleUpdateUser} loggedIn={this.state.loggedIn} user={this.state.user}></Landing>)
+    }
+    else if (this.state.page === "Projects") {
+      return (<Projects pageChange={this.handlePageChange}></Projects>);
+    }
+    else if (this.state.page === "ProjectDescription") {
+      return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange} titleChange={this.handleTitleChange} descriptionChange={this.handleDescriptionChange}/>);
+    }
+    else if (this.state.page === "SelectingTarotCards") {
+      return (<SelectingTarotCards selectedCards={this.state.selectedCards} title={this.state.title} description={this.state.description} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit} user={this.state.user}/>);
+    }
+    else {
+      throw new Error("invalid page");
     }
     
   };

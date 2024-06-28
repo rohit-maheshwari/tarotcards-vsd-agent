@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const cors = require('cors');
+const homeRoute = require('./routes/home.js');
 const recordRoute = require('./routes/record.js');
 const cardsRoute = require('./routes/cards.js');
 const deleteRoute = require('./routes/delete.js');
@@ -20,6 +21,7 @@ const PORT =  env.BACKEND.PORT || 8000;
 app.use(bodyParser.json());
 
 app.use(cors());
+app.use('/api/', homeRoute);
 app.use('/api', recordRoute);
 app.use('/api', verifyRoute);
 app.use('/api', cardsRoute);
