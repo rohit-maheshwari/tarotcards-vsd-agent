@@ -3,9 +3,9 @@ const Item = require('../models/Item');
 const router = express.Router();
 
 router.delete("/delete", async (req, res) => {
-    const { uid , card } = req.body;
-    console.log("Handling GET request for /get");
-    const result = await Item.deleteOne({user_id: uid, card: card});
+    const { user_id , card } = req.query;
+    console.log("Handling GET request for /delete");
+    const result = await Item.deleteOne({user_id: user_id, card: card});
     /* Print a message that indicates whether the operation deleted a
     document */
     if (result.deletedCount === 1) {

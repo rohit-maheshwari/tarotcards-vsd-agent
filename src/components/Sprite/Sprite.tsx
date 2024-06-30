@@ -49,10 +49,12 @@ class Sprite extends Component<SpriteProps, SpriteState> {
     render = () : JSX.Element => {
         return (
             <>
-                <div className="talk-bubble border round btm-right-in">
-                    <div className="sprite-text">{spritedialogue[this.state.index].dialogue}</div>
+                <div className="sprite-container">
+                    <div className="talk-bubble border round btm-right-in">
+                        <div className="sprite-text">{spritedialogue[this.state.index].dialogue}</div>
+                    </div>
+                    <img src={spriteavatar} alt="sprite avatar!" className="sprite-avatar" />
                 </div>
-                <img src={spriteavatar} alt="sprite avatar!" className="sprite-avatar" />
             </>
         )
     };
