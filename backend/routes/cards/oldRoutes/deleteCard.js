@@ -1,5 +1,5 @@
 const express = require('express');
-const Item = require('../models/Item');
+const Item = require('../../../models/Item');
 const router = express.Router();
 
 router.delete("/delete", async (req, res) => {

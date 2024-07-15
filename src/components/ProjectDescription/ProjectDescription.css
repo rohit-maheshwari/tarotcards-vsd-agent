@@ -11,6 +11,18 @@
     margin-right: auto;
 }
 
+.projectSubfieldTextArea { 
+    width: 100%;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    font-size: 15px;
+    resize: none;
+}
+
 .projectTitleTextArea { 
     width: 100%;
     margin-bottom: 10px;
@@ -38,7 +50,6 @@
 
 .projectDescriptionButton { 
     position: absolute;
-    bottom: 10px;
     right: 20px;
     background-color: #6200EA;
     display: flex; 

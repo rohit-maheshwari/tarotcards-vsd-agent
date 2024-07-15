@@ -100,13 +100,30 @@ class Landing extends Component<Props, LandingState> {
     this.auth.signOut().then(this.updateSigninStatus(false)).catch((error: any) => console.log(error));
   }
 
-
+  toggleMenu = () => {
+    const menu = document.getElementById('menu');
+    if (!menu) {
+        throw new Error("Menu does not exist")
+    }
+    if (menu.style.display === 'block') {
+        menu.style.display = 'none';
+    } else {
+        menu.style.display = 'block';
+    }
+  }
 
   render = (): JSX.Element => {
     return (
       !this.props.loggedIn ? 
         <div className="landingBody">
           <div className="container">
+          <div className="menuButton" onClick={this.toggleMenu}>&#9776;</div>
+            <div className="menu" id="menu">
+                <ul>
+                    <li onClick={() => this.props.pageChange("Landing")}>HOME</li>
+                    <li onClick={() => this.props.pageChange("About")}>ABOUT</li>
+                </ul>
+            </div>
             <div className="landingheader">
               <h1 className="landingH1"><span className="PEACE">PEACE</span> is a place where you proactively explore and anticipate consequences and ethics.</h1>
               <p className="landingDescription">
@@ -134,7 +151,6 @@ class Landing extends Component<Props, LandingState> {
             <div className="footer">
               <button className="googleButton" onClick={this.handleLogin}>Sign in with Google</button>
               <button className="guestButton" onClick={() => this.props.pageChange("ProjectDescription")}>Guest</button>
-              <button className="aboutButton">ABOUT</button>
             </div>
           </div>
         </div>

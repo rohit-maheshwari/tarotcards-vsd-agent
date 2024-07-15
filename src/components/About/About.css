@@ -1,4 +1,4 @@
-.landingBody {
+.aboutBody {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -7,30 +7,64 @@
     height: 100vh;
 }
 
-.landingheader .PEACE {
+.aboutheader .ABOUTUS {
     font-size: 96px;
 }
   
 .container {
     text-align: center;
+    margin-top: 100px;
     max-width: 1200px;
     padding: 20px;
 }
+
+.menuButton {
+    position: absolute;
+    top: 50x;
+    right: 50px;
+    font-size: 48px;
+    cursor: pointer;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 190px;
+    right: 100px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    padding: 10px;
+    cursor: pointer;
+}
   
-.landingheader {
+.aboutheader {
     margin-bottom: 50px;
 }
   
-.landingheader .landingH1 {
+.aboutheader .aboutH1 {
     font-size: 24px;
     margin-bottom: 10px;
 }
   
-.landingheader .landingH1 .PEACE {
+.aboutheader .aboutH1 .ABOUTUS {
     font-weight: bold;
 }
   
-.landingheader .landingDescription {
+.aboutheader .aboutDescription {
     font-size: 14px;
     color: #666;
     margin-bottom: 40px;
@@ -44,30 +78,24 @@
     gap: 20px;
 }
   
-.step {
+.person {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
   
-.step .box {
+.person .box {
     width: 200px;
     height: 150px;
     background-color: #ccc;
     margin-bottom: 10px;
 }
   
-.step .stepH2 {
+.person .personH2 {
     font-size: 16px;
     font-weight: bold;
     text-align: center;
 }
-  
-.arrow {
-    font-size: 24px;
-    display: flex;
-    align-items: center;
-  }
   
 .footer {
     display: flex;
@@ -84,14 +112,12 @@ button {
     font-size: 14px;
 }
   
-.googleButton {
-    background-color: #fff;
-    border: 1px solid #ccc;
+.aboutButton {
+    background-color: #ccc;
+    border: 2px solid #222;
+    font-weight: bold;
     color: #333;
-}
-  
-.guestButton {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    color: #333;
+    position: absolute;
+    bottom: 100px;
+    right: 250px;
 }

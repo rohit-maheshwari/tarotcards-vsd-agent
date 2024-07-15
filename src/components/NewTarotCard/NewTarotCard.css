@@ -1,0 +1,26 @@
+
+.card-pic {
+    transition: transform 0.3s;
+    transform-style: preserve-3d;
+    text-align: center;
+    width: 25%;
+}
+
+.card-pic img {
+    width: 100%;
+}
+
+.card-pic .flipbuttoncontainer img {
+    width: 10%;
+}
+
+.half-flipped {
+    transform: rotateY(90deg);
+}
+
+.flipbtn {
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    width: 10%
+}

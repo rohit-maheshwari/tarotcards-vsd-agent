@@ -1,9 +1,11 @@
 import { Component } from 'react';
 import './App.css';
 import Landing from './components/Landing/Landing';
+import About from './components/About/About'
 import Projects from './components/Projects/Projects';
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
 import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarotCards';
+import DrawTarotCards from './components/DrawTarotCards/DrawTarotCards';
 
 const env = require('./environment.json');
 // const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -20,7 +22,7 @@ type TarotCardType = {
   color: string
 }
 
-export type pages = "Landing" | "Projects" | "ProjectDescription" | "SelectingTarotCards" | "ReviewReorder" | "Export";
+export type pages = "Landing" | "About" | "Projects" | "ProjectDescription" | "DrawTarotCards" | "ReviewReorder" | "Export";
 
 type AppState = {
   loggedIn: boolean,
@@ -168,14 +170,17 @@ class App extends Component<Props, AppState> {
     if (this.state.page === "Landing") {
       return (<Landing pageChange={this.handlePageChange} updateUser={this.handleUpdateUser} loggedIn={this.state.loggedIn} user={this.state.user}></Landing>)
     }
+    else if (this.state.page === "About") {
+      return (<About pageChange={this.handlePageChange}></About>)
+    }
     else if (this.state.page === "Projects") {
       return (<Projects pageChange={this.handlePageChange}></Projects>);
     }
     else if (this.state.page === "ProjectDescription") {
       return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange} titleChange={this.handleTitleChange} descriptionChange={this.handleDescriptionChange}/>);
     }
-    else if (this.state.page === "SelectingTarotCards") {
-      return (<SelectingTarotCards selectedCards={this.state.selectedCards} title={this.state.title} description={this.state.description} pageChange={this.handlePageChange} handleCardSelect={this.handleCardSelect} handlePreselectSubmit={this.handlePreselectSubmit} user={this.state.user}/>);
+    else if (this.state.page === "DrawTarotCards") {
+      return (<DrawTarotCards />);
     }
     else {
       throw new Error("invalid page");
