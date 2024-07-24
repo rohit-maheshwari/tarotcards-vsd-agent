@@ -1,0 +1,89 @@
+.review-header {
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+
+.review-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 1.5% 1.5%;
+    gap: 3%;
+    padding: 0px 20px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    overflow-y: auto;
+    max-height: 575px;
+}
+
+.review-card {
+    display: flex;
+    flex-direction: row;
+    height: 500px;
+    background-color: white; /* Background color for the card */
+    padding: 10px; /* Padding inside the card */
+    border: 1px solid #ccc; /* Border around the card */
+    border-radius: 8px; /* Rounded corners for the card */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: shadow for the card */
+    box-sizing: border-box; 
+    margin-top: 20px;
+}
+
+.card-content {
+    display: flex;
+}
+ 
+.card-image {
+    border-radius: 8px; /* Rounded corners for the image */
+    width: 300px;
+    height: 450px;
+}
+
+.card-functions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    
+}
+
+.card-response {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Adjust spacing between label and textarea */
+    margin-left: 10px;
+}
+
+.card-response label {
+    font-weight: bold;
+}
+
+.review-card-textarea {
+    resize: none; /* Prevent resizing */
+    padding: 10px; /* Padding inside the textarea */
+    border: 1px solid #ccc; /* Border around the textarea */
+    border-radius: 4px; /* Rounded corners for the textarea */
+    
+}
+
+.review-response-box {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+}
+
+.review-back-button {
+    margin-top: 20px;
+    margin-left: 40px;
+    padding: 10px 20px;
+    background-color: #d3d3d3;
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+

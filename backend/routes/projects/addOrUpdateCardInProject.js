@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Card = require('../../models/ProjectCardSchema');
+const ProjectCard = require('../../models/ProjectCardSchema');
 
 router.put('/project/addOrUpdateCard', async (req, res) => {
   try {
     console.log("Handling /project/addOrUpdateCard");
     const { projectId, cardName, answers } = req.body;
-    const card = await Card.findOne({ projectId: projectId, cardName: cardName });
+    const card = await ProjectCard.findOne({ projectId: projectId, cardName: cardName });
     if (!card) { // POST
-      const newCard = new Card({
+      const newCard = new ProjectCard({
         projectId: projectId,
         cardName: cardName,
         createDate: Date.now(),
@@ -30,7 +30,7 @@ router.put('/project/addOrUpdateCard', async (req, res) => {
       const editedCard = {
         answers: answers
       };
-      const result = await Card.findOneAndUpdate({ projectId: projectId, cardName: cardName }, { $set: editedCard }, { new: true });
+      const result = await ProjectCard.findOneAndUpdate({ projectId: projectId, cardName: cardName }, { $set: editedCard }, { new: true });
       if (result) {
         res.json({
           message: "Card has been updated"
@@ -54,3 +54,23 @@ module.exports = router;
 
 
 
+
+
+        // const body = {
+        //     projectId: 1,
+        //     cardName: this.state.currentCard,
+        //     answers: this.state.response
+        // }
+        // try {
+        //     const response = await fetch("/api/project/addOrUpdateCard", {
+        //         body: JSON.stringify(body)
+        //     })
+        //     const data = await response.json()
+        //     if (response.status == 200) {
+        //         console.log(data.message)
+        //     } else {
+        //         console.error(response.status)
+        //     }
+        // } catch (error: any) {
+        //     console.error(error.message)
+        // }

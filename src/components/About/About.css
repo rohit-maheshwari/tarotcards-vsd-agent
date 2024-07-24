@@ -104,14 +104,6 @@
     margin-top: 50px;
 }
   
-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-  
 .aboutButton {
     background-color: #ccc;
     border: 2px solid #222;

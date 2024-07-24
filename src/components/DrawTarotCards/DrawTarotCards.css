@@ -14,10 +14,16 @@
 }
   
 .card-draw {
+    text-align: center;
     width: 25%;
+}
+
+.review-all-cards-button {
+    margin: 50px 0px;
 }
   
 .draw-new-card-button {
+    margin: 30px 0px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;

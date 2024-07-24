@@ -6,6 +6,7 @@ import Projects from './components/Projects/Projects';
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
 import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarotCards';
 import DrawTarotCards from './components/DrawTarotCards/DrawTarotCards';
+import ReviewCards from './components/DrawTarotCards/ReviewCards/ReviewCards';
 
 const env = require('./environment.json');
 // const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -22,7 +23,7 @@ type TarotCardType = {
   color: string
 }
 
-export type pages = "Landing" | "About" | "Projects" | "ProjectDescription" | "DrawTarotCards" | "ReviewReorder" | "Export";
+export type pages = "Landing" | "About" | "Projects" | "ProjectDescription" | "DrawTarotCards" | "ReviewCards" | "Reorder" | "Export";
 
 type AppState = {
   loggedIn: boolean,
@@ -180,7 +181,10 @@ class App extends Component<Props, AppState> {
       return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange} titleChange={this.handleTitleChange} descriptionChange={this.handleDescriptionChange}/>);
     }
     else if (this.state.page === "DrawTarotCards") {
-      return (<DrawTarotCards />);
+      return (<DrawTarotCards pageChange={this.handlePageChange}/>);
+    }
+    else if (this.state.page === "ReviewCards") {
+      return (<ReviewCards pageChange={this.handlePageChange}/>)
     }
     else {
       throw new Error("invalid page");

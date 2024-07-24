@@ -1,8 +1,13 @@
 import React, { useState, Component } from 'react';
+import { pages } from '../../App';
 import { tarotcards } from '../SelectingTarotCards/tarotcards';
 import './DrawTarotCards.css';
 import TarotCardComponent from '../NewTarotCard/NewTarotCard'
 import ProgressBar from '../NewProgressBar/ProgressBar';
+import drawCardLogo from "./drawCardLogo.svg";
+
+const lodash = require('lodash');
+
 
 type Card = {
   title: string;
@@ -12,7 +17,7 @@ type Card = {
 }
 
 type DrawTarotCardProps = {
-    
+    pageChange: (page: pages) => void,
 }
 
 type DrawTarotCardsState = {
@@ -31,16 +36,42 @@ class DrawTarotCards extends Component<DrawTarotCardProps, DrawTarotCardsState> 
             currentCard: cards[0],
             response: ''
         };
+
+        this.saveResponse = lodash.debounce(this.saveResponse.bind(this), 500)
     }
 
-    drawCard = () => {
+    saveResponse = async () => {
+        fetch('/api/project/addOrUpdateCard', {
+            method: "PUT",
+            body: JSON.stringify({
+                projectId: 1,
+                cardName: this.state.currentCard.title,
+                answers: this.state.response
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((response) => {
+            if (response.ok) {
+                return response.json()
+            }
+        }).then((data) => {
+            console.log(data.message);
+        }).catch((error) => {
+            console.log(error.message)
+        })
         
+        // console.log("response would be saved now")
+    }
+
+
+    drawCard = () => {
         const randomCard = cards[Math.floor(Math.random() * cards.length)];
         this.setState({currentCard: randomCard, response: ''})
     };
 
     handleResponseChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        this.setState({response: e.target.value})
+        this.setState({response: e.target.value}, () => this.saveResponse())
     };
 
     render() {
@@ -53,19 +84,12 @@ class DrawTarotCards extends Component<DrawTarotCardProps, DrawTarotCardsState> 
                 </header>
                 <div className='draw-card-row'>
                     <div className="card-draw">
-                        <button className='review-all-cards-button' onClick={() => console.log(this.state.currentCard.title)}>Review All Cards</button>
-                        <br />
+                        <button className='review-all-cards-button' onClick={() => this.props.pageChange("ReviewCards")}>Review All Cards</button>
+                        <img className="draw-card-logo" src={drawCardLogo} />
                         <button className='draw-new-card-button' onClick={this.drawCard}>Draw a new card</button>
                     </div>
                     {this.state.currentCard && (
                         <TarotCardComponent tarotcard={this.state.currentCard}/>
-                        // <div className="card">
-                        //     <h2>{this.state.currentCard.title}</h2>
-                            
-                        //     {this.state.currentCard.questions.map((question, index) => (
-                        //         <p key={index}>{question}</p>
-                        //     ))}
-                        // </div>
                     )}
                     <div className="response">
                         <h3>What is your response to the questions?</h3>
