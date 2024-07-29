@@ -7,73 +7,53 @@ import ProgressBar from '../../NewProgressBar/ProgressBar';
 import editbutton from './editbutton.svg'
 import deletebutton from './deletebutton.svg'
 
+type Card = {
+    title: string;
+    image: string;
+    questions: string[];
+    color: string
+}
+
 type ReviewCardsProps = {
-    pageChange: (page: pages) => void,
+    toggle: () => void,
+    setCard: (card: Card) => void;
+    finishedCardsWithResponse: any[];
+    deleteCard: (card: any, deleted: boolean) => void;
+    sortCards: () => any[],
 }
 
 type ReviewCardsState = {
-    cards: any[]
+
 }
 
 class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
     constructor(props: ReviewCardsProps) {
         super(props);
 
-        this.state = { cards: [] }
-    }
+        console.log()
 
-    componentDidMount(): void {
-        fetch('/api/project/getCards?projectId='+'1', {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-        })
-        .then((response) => {
-            if (response.ok) {
-                return response.json();
-            }
-        })
-        .then((data) => {
-            const usersTarotCards = data.cards;
-            const userTarotCardsNames = usersTarotCards.map((card: any) => card.cardName)
-            const matchingCardsWithResponse = tarotcards
-            .filter(card => userTarotCardsNames.includes(card.title))
-            .map(card => {
-                const matchingSelectedCard = usersTarotCards.find((selectedCard: any) => selectedCard.cardName === card.title);
-                return {
-                ...card,
-                response: matchingSelectedCard ? matchingSelectedCard.answers : null
-                };
-            });
-            console.log(matchingCardsWithResponse)
-            this.setState({cards: matchingCardsWithResponse })
-        })
-        .catch((error) => {
-            console.error(error)
-        })
+        this.state = {  }
     }
 
     render() {
-        console.log(this.state.cards)
+        console.log(this.props.finishedCardsWithResponse)
         return (
             <div className="review-body">
                 <h1 className="review-header">All the Tarot Cards of Tech</h1>
                 <div className="review-cards-container">
-                    {this.state.cards.map((card) => (
+                    {this.props.sortCards().map((card) => (
                         <div key={card.cardName} className="review-card">
                             <div className="card-content">
                                 <img className="card-image" src={card.image} alt="Card" />
                                 <div className="card-response">
                                     <div className='card-functions'>
                                         <label>Your response</label>
-                                        <img className='card-buttons' src={editbutton} />
-                                        <img className='card-buttons'  src={deletebutton} />
+                                        <img className='card-buttons' src={editbutton} onClick={() => this.props.setCard(card)}/>
+                                        <img className='card-buttons' src={deletebutton} onClick={() => this.props.deleteCard(card, false)}/>
                                     </div>
                                     <textarea
                                         className='review-card-textarea'
-                                        value={card.response}
+                                        value={card.response ? card.response : ''}
                                         readOnly={true}
                                         rows={28}
                                         cols={40}
@@ -83,7 +63,7 @@ class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
                         </div>
                     ))}
                 </div>
-                <button className="review-back-button" onClick={() => this.props.pageChange("DrawTarotCards")}>Back</button>
+                <button className="review-back-button" onClick={() => this.props.toggle()}>Back</button>
             </div>
         )
     }

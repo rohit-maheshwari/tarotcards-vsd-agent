@@ -23,7 +23,7 @@ type TarotCardType = {
   color: string
 }
 
-export type pages = "Landing" | "About" | "Projects" | "ProjectDescription" | "DrawTarotCards" | "ReviewCards" | "Reorder" | "Export";
+export type pages = "Landing" | "About" | "Projects" | "ProjectDescription" | "DrawTarotCards" | "Reorder" | "Export";
 
 type AppState = {
   loggedIn: boolean,
@@ -182,9 +182,6 @@ class App extends Component<Props, AppState> {
     }
     else if (this.state.page === "DrawTarotCards") {
       return (<DrawTarotCards pageChange={this.handlePageChange}/>);
-    }
-    else if (this.state.page === "ReviewCards") {
-      return (<ReviewCards pageChange={this.handlePageChange}/>)
     }
     else {
       throw new Error("invalid page");

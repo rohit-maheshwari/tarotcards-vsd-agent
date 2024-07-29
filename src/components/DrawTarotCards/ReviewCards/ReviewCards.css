@@ -1,3 +1,9 @@
+.review-body {
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+}
+
 .review-header {
     margin-left: 40px;
     margin-bottom: 20px;
@@ -9,9 +15,10 @@
     justify-content: center;
     margin: 1.5% 1.5%;
     gap: 3%;
-    padding: 0px 20px;
+    padding: 20px;
     border: 1px solid #999;
     border-radius: 5px;
+    background: white;
     overflow-y: auto;
     max-height: 575px;
 }
@@ -44,7 +51,10 @@
     display: flex;
     align-items: center;
     gap: 20px;
-    
+}
+
+.card-buttons {
+    cursor: pointer;
 }
 
 .card-response {

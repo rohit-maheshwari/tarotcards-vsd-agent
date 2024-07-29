@@ -7,6 +7,7 @@ router.put('/project/addOrUpdateCard', async (req, res) => {
     console.log("Handling /project/addOrUpdateCard");
     const { projectId, cardName, answers } = req.body;
     const card = await ProjectCard.findOne({ projectId: projectId, cardName: cardName });
+    console.log(card)
     if (!card) { // POST
       const newCard = new ProjectCard({
         projectId: projectId,

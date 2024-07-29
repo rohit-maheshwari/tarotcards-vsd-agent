@@ -25,6 +25,7 @@ const removeUserFromProjectRoute = require('./routes/projects/removeUserFromProj
 const addOrUpdateCardInProjectRoute = require('./routes/projects/addOrUpdateCardInProject.js')
 const removeCardFromProjectRoute = require('./routes/projects/removeCardFromProject.js')
 const getCardsForProjectRoute = require('./routes/projects/getCardsForProject.js')
+const getCardForProjectRoute = require('./routes/projects/getCardForProject.js')
 
 const addCardRoute = require('./routes/cards/addCard.js')
 const deleteCardRoute = require('./routes/cards/deleteCard.js')
@@ -65,6 +66,7 @@ app.use('/api', deleteCardRoute);
 app.use('/api', getCardRoute);
 app.use('/api', getAllCardsRoute);
 app.use('/api', getCardsForProjectRoute);
+app.use('/api', getCardForProjectRoute);
 
 // Connect to MongoDB
 
