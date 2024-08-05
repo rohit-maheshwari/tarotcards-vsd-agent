@@ -17,6 +17,7 @@ const createUserRoute = require('./routes/users/createUser.js');
 const updateUserRoute = require('./routes/users/updateUser.js');
 const deleteUserRoute = require('./routes/users/deleteUser.js');
 
+const getProjectRoute = require('./routes/projects/getProject.js')
 const createProjectRoute = require('./routes/projects/createProject.js');
 const updateProjectRoute = require('./routes/projects/updateProject.js');
 const deleteProjectRoute = require('./routes/projects/deleteProject.js');
@@ -54,6 +55,7 @@ app.use('/api', getUsersRoute);
 app.use('/api', createUserRoute);
 app.use('/api', updateUserRoute);
 app.use('/api', deleteUserRoute);
+app.use('/api', getProjectRoute)
 app.use('/api', createProjectRoute);
 app.use('/api', updateProjectRoute);
 app.use('/api', deleteProjectRoute);

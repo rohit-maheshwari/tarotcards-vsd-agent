@@ -7,7 +7,7 @@ const ProjectSchema = mongoose.Schema({
     projectCreateDate: {
         type: Date,
     },
-    projectName: {
+    projectSubfield: {
         type: String,
     },
     projectTitle: {

@@ -58,3 +58,12 @@
     font-size: 15px;
     resize: none;
 }
+
+.draw-page-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.draw-next-button {
+    align-self: flex-end;
+}

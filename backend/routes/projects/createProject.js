@@ -6,12 +6,12 @@ const PersonProject = require('../../models/PersonProjectSchema');
 router.post('/project/create', async (req, res) => {
     console.log('Handling /project/create')
     try {
-        projectId = await Project.countDocuments()+1
-        const { personId, projectName, projectTitle, projectDescription } = req.body;
+        const projectId = await Project.countDocuments()+1
+        const { personId, projectSubfield, projectTitle, projectDescription } = req.body;
         const newProject = new Project({
             projectId: projectId,
             projectCreateDate: Date.now(),
-            projectName: projectName,
+            projectSubfield: projectSubfield,
             projectTitle: projectTitle,
             projectDescription: projectDescription,
             subfieldId: 1
@@ -24,7 +24,8 @@ router.post('/project/create', async (req, res) => {
         const responsePersonProject = await newPersonProject.save()
         if (responseProject && responsePersonProject) {
             res.status(200).json({
-                message: `Project successfully saved`
+                message: `Project successfully saved`,
+                projectId: projectId
             })
         } else {
             res.status(400).json({

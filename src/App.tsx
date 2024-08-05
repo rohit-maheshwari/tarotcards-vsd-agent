@@ -7,6 +7,7 @@ import ProjectDescription from './components/ProjectDescription/ProjectDescripti
 import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarotCards';
 import DrawTarotCards from './components/DrawTarotCards/DrawTarotCards';
 import ReviewCards from './components/DrawTarotCards/ReviewCards/ReviewCards';
+import ReorderCards from './components/ReorderCards/ReorderCards'
 
 const env = require('./environment.json');
 // const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -140,17 +141,7 @@ class App extends Component<Props, AppState> {
     }
   }
 
-  handleFinishedChange = (finished: boolean) => {
-    this.setState({finished: !this.state.finished});
-  }
-
-  handleTitleChange = (title: string) => {
-    this.setState({title: title});
-  }
-
-  handleDescriptionChange = (description: string) => {
-    this.setState({description: description});
-  }
+  
 
   handlePageChange = (page: pages): void => {
     this.setState({page: page});
@@ -169,19 +160,10 @@ class App extends Component<Props, AppState> {
 
   render = (): JSX.Element => {
     if (this.state.page === "Landing") {
-      return (<Landing pageChange={this.handlePageChange} updateUser={this.handleUpdateUser} loggedIn={this.state.loggedIn} user={this.state.user}></Landing>)
+      return (<Landing pageChange={this.handlePageChange} updateUser={this.handleUpdateUser} loggedIn={this.state.loggedIn} user={this.state.user} />)
     }
     else if (this.state.page === "About") {
       return (<About pageChange={this.handlePageChange}></About>)
-    }
-    else if (this.state.page === "Projects") {
-      return (<Projects pageChange={this.handlePageChange}></Projects>);
-    }
-    else if (this.state.page === "ProjectDescription") {
-      return (<ProjectDescription pageChange={this.handlePageChange} finishedChange={this.handleFinishedChange} titleChange={this.handleTitleChange} descriptionChange={this.handleDescriptionChange}/>);
-    }
-    else if (this.state.page === "DrawTarotCards") {
-      return (<DrawTarotCards pageChange={this.handlePageChange}/>);
     }
     else {
       throw new Error("invalid page");

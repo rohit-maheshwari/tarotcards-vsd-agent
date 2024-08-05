@@ -5,10 +5,10 @@ const Project = require('../../models/ProjectSchema');
 router.put('/project/update', async (req, res) => {
     console.log('Handling /project/update')
     try {
-        const { projectId, projectName, projectTitle, projectDescription } = req.body;
+        const { projectId, projectSubfield, projectTitle, projectDescription } = req.body;
         const project = await Project.findOne({ projectId: projectId });
         const editedProject = {
-            projectName: projectName ? projectName : project.projectName,
+            projectSubfield: projectSubfield ? projectSubfield : project.projectSubfield,
             projectTitle: projectTitle ? projectTitle : project.projectTitle,
             projectDescription: projectDescription ? projectDescription : project.projectDescription,
         };

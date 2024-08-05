@@ -2,26 +2,27 @@ import React, { Component } from "react";
 import { pages } from '../../App';
 import Projects from "../Projects/Projects";
 import './Landing.css'
+import ProjectDescription from "../ProjectDescription/ProjectDescription";
 const env = require('../../environment.json');
 
-type Props = {
+type LandingProps = {
     pageChange: (page: pages) => void,
     updateUser: (loggedIn: boolean, user: any) => void,
     loggedIn: boolean,
-    user: any
+    user: any,
 }
 
 type LandingState = {
-
+  nextPage: boolean
 }
 
-class Landing extends Component<Props, LandingState> {
+class Landing extends Component<LandingProps, LandingState> {
   auth: gapi.auth2.GoogleAuth;
   GOOGLE_CLIENT_ID: string;
-  constructor(props: Props) {
+  constructor(props: LandingProps) {
     super(props);
 
-    this.state = { };
+    this.state = { nextPage: false };
 
     this.auth = {} as gapi.auth2.GoogleAuth;
     this.GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -115,6 +116,7 @@ class Landing extends Component<Props, LandingState> {
   render = (): JSX.Element => {
     return (
       !this.props.loggedIn ? 
+      !this.state.nextPage ?
         <div className="landingBody">
           <div className="container">
           <div className="menuButton" onClick={this.toggleMenu}>&#9776;</div>
@@ -150,12 +152,14 @@ class Landing extends Component<Props, LandingState> {
             </div>
             <div className="footer">
               <button className="googleButton" onClick={this.handleLogin}>Sign in with Google</button>
-              <button className="guestButton" onClick={() => this.props.pageChange("ProjectDescription")}>Guest</button>
+              <button className="guestButton" onClick={() => this.setState({nextPage: true})}>Guest</button>
             </div>
           </div>
         </div>
+      :
+        <ProjectDescription returnToPrevPage={() => this.setState({nextPage: false})} />
       : 
-        <Projects pageChange={this.props.pageChange}></Projects>
+        <Projects />
     );
   };
 }

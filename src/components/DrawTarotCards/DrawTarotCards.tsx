@@ -6,6 +6,7 @@ import TarotCardComponent from '../NewTarotCard/NewTarotCard'
 import ProgressBar from '../NewProgressBar/ProgressBar';
 import drawCardLogo from "./drawCardLogo.svg";
 import ReviewCards from './ReviewCards/ReviewCards';
+import ReorderCards from '../ReorderCards/ReorderCards';
 
 const lodash = require('lodash');
 
@@ -17,7 +18,7 @@ type Card = {
 }
 
 type DrawTarotCardsProps = {
-    pageChange: (page: pages) => void,
+    returnToPrevPage: () => void;
 }
 
 type DrawTarotCardsState = {
@@ -26,7 +27,8 @@ type DrawTarotCardsState = {
     response: string,
     showReviewCards: boolean,
     finishedCardsWithResponse: any[],
-    unfinishedCards: Card[]
+    unfinishedCards: Card[],
+    nextPage: boolean
 }
 
 const cards: Card[] = tarotcards;
@@ -42,7 +44,8 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
             response: '',
             showReviewCards: false,
             finishedCardsWithResponse: [],
-            unfinishedCards: cards
+            unfinishedCards: cards,
+            nextPage: false
         };
 
         this.saveResponse = lodash.debounce(this.saveResponse.bind(this), 500)
@@ -192,7 +195,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
     setCard = (card: any) => {
         console.log('setCard was called')
         console.log(card)
-        this.setState({currentCard: card, response: card.response, showReviewCards: false});
+        this.setState({currentCard: card, response: card.response, showReviewCards: false, nextPage: false});
     }
 
     deleteCard = (card: any, calledFromSaveResponse: boolean) => {
@@ -241,6 +244,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
         this.state.showReviewCards ? 
             <ReviewCards toggle={this.toggle} setCard={this.setCard} finishedCardsWithResponse={this.state.finishedCardsWithResponse} deleteCard={this.deleteCard} sortCards={this.sortCards}/>
         :
+        !this.state.nextPage ?
             <div className="draw-tarot-cards">
                 <ProgressBar step={2}/>
                 <header className='header-brainstorm'>
@@ -268,7 +272,13 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
                         />
                     </div>
                 </div>
+                <div className="draw-page-buttons">
+                    <button className='draw-back-button' onClick={() => this.props.returnToPrevPage()}>Back</button>
+                    <button className='draw-next-button' onClick={() => this.setState({nextPage: true})}>Next</button>
+                </div>
             </div>
+        :
+            <ReorderCards setCard={this.setCard} returnToPrevPage={() => this.setState({nextPage: false})}/>
           );
     }
 

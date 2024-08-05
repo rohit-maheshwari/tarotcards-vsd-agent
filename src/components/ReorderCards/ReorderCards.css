@@ -1,0 +1,92 @@
+.reorder-body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+  
+.reorder-body .title {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+  
+.reorder-body .description {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.reorder-body .reordering-window {
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+    gap: 3%;
+    padding: 20px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    background: white;
+    overflow-y: auto;
+    max-height: 391px;
+}
+
+.reorder-body .reorder-card {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 50px;
+}
+
+
+.reorder-body .reorder-card-content {
+    display: flex;
+    list-style: none;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fcfcfc;
+    position: relative;
+    width: 100%;
+}
+
+.reorder-body .reorder-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 50px;
+}
+  
+.reorder-body .reorder-buttons .reorder-button {
+    cursor: pointer;
+}
+
+.reorder-body .reorder-card-content img {
+    width: 10%;
+}
+
+.reorder-card-text {
+    margin-left: 30px;
+}
+
+.reorder-card-edit-button {
+    margin: auto 50px auto auto;
+    border: 1px solid #999;
+    background-color: #bbb;
+}
+
+.reorder-takeaways {
+    text-align: center;
+}
+
+.reorder-takeaways textarea {
+    resize: none;
+    width: 80%;
+    font-size: 18px;
+}
+
+.reorder-page-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reorder-next-button {
+    align-self: flex-end;
+}

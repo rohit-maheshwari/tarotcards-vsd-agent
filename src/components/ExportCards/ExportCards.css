@@ -1,0 +1,37 @@
+.export-cards-body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.export-cards-header {
+    text-align: center;
+}
+
+.export-cards-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.export-cards-pdf-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.export-cards-pdf-download {
+    border-radius: 20px;
+    background-color: #6200EA;
+    color: white;
+    text-decoration: none;
+    padding: 20px;
+    margin-top: 20px; /* Adjust the spacing as needed */
+}
+
+.export-cards-pdf-download:hover {
+    border-radius: 20px;
+    background-color: #bf92ff;
+    color: rgb(69, 69, 69);
+    text-decoration: none;
+    padding: 20px;
+    margin-top: 20px; /* Adjust the spacing as needed */
+}

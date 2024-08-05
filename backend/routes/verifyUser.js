@@ -21,7 +21,6 @@ async function verify(token) {
 }
 
 router.get("/verify", async (req, res) => {
-    console.log(req);
     const { idToken } = req.query;
     console.log("Handling GET request for /verify");
     const userInfo = await verify(idToken);

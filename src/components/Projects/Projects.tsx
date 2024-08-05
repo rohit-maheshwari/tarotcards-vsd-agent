@@ -1,29 +1,33 @@
 import React, { Component } from "react";
 import { pages } from '../../App';
+import ProjectDescription from "../ProjectDescription/ProjectDescription";
 
 type Props = {
-    pageChange: (page: pages) => void,
+  
 }
 
 type ProjectsState = {
-
+  nextPage: boolean
 }
 
 class Projects extends Component<Props, ProjectsState> {
     constructor(props: Props) {
       super(props);
   
-      this.state = { };
+      this.state = { nextPage: false };
     }
   
   
 
     render = (): JSX.Element => {
       return (
-        <>
-        <h3>Projects Page</h3>
-        <button onClick={() => this.props.pageChange("ProjectDescription")}>Next</button>
-        </>
+        !this.state.nextPage ?
+          <>
+            <h3>Projects Page</h3>
+            <button onClick={() => this.setState({nextPage: true})}>Next</button>
+          </>
+        :
+          <ProjectDescription returnToPrevPage={() => this.setState({nextPage: false})}/>
       );
     };
 }
