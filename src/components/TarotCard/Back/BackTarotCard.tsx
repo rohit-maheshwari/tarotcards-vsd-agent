@@ -5,7 +5,8 @@ import "./BackTarotCard.css";
 
 type TarotCardType = {
     title: string,
-    image: string,
+    frontimage: string,
+    backimage: string,
     questions: string[],
     color: string
 }

@@ -14,7 +14,8 @@ type pages = "ProjectDescription" | "SelectingTarotCards";
 
 type TarotCardType = {
   title: string,
-  image: string,
+  frontimage: string,
+  backimage: string,
   questions: string[],
   color: string
 }

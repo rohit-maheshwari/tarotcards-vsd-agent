@@ -3,7 +3,8 @@ import "./FrontTarotCard.css";
 
 type TarotCardType = {
     title: string,
-    image: string,
+    frontimage: string,
+    backimage: string,
     questions: string[],
     color: string
 }
@@ -23,7 +24,7 @@ export class FrontTarotCardComponent extends Component <TarotCardProps, TarotCar
 
     render = (): JSX.Element => {
         return (
-            <img className="card-front" src={this.props.tarotcard.image} alt={this.props.tarotcard.title} />
+            <img className="card-front" src={this.props.tarotcard.frontimage} alt={this.props.tarotcard.title} />
         );
     };
 };

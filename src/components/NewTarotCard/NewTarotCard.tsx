@@ -4,7 +4,8 @@ import flip from "./flipbutton.svg";
 
 type Card = {
     title: string,
-    image: string,
+    frontimage: string,
+    backimage: string,
     questions: string[],
     color: string
 }
@@ -29,20 +30,21 @@ export default class TarotCardComponent extends Component <TarotCardProps, Tarot
         this.setState({ isFlipping: true });
 
         setTimeout(() => {
-            this.setState({ isFlipping: false });
+            this.setState({ isFlipping: false, selected: !this.state.selected });
         }, 150);
     }
 
     render = (): JSX.Element => {
+        console.log(this.state.selected)
         return (
             <div className={`card-pic ${this.state.isFlipping ? 'half-flipped' : ''}`}>
                 <div className="flipbuttoncontainer">
                     <img className={`flipbtn ${this.state.isFlipping ? 'half-flipped' : ''}`} src={flip} onClick={this.flipCard} />
                 </div>
                 {!this.state.selected ?
-                    <img src={this.props.tarotcard.image} />
+                    <img src={this.props.tarotcard.frontimage} />
                 :
-                    <img src={this.props.tarotcard.image} />
+                    <img src={this.props.tarotcard.backimage} />
                 }
             </div>
         );

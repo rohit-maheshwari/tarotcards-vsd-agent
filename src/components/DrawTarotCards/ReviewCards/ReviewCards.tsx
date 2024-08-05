@@ -9,7 +9,8 @@ import deletebutton from './deletebutton.svg'
 
 type Card = {
     title: string;
-    image: string;
+    frontimage: string;
+    backimage: string;
     questions: string[];
     color: string
 }
@@ -42,7 +43,7 @@ class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
                     {this.props.sortCards().map((card) => (
                         <div key={card.cardName} className="review-card">
                             <div className="card-content">
-                                <img className="card-image" src={card.image} alt="Card" />
+                                <img className="card-image" src={card.frontimage} alt="Card" />
                                 <div className="card-response">
                                     <div className='card-functions'>
                                         <label>Your response</label>

@@ -1,7 +1,8 @@
 export const tarotcards = [
     {
         title: "THE SCANDAL",
-        image: require("../../images/FrontTarotCards/Scandal.png"),
+        frontimage: require("../../images/FrontTarotCards/Scandal.png"),
+        backimage: require("../../images/BackTarotCards/Scandal.png"),
         questions: [
             "What's the worst headline about your product you can imagine?",
             "What about your business model would concern users most?",
@@ -12,7 +13,8 @@ export const tarotcards = [
     },
     {
         title: "THE SMASH HIT",
-        image: require("../../images/FrontTarotCards/SmashHit.png"),
+        frontimage: require("../../images/FrontTarotCards/SmashHit.png"),
+        backimage: require("../../images/BackTarotCards/SmashHit.png"),
         questions: [
             "What happens when 100 million people use your product?",
             "What would mass scale usage of your product reveal or cause?",
@@ -23,7 +25,8 @@ export const tarotcards = [
     },
     {
         title: "THE RADIO STAR",
-        image: require("../../images/FrontTarotCards/RadioStar.png"),
+        frontimage: require("../../images/FrontTarotCards/RadioStar.png"),
+        backimage: require("../../images/BackTarotCards/RadioStar.png"),
         questions: [
             "Who or what disappears if your product is successful?",
             "Who loses their job?",
@@ -34,7 +37,8 @@ export const tarotcards = [
     },
     {
         title: "MOTHER NATURE",
-        image: require("../../images/FrontTarotCards/MotherNature.png"),
+        frontimage: require("../../images/FrontTarotCards/MotherNature.png"),
+        backimage: require("../../images/BackTarotCards/MotherNature.png"),
         questions: [
             "If the environment was your client, how would your product change?",
             "What feedback would the environment give about your product?",
@@ -44,7 +48,8 @@ export const tarotcards = [
     },
     {
         title: "THE SIREN",
-        image: require("../../images/FrontTarotCards/Siren.png"),
+        frontimage: require("../../images/FrontTarotCards/Siren.png"),
+        backimage: require("../../images/BackTarotCards/Siren.png"),
         questions: [
             "What would using your product 'too much' look like?",
             "How does your product encourage users to engage, and how does it make it easy to disconnect?",
@@ -55,7 +60,8 @@ export const tarotcards = [
     },
     {
         title: "THE BFFs",
-        image: require("../../images/FrontTarotCards/BFFs.png"),
+        frontimage: require("../../images/FrontTarotCards/BFFs.png"),
+        backimage: require("../../images/BackTarotCards/BFFs.png"),
         questions: [
             "If two friends use your product, how could it enhance or detract from their relationship?",
             "How does your product change or create new ways for people to interact?",
@@ -65,7 +71,8 @@ export const tarotcards = [
     },
     {
         title: "THE SUPERFAN",
-        image: require("../../images/FrontTarotCards/Superfan.png"),
+        frontimage: require("../../images/FrontTarotCards/Superfan.png"),
+        backimage: require("../../images/BackTarotCards/Superfan.png"),
         questions: [
             "How would a community of your most passionate users behave?",
             "What 'rules of engagement' does your product rely on, and how might these be subverted?",
@@ -76,7 +83,8 @@ export const tarotcards = [
     },
     {
         title: "THE BIG BAD WOLF",
-        image: require("../../images/FrontTarotCards/BigBadWolf.png"),
+        frontimage: require("../../images/FrontTarotCards/BigBadWolf.png"),
+        backimage: require("../../images/BackTarotCards/BigBadWolf.png"),
         questions: [
             "What could a bad actor do with your product?",
             "What would predatory and exploitative behavior look like within your product?",
@@ -87,7 +95,8 @@ export const tarotcards = [
     },
     {
         title: "THE FORGOTTEN",
-        image: require("../../images/FrontTarotCards/Forgotten.png"),
+        frontimage: require("../../images/FrontTarotCards/Forgotten.png"),
+        backimage: require("../../images/BackTarotCards/Forgotten.png"),
         questions: [
             "When you picture your user base, who is excluded? If they used your product, what would their experience be like?",
             "Whose perspective is missing from product development?",
@@ -97,7 +106,8 @@ export const tarotcards = [
     },
     {
         title: "THE SERVICE DOG",
-        image: require("../../images/FrontTarotCards/ServiceDog.png"),
+        frontimage: require("../../images/FrontTarotCards/ServiceDog.png"),
+        backimage: require("../../images/BackTarotCards/ServiceDog.png"),
         questions: [
             "If your product was entirely dedicated to empowering the lives of an underserved population, what kind of impact could you make?",
             "Who could your product most directly benefit outside of your targeted users?",
@@ -107,7 +117,8 @@ export const tarotcards = [
     },
     {
         title: "THE CATALYST",
-        image: require("../../images/FrontTarotCards/Catalyst.png"),
+        frontimage: require("../../images/FrontTarotCards/Catalyst.png"),
+        backimage: require("../../images/BackTarotCards/Catalyst.png"),
         questions: [
             "How might cultural habits change how your product is used? And how might your product change cultural habits?",
             "What context would an alien from outer space need to use or understand your product?",
@@ -117,7 +128,8 @@ export const tarotcards = [
     },
     {
         title: "THE BACKSTABBER",
-        image: require("../../images/FrontTarotCards/Backstabber.png"),
+        frontimage: require("../../images/FrontTarotCards/Backstabber.png"),
+        backimage: require("../../images/BackTarotCards/Backstabber.png"),
         questions: [
             "What could cause people to lose trust in your product?",
             "What could make people feel unsafe or exposed?",

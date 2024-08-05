@@ -6,7 +6,8 @@ import flip from "./flipbutton.svg";
 
 type TarotCardType = {
     title: string,
-    image: string,
+    frontimage: string,
+    backimage: string,
     questions: string[],
     color: string
 }
