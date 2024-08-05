@@ -22,7 +22,7 @@ type DrawTarotCardsProps = {
 }
 
 type DrawTarotCardsState = {
-    currentCard: Card,
+    currentCard: Card | null,
     finishedCards: any[],
     response: string,
     showReviewCards: boolean,
@@ -39,7 +39,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
         super(props);
 
         this.state = {
-            currentCard: cards[1],
+            currentCard: null,
             finishedCards: [],
             response: '',
             showReviewCards: false,
@@ -85,7 +85,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
             this.setState({finishedCards: data.cards, finishedCardsWithResponse: matchingCardsWithResponse, unfinishedCards: unfinishedCards, currentCard: unfinishedRandomCard})
         })
         .then(() => {
-            this.handleCardUpdate()
+            
         })
         .catch((error) => {
             console.error(error)
@@ -115,39 +115,30 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
         this.setFinishedCardsFromDB();
     }
 
-    // componentDidUpdate(prevProps: DrawTarotCardsProps, prevState: DrawTarotCardsState): void {
-    //     console.log('component updated')
-    //     console.log(prevState.currentCard);
-    //     console.log(this.state.currentCard);
-    //     if (prevState.currentCard != this.state.currentCard) {
-    //         this.handleCardUpdate()
-    //     }
+    // handleCardUpdate = () => {
+    //     fetch('/api/project/getCard?projectId='+'1&cardName='+this.state.currentCard?.title, {
+    //         method: "GET",
+    //     }).then((response) => {
+    //         if (response.ok) {
+    //             return response.json()
+    //         }
+    //     }).then((data) => {
+    //         if (data.card != null) {
+    //             this.setState({response: data.card.answers})
+    //         } else {
+    //             this.setState({response: ''});
+    //         }
+    //     }).catch((error) => {
+    //         console.log(error.message)
+    //     })
     // }
-
-    handleCardUpdate = () => {
-        fetch('/api/project/getCard?projectId='+'1&cardName='+this.state.currentCard.title, {
-            method: "GET",
-        }).then((response) => {
-            if (response.ok) {
-                return response.json()
-            }
-        }).then((data) => {
-            if (data.card != null) {
-                this.setState({response: data.card.answers})
-            } else {
-                this.setState({response: ''});
-            }
-        }).catch((error) => {
-            console.log(error.message)
-        })
-    }
 
     saveResponse = async () => {
         fetch('/api/project/addOrUpdateCard', {
             method: "PUT",
             body: JSON.stringify({
                 projectId: 1,
-                cardName: this.state.currentCard.title,
+                cardName: this.state.currentCard?.title,
                 answers: this.state.response
             }),
             headers: {
@@ -159,9 +150,9 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
             }
         }).then((data) => {
             console.log(data.message);
-            if (this.state.finishedCardsWithResponse.map(card => card.title).includes(this.state.currentCard.title)) {
+            if (this.state.finishedCardsWithResponse.map(card => card.title).includes(this.state.currentCard?.title)) {
                 let newFinishedCardsWithResponse = this.state.finishedCardsWithResponse.map(card => 
-                    (card.title == this.state.currentCard.title && this.state.response != '')
+                    (card.title == this.state.currentCard?.title && this.state.response != '')
                     ? {...card, response: this.state.response}
                     : card
                 )
@@ -172,7 +163,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
                 this.setState({finishedCardsWithResponse: newFinishedCardsWithResponse});
             } else {
                 const newFinishedCardsWithResponse = [...this.state.finishedCardsWithResponse, {...this.state.currentCard, response: this.state.response}]
-                const newUnfinishedCards = this.state.unfinishedCards.filter(card => card.title !== this.state.currentCard.title);
+                const newUnfinishedCards = this.state.unfinishedCards.filter(card => card.title !== this.state.currentCard?.title);
                 this.setState({finishedCardsWithResponse: newFinishedCardsWithResponse, unfinishedCards: newUnfinishedCards});
             }
             
