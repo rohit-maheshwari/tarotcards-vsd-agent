@@ -9,12 +9,11 @@ router.post('/user/create', async (req, res) => {
         const person = await Person.findOne({ emailAddress: emailAddress });
         if (!person) { // POST Create a new person
             const newPerson = new Person({
-                personId: await Person.countDocuments()+1,
                 firstName: firstName,
                 lastName: lastName,
                 emailAddress: emailAddress,
-                classStanding: classStanding,
-                graduationDate: graduationDate
+                // classStanding: classStanding,
+                // graduationDate: graduationDate
             });
             await newPerson.save();
             console.log('Person saved successfully');
@@ -29,7 +28,7 @@ router.post('/user/create', async (req, res) => {
     } catch (err) {
         console.error('error: ' + err);
         res.status(400).json({
-        message: "error"
+            message: "error"
         })
     }
 });

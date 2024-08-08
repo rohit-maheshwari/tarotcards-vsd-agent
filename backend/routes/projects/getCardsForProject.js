@@ -6,12 +6,16 @@ router.get('/project/getCards', async (req, res) => {
   try {
     console.log("Handling /project/getCards");
     const { projectId } = req.query;
-    const cards = await ProjectCard.find({ projectId: projectId });
-    if (cards) { // GET
-      console.log(cards)
-      res.send({cards: cards})
-    } else { // PUT
-      throw new Error("Project does not exist");
+    if (projectId == null) {
+      res.status(200).send({cards: []})
+    } else {
+      const cards = await ProjectCard.find({ projectId: projectId });
+      if (cards) { // GET
+        console.log(cards)
+        res.send({cards: cards})
+      } else { // PUT
+        throw new Error("Project does not exist");
+      }
     }
   } catch (err) {
       console.error('error: ' + err);
@@ -19,6 +23,7 @@ router.get('/project/getCards', async (req, res) => {
         message: "error"
       }
   )}
+  
 });
 
 

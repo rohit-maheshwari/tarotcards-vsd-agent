@@ -18,6 +18,9 @@ type Card = {
 type ReorderCardsProps = {
     setCard: (card: any) => void;
     returnToPrevPage: () => void;
+    returnToHomePage: () => void;
+    user: any;
+    projectId: number | null;
 }
 
 type ReorderCardsState = {
@@ -38,10 +41,10 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
     }
 
     componentDidMount(): void {
-        fetch('/api/project/getCards?projectId='+'1', {
+        fetch('/api/project/getCards?projectId='+this.props.projectId, {
             method: 'GET',
             headers: {
-                Accept: 'application/json',
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         })
@@ -111,7 +114,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
                             <p className='reorder-button' onClick={() => this.moveCardDown(card)}>&darr;</p>
                         </div>
                         <div className='reorder-card-content'>
-                            <img src={card.image} />
+                            <img src={card.frontimage} />
                             <div className="reorder-card-text">
                                 <h3 className='reorder-card-title'>{card.title}</h3>
                                 <p className='reorder-card-response'>{card.response}</p>
@@ -131,7 +134,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
                 </div>
             </div>
             :
-            <ExportCards finalCards={this.state.cardsWithResponse} returnToPrevPage={() => this.setState({nextPage: false})} />
+            <ExportCards finalCards={this.state.cardsWithResponse} returnToPrevPage={() => this.setState({nextPage: false})} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.props.projectId}/>
         )
     }
 }

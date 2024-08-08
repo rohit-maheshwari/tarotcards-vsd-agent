@@ -2,8 +2,8 @@ const express = require('express');
 const Person = require('../../models/PersonSchema');
 const router = express.Router();
 
-router.get("/user/get", async (req, res) => {
-  console.log("Handling GET request for /user/get");
+router.get("/user/getAll", async (req, res) => {
+  console.log("Handling GET request for /user/getAll");
   const cursor = Person.find({})
   let people = [];
   for await (const doc of cursor) {

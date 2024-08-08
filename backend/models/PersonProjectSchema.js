@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const PersonProjectSchema = mongoose.Schema({
-    personId: {
+    personEmailAddress: {
         type: String,
     },
     projectId: {

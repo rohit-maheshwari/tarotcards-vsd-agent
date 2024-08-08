@@ -5,8 +5,8 @@ const PersonProject = require('../../models/PersonProjectSchema');
 router.delete('/project/removeUser', async (req, res) => {
     console.log('Handling /project/removeUser')
     try {
-        const { personId, projectId } = req.body;
-        const personproject = await PersonProject.deleteOne({personId: personId, projectId: projectId});
+        const { personEmailAddress, projectId } = req.body;
+        const personproject = await PersonProject.deleteOne({personEmailAddress: personEmailAddress, projectId: projectId});
         if (personproject.deletedCount === 1) {
             console.log("Successfully removed person from project.");
             res.status(200).json({

@@ -5,11 +5,11 @@ const PersonProject = require('../../models/PersonProjectSchema');
 router.post('/project/addUser', async (req, res) => {
     console.log('Handling /project/addUser')
     try {
-        const { personId, projectId } = req.body;
-        const personproject = await PersonProject.findOne({personId: personId, projectId: projectId});
+        const { personEmailAddress, projectId } = req.body;
+        const personproject = await PersonProject.findOne({personEmailAddress: personEmailAddress, projectId: projectId});
         if (!personproject) {
             const newPersonProject = new PersonProject({
-                personId: personId,
+                personEmailAddress: personEmailAddress,
                 projectId: projectId
             })
             const responsePersonProject = await newPersonProject.save()

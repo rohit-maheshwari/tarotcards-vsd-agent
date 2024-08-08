@@ -20,6 +20,9 @@ type Card = {
 
 type DrawTarotCardsProps = {
     returnToPrevPage: () => void;
+    returnToHomePage: () => void;
+    user: any;
+    projectId: number | null;
 }
 
 type DrawTarotCardsState = {
@@ -53,7 +56,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
     }
 
     setFinishedCardsFromDB = async () => {
-        fetch('/api/project/getCards?projectId='+'1', {
+        fetch('/api/project/getCards?projectId='+this.props.projectId, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -270,7 +273,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
                 </div>
             </div>
         :
-            <ReorderCards setCard={this.setCard} returnToPrevPage={() => this.setState({nextPage: false})}/>
+            <ReorderCards setCard={this.setCard} returnToPrevPage={() => this.setState({nextPage: false})} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.props.projectId} />
           );
     }
 

@@ -5,6 +5,9 @@ import DrawTarotCards from "../DrawTarotCards/DrawTarotCards";
 
 type ProjectDescriptionProps = {
   returnToPrevPage: () => void;
+  returnToHomePage: () => void;
+  user: any;
+  projectId: number | null;
 }
 
 type ProjectDescriptionState = {
@@ -19,11 +22,35 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
       super(props);
   
       this.state = {
-        subfield: 'Amazing Subfield',
-        title: 'Amazing Project 1.0',
-        description: 'Amazing Project Description',
+        subfield: '',
+        title: '',
+        description: '',
         nextPage: false,
       };
+    }
+    
+    componentDidMount(): void {
+        if (this.props.projectId != null) {
+          fetch('/api/project/get?projectId='+this.props.projectId, {
+            method: "GET",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((response) => {
+            if (response.ok) {
+              return response.json()
+            }
+          })
+          .then((data) => {
+            console.log(data)
+            this.setState({subfield: data.subfield, title: data.title, description: data.description})
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        }
     }
 
     handleSubfieldChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -54,7 +81,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
         !this.state.nextPage ? 
           <div className="project">
             <ProgressBar step={1}/>
-            <h3 className="project-description-title">Enter title and description of your project! This will help us generate your export later!</h3>
+            <h2 className="project-description-title">Enter title and description of your project! This will help us generate your export later!</h2>
             <div className="project-description-content">
               <p>Subfield</p>
               <textarea 
@@ -87,7 +114,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
             </div>
           </div>
         :
-        <DrawTarotCards returnToPrevPage={this.togglePage}/>
+        <DrawTarotCards returnToPrevPage={this.togglePage} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.props.projectId} />
       );
     };
 }

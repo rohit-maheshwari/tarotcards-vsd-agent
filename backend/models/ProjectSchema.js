@@ -16,6 +16,9 @@ const ProjectSchema = mongoose.Schema({
     projectDescription: {
         type: String,
     },
+    projectTakeaways: {
+        type: String,
+    },
     subfieldId: {
         type: String,
     }

@@ -12,12 +12,14 @@ const homeRoute = require('./routes/home.js');
 // const getCardsRoute = require('./routes/cards/oldRoutes/getCards.js');
 // const deleteCardRoute = require('./routes/cards/oldRoutes/deleteCard.js');
 
+const getUserRoute = require('./routes/users/getUser.js');
 const getUsersRoute = require('./routes/users/getUsers.js');
 const createUserRoute = require('./routes/users/createUser.js');
 const updateUserRoute = require('./routes/users/updateUser.js');
 const deleteUserRoute = require('./routes/users/deleteUser.js');
 
-const getProjectRoute = require('./routes/projects/getProject.js')
+const getProjectRoute = require('./routes/projects/getProject.js');
+const getProjectsOfUserRoute = require('./routes/projects/getProjectsOfUser.js');
 const createProjectRoute = require('./routes/projects/createProject.js');
 const updateProjectRoute = require('./routes/projects/updateProject.js');
 const deleteProjectRoute = require('./routes/projects/deleteProject.js');
@@ -51,11 +53,13 @@ app.use('/api', homeRoute);
 app.use('/api', verifyUserRoute);
 // app.use('/api', getCardsRoute);
 // app.use('/api', deleteCardRoute);
+app.use('/api', getUserRoute);
 app.use('/api', getUsersRoute);
 app.use('/api', createUserRoute);
 app.use('/api', updateUserRoute);
 app.use('/api', deleteUserRoute);
-app.use('/api', getProjectRoute)
+app.use('/api', getProjectRoute);
+app.use('/api', getProjectsOfUserRoute);
 app.use('/api', createProjectRoute);
 app.use('/api', updateProjectRoute);
 app.use('/api', deleteProjectRoute);

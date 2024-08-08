@@ -30,10 +30,6 @@ type AppState = {
   loggedIn: boolean,
   user: any,
   page: pages,
-  title: string,
-  description: string,
-  selectedCards: TarotCardType[],
-  finished: boolean // denotes if description is finished or not
 }
 
 class App extends Component<Props, AppState> {
@@ -44,7 +40,7 @@ class App extends Component<Props, AppState> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {loggedIn: false, user: null, page: "Landing", title: "", description: "", selectedCards: [], finished: false}
+    this.state = {loggedIn: false, user: null, page: "Landing"}
 
     this.auth = {} as gapi.auth2.GoogleAuth;
     this.GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -92,12 +88,15 @@ class App extends Component<Props, AppState> {
   }
 
   handleLogin = () => {
-    this.auth.signIn().then(this.handleVerifyUser).catch((error: any) => console.log(error));
+    console.log('step 1');
+    console.log(this.auth.currentUser.get())
+    this.auth.signIn({prompt: 'select_account'}).then(this.handleVerifyUser).catch((error: any) => console.log(error));
   }
 
   handleVerifyUser = () => {
     // should never send "this.auth.currentUser.get().getBasicProfile().getID()" to backend
     // instead, get idToken and then send that to backend
+    console.log('step 2')
     const idToken = this.auth.currentUser.get().getAuthResponse().id_token;
     fetch(`/api/verify?idToken=${idToken}`, {
       method: 'GET',
@@ -114,53 +113,26 @@ class App extends Component<Props, AppState> {
     .then((data: any) => {
       this.setState({loggedIn: true, user: data.userInfo})
     })
+    console.log('setted state')
   }
 
   handleLogout = () => {
     this.auth.signOut().then(this.updateSigninStatus(false)).catch((error: any) => console.log(error));
   }
 
-
-
-  handleCardSelect = (card: TarotCardType) => {
-    const selectedCards = this.state.selectedCards;
-
-    const index = selectedCards.findIndex((selectedCard: TarotCardType) => 
-      selectedCard.title === card.title);
-
-    if (index > -1) {
-      // Card is already selected, remove it from the array
-      this.setState({
-        selectedCards: selectedCards.filter((_, i) => i !== index)
-      });
-    } else {
-      // Card is not selected, add it to the array
-      this.setState({
-        selectedCards: [...selectedCards, card]
-      });
-    }
-  }
-
-  
-
   handlePageChange = (page: pages): void => {
     this.setState({page: page});
   }
 
-  handlePreselectSubmit = () => {
-    // BACKEND FETCH WILL BE HERE
-    console.log('preselecting...');
-    this.setState({selectedCards: []});
-  }
-
   handleUpdateUser = (_loggedIn: boolean, _user: any) =>{
+    console.log('setted state')
     this.setState({loggedIn: _loggedIn, user: _user})
   }
 
 
   render = (): JSX.Element => {
     if (this.state.page === "Landing") {
-      return (<Landing pageChange={this.handlePageChange} updateUser={this.handleUpdateUser} loggedIn={this.state.loggedIn} user={this.state.user} />)
+      return (<Landing pageChange={this.handlePageChange} handleLogin={this.handleLogin} user={this.state.user} loggedIn={this.state.loggedIn} />)
     }
     else if (this.state.page === "About") {
       return (<About pageChange={this.handlePageChange}></About>)

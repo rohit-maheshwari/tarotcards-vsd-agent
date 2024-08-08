@@ -3,11 +3,10 @@ import { pages } from '../../App';
 import Projects from "../Projects/Projects";
 import './Landing.css'
 import ProjectDescription from "../ProjectDescription/ProjectDescription";
-const env = require('../../environment.json');
 
 type LandingProps = {
     pageChange: (page: pages) => void,
-    updateUser: (loggedIn: boolean, user: any) => void,
+    handleLogin: () => void;
     loggedIn: boolean,
     user: any,
 }
@@ -17,88 +16,10 @@ type LandingState = {
 }
 
 class Landing extends Component<LandingProps, LandingState> {
-  auth: gapi.auth2.GoogleAuth;
-  GOOGLE_CLIENT_ID: string;
   constructor(props: LandingProps) {
     super(props);
 
     this.state = { nextPage: false };
-
-    this.auth = {} as gapi.auth2.GoogleAuth;
-    this.GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
-  }
-
-  componentDidMount() {
-    // Load the Google API script and initialize the `gapi` client
-    const script = document.createElement('script');
-    script.src = 'https://apis.google.com/js/api.js';
-    script.onload = () => {
-        window.gapi.load('client:auth2', this.initClient);
-    };
-    document.body.appendChild(script);
-  }
-
-  initClient = () => {
-    window.gapi.client.init({
-        clientId: this.GOOGLE_CLIENT_ID,
-        scope: 'email',
-        plugin_name: 'TarotCardsVSD'
-    }).then(() => {
-        this.auth = window.gapi.auth2.getAuthInstance();
-
-        // Listen for sign-in state changes.
-        this.auth.isSignedIn.listen(this.updateSigninStatus);
-
-        // Handle initial sign-in state.
-        this.updateSigninStatus(false);
-    }).catch((error: any) => {
-      // Handle the error here if initialization fails
-      console.error('Error initializing the Google API client:', error);
-    });
-  }
-
-  updateSigninStatus = (loggedIn: boolean) => {
-    if (loggedIn) {
-      // console.log('The user is signed in');
-      // You can access user profile info with:
-      // this.auth.currentUser.get().getBasicProfile();
-      console.log(this.auth.currentUser.get().getBasicProfile());
-      this.props.updateUser(true, this.props.user);
-    } else {
-      // console.log('The user is not signed in');
-      this.props.updateUser(false, null);
-    }
-  }
-
-  handleLogin = () => {
-    this.auth.signIn().then(this.handleVerifyUser).catch((error: any) => console.log(error));
-  }
-
-  handleVerifyUser = () => {
-    // should never send "this.auth.currentUser.get().getBasicProfile().getID()" to backend
-    // instead, get idToken and then send that to backend
-    const idToken = this.auth.currentUser.get().getAuthResponse().id_token;
-    console.log(idToken);
-    fetch(`/api/verify?idToken=${idToken}`, {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((res) => this.handleVerifiedUser(res))
-    .catch(() => console.log("/get: Failed to connect to server"));
-  }
-
-  handleVerifiedUser = (res: any) => {
-    res.json()
-    .then((data: any) => {
-      this.props.updateUser(true, data.userInfo);
-    })
-  }
-
-  handleLogout = () => {
-    this.auth.signOut().then(this.updateSigninStatus(false)).catch((error: any) => console.log(error));
   }
 
   toggleMenu = () => {
@@ -114,6 +35,7 @@ class Landing extends Component<LandingProps, LandingState> {
   }
 
   render = (): JSX.Element => {
+    console.log(this.state, this.props)
     return (
       !this.props.loggedIn ? 
       !this.state.nextPage ?
@@ -151,15 +73,15 @@ class Landing extends Component<LandingProps, LandingState> {
               </div>
             </div>
             <div className="footer">
-              <button className="googleButton" onClick={this.handleLogin}>Sign in with Google</button>
+              <button className="googleButton" onClick={this.props.handleLogin}>Sign in with Google</button>
               <button className="guestButton" onClick={() => this.setState({nextPage: true})}>Guest</button>
             </div>
           </div>
         </div>
       :
-        <ProjectDescription returnToPrevPage={() => this.setState({nextPage: false})} />
+        <ProjectDescription returnToPrevPage={() => this.setState({nextPage: false})} returnToHomePage={() => this.setState({nextPage: false})} user={null} projectId={null}/>
       : 
-        <Projects />
+        <Projects user={this.props.user} returnToHomePage={() => this.setState({nextPage: false})} />
     );
   };
 }

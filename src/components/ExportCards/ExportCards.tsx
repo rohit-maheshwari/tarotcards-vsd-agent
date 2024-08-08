@@ -4,6 +4,8 @@ import './ExportCards.css';
 import ProgressBar from '../NewProgressBar/ProgressBar';
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import Doc from './PDF/PDF';
+import Projects from '../Projects/Projects';
+import Landing from '../Landing/Landing';
 
 type CustomPDFViewerProps = {
     pdfData: string
@@ -11,26 +13,31 @@ type CustomPDFViewerProps = {
 
 type ExportCardsProps = {
     finalCards: any[],
-    returnToPrevPage: () => void
+    returnToPrevPage: () => void,
+    returnToHomePage: () => void,
+    user: any
+    projectId: number | null;
 }
 
 type ExportCardsState = {
     title: string,
     description: string,
+    takeaways: string,
+    homePage: boolean
 }
 
 class ExportCards extends Component<ExportCardsProps, ExportCardsState> {
     constructor(props: ExportCardsProps) {
         super(props);
 
-        this.state = { title: '', description: '' }
+        this.state = { title: '', description: '', takeaways: '', homePage: false }
     }
 
     componentDidMount(): void {
-        fetch('/api/project/get?projectId='+'1', {
+        fetch('/api/project/get?projectId='+this.props.projectId, {
             method: 'GET',
             headers: {
-                Accept: 'application/json',
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
         })
@@ -40,7 +47,7 @@ class ExportCards extends Component<ExportCardsProps, ExportCardsState> {
             }
         })
         .then((data) => {
-            this.setState({ title: data.title, description: data.description })
+            this.setState({ title: data.title, description: data.description, takeaways: data.takeaways })
         })
         .catch((error) => {
             console.log(error)
@@ -67,7 +74,7 @@ class ExportCards extends Component<ExportCardsProps, ExportCardsState> {
                 </div>
                 <div className="export-cards-buttons">
                     <button onClick={() => this.props.returnToPrevPage()}>Back</button>
-                    <button onClick={() => this.props.returnToPrevPage()}>Home</button>
+                    <button onClick={() => this.props.returnToHomePage()}>Home</button>
                 </div>
             </div>
         )
