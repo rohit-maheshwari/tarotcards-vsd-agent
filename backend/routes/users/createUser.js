@@ -5,15 +5,15 @@ const Person = require('../../models/PersonSchema');
 router.post('/user/create', async (req, res) => {
     console.log('Handling /user/create')
     try {
-        const { firstName, lastName, emailAddress, classStanding, graduationDate } = req.body;
+        const { name, emailAddress, classStanding, graduationDate } = req.body;
+        console.log(name, emailAddress, classStanding, graduationDate)
         const person = await Person.findOne({ emailAddress: emailAddress });
-        if (!person) { // POST Create a new person
+        if (person == null) { // POST Create a new person
             const newPerson = new Person({
-                firstName: firstName,
-                lastName: lastName,
+                name: name,
                 emailAddress: emailAddress,
-                // classStanding: classStanding,
-                // graduationDate: graduationDate
+                classStanding: classStanding,
+                graduationDate: graduationDate
             });
             await newPerson.save();
             console.log('Person saved successfully');

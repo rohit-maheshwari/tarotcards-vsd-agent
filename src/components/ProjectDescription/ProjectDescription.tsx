@@ -3,6 +3,8 @@ import ProgressBar from "../NewProgressBar/ProgressBar";
 import './ProjectDescription.css';
 import DrawTarotCards from "../DrawTarotCards/DrawTarotCards";
 
+const lodash = require('lodash')
+
 type ProjectDescriptionProps = {
   returnToPrevPage: () => void;
   returnToHomePage: () => void;
@@ -27,9 +29,12 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
         description: '',
         nextPage: false,
       };
+
+      this.saveProject = lodash.debounce(this.saveProject.bind(this), 500);
     }
     
     componentDidMount(): void {
+      console.log(this.props.projectId)
         if (this.props.projectId != null) {
           fetch('/api/project/get?projectId='+this.props.projectId, {
             method: "GET",
@@ -54,15 +59,15 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
     }
 
     handleSubfieldChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      this.setState({ subfield: event.target.value });
+      this.setState({ subfield: event.target.value }, () => this.saveProject());
     };
 
     handleTitleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      this.setState({ title: event.target.value });
+      this.setState({ title: event.target.value }, () => this.saveProject());
     };
 
     handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      this.setState({ description: event.target.value });
+      this.setState({ description: event.target.value }, () => this.saveProject());
     };
 
     nextPage = () => {
@@ -72,6 +77,33 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
     
     togglePage = () => {
       this.setState({nextPage: !this.state.nextPage});
+    }
+
+    saveProject = () => {
+      fetch('/api/project/update', {
+        method: "PUT",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          projectId: this.props.projectId,
+          projectSubfield: this.state.subfield,
+          projectTitle: this.state.title,
+          projectDescription: this.state.description
+        })
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     }
   
 

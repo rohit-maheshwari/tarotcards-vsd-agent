@@ -4,18 +4,15 @@ const PersonSchema = mongoose.Schema({
     emailAddress: {
         type: String,
     },
-    firstName: {
+    name: {
         type: String,
     },
-    lastName: {
+    classStanding: {
         type: String,
     },
-    // classStanding: {
-    //     type: String,
-    // },
-    // graduationDate: {
-    //     type: String,
-    // }
+    graduationDate: {
+        type: String,
+    }
 }, {
     collection: 'Person' // Explicitly specify the collection name
 });

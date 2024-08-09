@@ -7,13 +7,10 @@ router.post('/project/create', async (req, res) => {
     console.log('Handling /project/create')
     try {
         const projectId = await Project.countDocuments()+1
-        const { personEmailAddress, projectSubfield, projectTitle, projectDescription } = req.body;
+        const { personEmailAddress } = req.body;
         const newProject = new Project({
             projectId: projectId,
             projectCreateDate: Date.now(),
-            projectSubfield: projectSubfield ? projectSubfield : '',
-            projectTitle: projectTitle ? projectTitle : '',
-            projectDescription: projectDescription ? projectDescription : '',
             subfieldId: 1
         })
         const responseProject = await newProject.save()

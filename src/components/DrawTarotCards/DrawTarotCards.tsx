@@ -141,7 +141,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
         fetch('/api/project/addOrUpdateCard', {
             method: "PUT",
             body: JSON.stringify({
-                projectId: 1,
+                projectId: this.props.projectId,
                 cardName: this.state.currentCard?.title,
                 answers: this.state.response
             }),
@@ -203,8 +203,9 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
                 cardName: card.title
             }),
             headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
-            }
+            },
         }).then((response) => {
             if (response.ok) {
                 return response.json()

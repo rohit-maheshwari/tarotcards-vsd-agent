@@ -16,6 +16,11 @@ export const styles = StyleSheet.create(
       top: -3,
       marginBottom: 10,
     },
+    takeaways: {
+      fontSize: 9,
+      top: -3,
+      marginBottom: 10,
+    },
     card: {
       flexDirection: 'row',
       marginBottom: 10,

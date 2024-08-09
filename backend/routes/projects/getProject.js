@@ -12,6 +12,7 @@ router.get('/project/get', async (req, res) => {
                 subfield: project.projectSubfield,
                 title: project.projectTitle,
                 description: project.projectDescription,
+                takeaways: project.projectTakeaways
             })
         } else {
             res.status(400).json({
@@ -21,7 +22,7 @@ router.get('/project/get', async (req, res) => {
     } catch (err) {
         console.error('error: ' + err);
         res.status(400).json({
-        message: "error"
+            message: "error"
         }
     )}
 });

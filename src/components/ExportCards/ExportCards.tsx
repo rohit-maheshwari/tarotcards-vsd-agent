@@ -64,9 +64,9 @@ class ExportCards extends Component<ExportCardsProps, ExportCardsState> {
                 </div>
                 <div className='export-cards-pdf-container'>
                     <PDFViewer width='80%' height={600} showToolbar={false}>
-                        <Doc title={this.state.title} description={this.state.description} finalCards={this.props.finalCards}/>
+                        <Doc title={this.state.title} description={this.state.description} takeaways={this.state.takeaways} finalCards={this.props.finalCards}/>
                     </PDFViewer>
-                    <PDFDownloadLink className="export-cards-pdf-download" document={<Doc title={this.state.title} description={this.state.description} finalCards={this.props.finalCards}/>} fileName="tarotcards.pdf">
+                    <PDFDownloadLink className="export-cards-pdf-download" document={<Doc title={this.state.title} description={this.state.description} takeaways={this.state.takeaways} finalCards={this.props.finalCards}/>} fileName="tarotcards.pdf">
                         {({ blob, url, loading, error }) =>
                         loading ? 'Loading document...' : 'DOWNLOAD PDF'
                         }
