@@ -1,0 +1,16 @@
+{
+    "databases": [
+      {
+        "name": "TarotCardsVSD",
+        "collections": [
+          { "name": "Person" },
+          { "name": "Person-Project" },
+          { "name": "Project" },
+          { "name": "Project-Card" },
+          { "name": "Card" },
+          { "name": "Subfield" },
+          { "name": "RelevantCard" }
+        ]
+      }
+    ]
+  }

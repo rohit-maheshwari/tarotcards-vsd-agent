@@ -3,11 +3,10 @@ import { Page, Text, View, Document, Image, Line, Svg } from '@react-pdf/rendere
 import { tarotcards } from "../tarotcards";
 import { styles } from "./PDFstyles";
 
-const image = require('../../../images/FrontTarotCards/Scandal.png')
-
 type TarotCardType = {
     title: string,
-    image: string,
+    frontimage: string,
+    backimage: string,
     questions: string[],
     color: string
 }
@@ -61,7 +60,7 @@ class Doc extends Component<DocProps, DocState> {
                             return (
                                 <View key={index} style={styles.card}>
                                     <View style={styles.imageContainer}>
-                                        <Image src={card.image} style={styles.image}/>
+                                        <Image src={card.frontimage} style={styles.image}/>
                                     </View>
                                     <View style={styles.textContainer} wrap={false}>
                                         <Text style={styles.question}>{card.questions[0]}</Text>

@@ -1,9 +1,12 @@
 import React, { Component, useState } from "react";
 import "./BackTarotCard.css";
+// const env = require('../../../environment.json');
+// const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT;
 
 type TarotCardType = {
     title: string,
-    image: string,
+    frontimage: string,
+    backimage: string,
     questions: string[],
     color: string
 }
@@ -13,8 +16,9 @@ type TarotCardProps = {
     description: string,
     tarotcard: TarotCardType,
     finishedCards: {[key: string]: boolean},
-    updateCard: (card: TarotCardType) => void;
+    updateCard: (card: TarotCardType, response: string) => void;
     initialResponse: string,
+    user: any
 }
 
 type TarotCardState = {
@@ -48,13 +52,15 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                 card: this.props.tarotcard.title,
                 card_response: this.state.response,
                 finished: !this.props.finishedCards[this.props.tarotcard.title],
-                user_id: 12345678910, 
+                user_name: this.props.user.name,
+                user_email: this.props.user.email,
+                user_id: this.props.user.googleId,
                 session_id: 3 
             };
             if (userCheck) {
                 if (this.state.response !== "") {
-                    this.props.updateCard(this.props.tarotcard);
-                    fetch ('/record', {
+                    this.props.updateCard(this.props.tarotcard, this.state.response);
+                    fetch (`/api/record`, {
                         method: 'PUT',
                         body: JSON.stringify(requestData),
                         headers: {
@@ -64,10 +70,8 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                     .then((res) => this.doButtonClickResponse(res))
                     .catch(() => this.doError("/record: Failed to connect to server"));
                 } else {
-                    console.log(requestData.user_id);
-                    fetch ('/delete', {
+                    fetch (`/api/delete?uid=${requestData.user_id}&card=${requestData.card}`, {
                         method: 'DELETE',
-                        body: JSON.stringify(requestData),
                         headers: {
                             'Content-Type': 'application/json',
                             },
@@ -76,7 +80,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                 }
             }
         } else { // if button is going from "edit" -> "done"
-            this.props.updateCard(this.props.tarotcard);
+            this.props.updateCard(this.props.tarotcard, this.state.response);
         }
     }
 
@@ -93,7 +97,6 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
     } 
 
     render = (): JSX.Element => {
-        console.log(this.state.response)
         return (
             <div className="card-back" style={{backgroundColor: this.props.tarotcard.color}}>
                 <h1>{this.props.tarotcard.title}</h1>

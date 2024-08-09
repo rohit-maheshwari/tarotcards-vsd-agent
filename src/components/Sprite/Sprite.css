@@ -4,8 +4,8 @@
 
 .round{
     border-radius: 20px;
-      -webkit-border-radius: 20px;
-      -moz-border-radius: 20px;  
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;  
 }
 
 
@@ -37,30 +37,28 @@
 
 
 .talk-bubble {
-    height: 100px;
-    width: 40%;
-    position: relative;
-    cursor:pointer;
-    padding: 5px;
-    margin: 0 auto;
-    margin-top: 1%;
-	background-color: rgb(255, 255, 255);
+  height: 100px;
+  width: 40%;
+  position: relative;
+  padding: 5px;
+  background-color: rgb(255, 255, 255);
 }
 
-
 .sprite-text {
-    height: 100px;
-    padding: 8px;
-    flex-grow: 1;
-    overflow-y: auto;
+  height: 100px;
+  padding: 8px;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .sprite-avatar {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    margin-top: 25px;
-    margin-right: 10px;
-    left: 75%;
-    bottom: 170px; /* Adjust the top position as needed */
+  width: 150px;
+  margin-left: 2%;
+}
+
+.sprite-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
 }

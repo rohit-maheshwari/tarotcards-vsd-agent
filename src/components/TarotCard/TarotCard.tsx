@@ -6,7 +6,8 @@ import flip from "./flipbutton.svg";
 
 type TarotCardType = {
     title: string,
-    image: string,
+    frontimage: string,
+    backimage: string,
     questions: string[],
     color: string
 }
@@ -19,8 +20,9 @@ type TarotCardProps = {
     handleCardSelect: (card: TarotCardType) => void,
     showComponent: boolean,
     finishedCards: {[key: string]: boolean},
-    updateCard: (card: TarotCardType) => void,
-    initialResponse: string
+    updateCard: (card: TarotCardType, response: string) => void,
+    initialResponse: string,
+    user: any
 }
 
 type TarotCardState = {
@@ -56,7 +58,7 @@ export class TarotCardComponent extends Component <TarotCardProps, TarotCardStat
                     <FrontTarotCardComponent tarotcard={this.props.tarotcard} />
                 :
                 <div className="card-back">
-                    <BackTarotCardComponent title={this.props.title} description={this.props.description} tarotcard={this.props.tarotcard} finishedCards={this.props.finishedCards} updateCard={this.props.updateCard} initialResponse={this.props.initialResponse}/>
+                    <BackTarotCardComponent title={this.props.title} description={this.props.description} tarotcard={this.props.tarotcard} finishedCards={this.props.finishedCards} updateCard={this.props.updateCard} initialResponse={this.props.initialResponse} user={this.props.user}/>
                 </div>
                 }
             </div>
