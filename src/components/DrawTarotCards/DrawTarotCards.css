@@ -1,5 +1,4 @@
 .draw-tarot-cards {
-    font-family: Arial, sans-serif;
     padding: 20px;
 }
 
@@ -60,10 +59,10 @@
 }
 
 .draw-page-buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 1%;
+    width: 98%;
     display: flex;
     justify-content: space-between;
-}
-
-.draw-next-button {
-    align-self: flex-end;
 }

@@ -7,12 +7,15 @@ import ProjectDescription from "../ProjectDescription/ProjectDescription";
 type LandingProps = {
     pageChange: (page: pages) => void,
     handleLogin: () => void;
+    handleLogout: () => void;
     loggedIn: boolean,
     user: any,
+    nextPage: boolean,
+    updateNextPage: (_: boolean) => void;
 }
 
 type LandingState = {
-  nextPage: boolean
+  
 }
 
 class Landing extends Component<LandingProps, LandingState> {
@@ -37,8 +40,12 @@ class Landing extends Component<LandingProps, LandingState> {
   render = (): JSX.Element => {
     console.log(this.state, this.props)
     return (
-      !this.props.loggedIn ? 
-      !this.state.nextPage ?
+      this.props.nextPage ?
+      (this.props.loggedIn ?
+        <Projects user={this.props.user} returnToHomePage={() => this.props.updateNextPage(false)} />
+      :
+        <ProjectDescription returnToPrevPage={() => this.props.updateNextPage(false)} returnToHomePage={() => this.props.updateNextPage(false)} user={null} projectId={null}/>
+      ):
         <div className="landingBody">
           <div className="container">
           <div className="menuButton" onClick={this.toggleMenu}>&#9776;</div>
@@ -73,15 +80,11 @@ class Landing extends Component<LandingProps, LandingState> {
               </div>
             </div>
             <div className="footer">
-              <button className="googleButton" onClick={this.props.handleLogin}>Sign in with Google</button>
-              <button className="guestButton" onClick={() => this.setState({nextPage: true})}>Guest</button>
+              <button className="googleButton" onClick={this.props.loggedIn ? this.props.handleLogout : this.props.handleLogin}>{this.props.loggedIn ? "Sign Out" : "Sign in with Google"}</button>
+              <button className="guestButton" onClick={() => this.props.updateNextPage(true)}>Guest</button>
             </div>
           </div>
         </div>
-      :
-        <ProjectDescription returnToPrevPage={() => this.setState({nextPage: false})} returnToHomePage={() => this.setState({nextPage: false})} user={null} projectId={null}/>
-      : 
-        <Projects user={this.props.user} returnToHomePage={() => this.setState({nextPage: false})} />
     );
   };
 }

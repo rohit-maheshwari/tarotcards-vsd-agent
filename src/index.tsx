@@ -12,7 +12,7 @@ const env = require('./environment.json')
 const googleClientId = env.GOOGLE_CLIENT_ID;
 root.render(
   <GoogleOAuthProvider clientId={googleClientId}>
-      <App page="ProjectDescription"/>
+      <App />
   </GoogleOAuthProvider>
   
 );

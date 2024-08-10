@@ -121,9 +121,12 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
               )
             })}
             </ul>
+            <div className="projects-page-buttons">
+              <button onClick={() => this.props.returnToHomePage()}>Home</button>
+            </div>
           </div>
         :
-          <ProjectDescription returnToPrevPage={() => this.setState({nextPage: false})} user={this.props.user} returnToHomePage={() => this.setState({nextPage: false})} projectId={this.state.selectedProjectId}/>
+          <ProjectDescription returnToPrevPage={() => this.setState({nextPage: false})} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.state.selectedProjectId}/>
       );
     };
 }

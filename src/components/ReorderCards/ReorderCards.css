@@ -1,5 +1,4 @@
 .reorder-body {
-    font-family: Arial, sans-serif;
     padding: 20px;
 }
   
@@ -83,10 +82,10 @@
 }
 
 .reorder-page-buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 1%;
+    width: 98%;
     display: flex;
     justify-content: space-between;
-}
-
-.reorder-next-button {
-    align-self: flex-end;
 }

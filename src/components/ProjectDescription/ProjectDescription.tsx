@@ -136,7 +136,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
                 value={this.state.description}
                 onChange={this.handleDescriptionChange}
                 className="project-description-description-text-area"
-                rows={4}
+                rows={20}
                 cols={50}
               />
             </div>

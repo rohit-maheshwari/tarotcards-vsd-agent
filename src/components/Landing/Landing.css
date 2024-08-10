@@ -1,10 +1,9 @@
 .landingBody {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
 }
 
 .landingheader .PEACE {
@@ -22,7 +21,7 @@
 }
   
 .landingheader .landingH1 {
-    font-size: 24px;
+    font-size: 36px;
     margin-bottom: 10px;
 }
   
@@ -31,7 +30,7 @@
 }
   
 .landingheader .landingDescription {
-    font-size: 14px;
+    font-size: 18px;
     color: #666;
     margin-bottom: 40px;
 }

@@ -14,7 +14,7 @@ const env = require('./environment.json');
 // const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
 
 type Props = {
-  page: pages
+  
 }
 
 type TarotCardType = {
@@ -30,6 +30,7 @@ type AppState = {
   loggedIn: boolean,
   user: any,
   page: pages,
+  landingNextPage: boolean,
 }
 
 class App extends Component<Props, AppState> {
@@ -40,7 +41,7 @@ class App extends Component<Props, AppState> {
   constructor(props: Props) {
     super(props);
 
-    this.state = {loggedIn: false, user: null, page: "Landing"}
+    this.state = {loggedIn: false, user: null, page: "Landing", landingNextPage: false}
 
     this.auth = {} as gapi.auth2.GoogleAuth;
     this.GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -111,7 +112,7 @@ class App extends Component<Props, AppState> {
   handleVerifiedUser = (res: any) => {
     res.json()
     .then((data: any) => {
-      this.setState({loggedIn: true, user: data.userInfo})
+      this.setState({loggedIn: true, user: data.userInfo, landingNextPage: true})
     })
     console.log('setted state')
   }
@@ -129,10 +130,15 @@ class App extends Component<Props, AppState> {
     this.setState({loggedIn: _loggedIn, user: _user})
   }
 
+  updateLandingNextPage = (bool: boolean) => {
+    console.log(bool)
+    this.setState({landingNextPage: bool})
+  }
+
 
   render = (): JSX.Element => {
     if (this.state.page === "Landing") {
-      return (<Landing pageChange={this.handlePageChange} handleLogin={this.handleLogin} user={this.state.user} loggedIn={this.state.loggedIn} />)
+      return (<Landing pageChange={this.handlePageChange} handleLogin={this.handleLogin} handleLogout={this.handleLogout} user={this.state.user} loggedIn={this.state.loggedIn} nextPage={this.state.landingNextPage} updateNextPage={this.updateLandingNextPage}/>)
     }
     else if (this.state.page === "About") {
       return (<About pageChange={this.handlePageChange}></About>)

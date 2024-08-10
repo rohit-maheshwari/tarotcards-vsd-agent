@@ -1,5 +1,4 @@
 .export-cards-body {
-    font-family: Arial, sans-serif;
     padding: 20px;
 }
 
@@ -8,6 +7,10 @@
 }
 
 .export-cards-buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 1%;
+    width: 98%;
     display: flex;
     justify-content: space-between;
 }
