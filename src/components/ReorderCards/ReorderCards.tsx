@@ -38,6 +38,8 @@ type ReorderCardsState = {
 }
 
 class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
+    ref: React.RefObject<HTMLDivElement>; 
+
     constructor(props: ReorderCardsProps) {
         super(props);
 
@@ -49,6 +51,8 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
             dragCard: 0,
             dragOverCard: 0,
         }
+
+        this.ref = React.createRef();
 
         this.saveProject = lodash.debounce(this.saveProject.bind(this), 500);
     }
@@ -170,7 +174,27 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
         cardsWithResponseClone[this.state.dragOverCard] = temp
         this.setState({cardsWithResponse: cardsWithResponseClone})
     }
+
+    onDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+        e.preventDefault();
     
+        const container = this.ref.current;
+        if (!container) return;
+    
+        const rect = container.getBoundingClientRect();
+        const scrollThreshold = 100; // pixels from the edge to start scrolling
+        const scrollSpeed = 0.75; // how fast to scroll
+    
+        // Scroll down if the mouse is near the bottom of the container
+        if (e.clientY > rect.bottom - scrollThreshold) {
+            container.scrollTop += scrollSpeed;
+        }
+    
+        // Scroll up if the mouse is near the top of the container
+        if (e.clientY < rect.top + scrollThreshold) {
+            container.scrollTop -= scrollSpeed;
+        }
+    };
 
     render() {
         console.log(this.state.cardsWithResponse)
@@ -180,15 +204,14 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
                 <ProgressBar step={3} />
                 <h1 className="title">Review and rank the unintended consequences you identified</h1>
                 <h3 className="description">You can review your answers, edit anything you would like to change, and rank the tarot cards in the order you think is most important.</h3>
-                <div className="reordering-window">
-                <DndProvider backend={HTML5Backend}>
+                <div ref={this.ref} className="reordering-window">
                     {this.state.cardsWithResponse.map((card, index) => 
                         <div className='reorder-card' 
                             draggable
                             onDragStart={() => (this.setState({dragCard: index}))}
                             onDragEnter={() => (this.setState({dragOverCard: index}))}
                             onDragEnd={this.handleSort}
-                            onDragOver={(e) => e.preventDefault()}
+                            onDragOver={this.onDragOver}
                         >
                             <div className="reorder-buttons">
                                 <p className='reorder-button' onClick={() => this.moveCardUp(card)}>&uarr;</p>
@@ -204,7 +227,6 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
                             </div>
                         </div>
                     )}
-                </DndProvider>
                 </div>
                 <div className="reorder-takeaways">
                     <h3>What are your overall takeaways?</h3>
