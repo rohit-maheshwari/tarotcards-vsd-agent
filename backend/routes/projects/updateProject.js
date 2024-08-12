@@ -7,6 +7,9 @@ router.put('/project/update', async (req, res) => {
     try {
         const { projectId, projectSubfield, projectTitle, projectDescription, projectTakeaways } = req.body;
         const project = await Project.findOne({ projectId: projectId });
+        if (project == null) {
+            return;
+        }
         const editedProject = {
             projectSubfield: projectSubfield != null ? projectSubfield : project.projectSubfield,
             projectTitle: projectTitle != null ? projectTitle : project.projectTitle,

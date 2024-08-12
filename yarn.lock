@@ -9012,6 +9012,11 @@
   "resolved" "https://registry.npmjs.org/nanoid/-/nanoid-3.3.7.tgz"
   "version" "3.3.7"
 
+"nanoid@^5.0.7":
+  "integrity" "sha512-oLxFY2gd2IqnjcYyOXD8XGCftpGtZP2AbHbOkthDkvRywH5ayNtPVy9YlOPcHckXzbLTCHpkb7FB+yuxKV13pQ=="
+  "resolved" "https://registry.npmjs.org/nanoid/-/nanoid-5.0.7.tgz"
+  "version" "5.0.7"
+
 "natural-compare-lite@^1.4.0":
   "integrity" "sha512-Tj+HTDSJJKaZnfiuw+iaF9skdPpTo2GtEly5JHnWV/hfv2Qj/9RKsGISQtLh2ox3l5EAGw487hnBee0sIJ6v2g=="
   "resolved" "https://registry.npmjs.org/natural-compare-lite/-/natural-compare-lite-1.4.0.tgz"

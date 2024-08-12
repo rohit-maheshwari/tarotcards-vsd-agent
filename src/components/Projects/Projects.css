@@ -46,3 +46,9 @@
 .project-buttons img {
     cursor: pointer;
 }
+
+.projects-page-buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 1%;
+}

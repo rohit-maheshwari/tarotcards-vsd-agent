@@ -53,8 +53,8 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
         }
     }
 
-    createProject = () => {
-      fetch('/api/project/create', {
+    createProject = async () => {
+      await fetch('/api/project/create', {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -75,8 +75,9 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
       })
     }
 
-    deleteProject = (projectId: number) => {
-      fetch('/api/project/delete?projectId='+projectId, {
+    deleteProject = async (projectId: number) => {
+      console.log(projectId)
+      await fetch('/api/project/delete?personEmailAddress=' + this.props.user.email + '&projectId='+projectId, {
         method: "DELETE",
         headers: {
           'Accept': 'application/json',
@@ -89,7 +90,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
         }
       })
       .then((data) => {
-        console.log(data);
+        console.log(data.remainingProjects);
         this.setState({userProjects: data.remainingProjects})
       })
       .catch((error) => {
@@ -109,7 +110,9 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
               <button onClick={() => this.createProject()}>Create a New Project</button>
             </div>
             <ul className='projects-container'>
-            {this.state.userProjects.map((project: any) => {
+            {this.state.userProjects.length == 0 ? 
+              <div> no projects yet... </div>
+            : this.state.userProjects.map((project: any) => {
               return (
                 <li className='projects-project'>
                   {project.projectTitle}

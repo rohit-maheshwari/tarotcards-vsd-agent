@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const ProjectSchema = mongoose.Schema({
     projectId: {
-        type: Number,
+        type: String,
     },
     projectCreateDate: {
         type: Date,

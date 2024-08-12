@@ -1,14 +1,20 @@
 const express = require('express');
+
 const router = express.Router();
 const Project = require('../../models/ProjectSchema');
 const PersonProject = require('../../models/PersonProjectSchema');
 
+const ObjectID = require('mongodb').ObjectId;
+
+
+
 router.post('/project/create', async (req, res) => {
     console.log('Handling /project/create')
+    const projectId = await new ObjectID();
     try {
-        const projectId = await Project.countDocuments()+1
         const { personEmailAddress } = req.body;
         const newProject = new Project({
+            _id: projectId,
             projectId: projectId,
             projectCreateDate: Date.now(),
             subfieldId: 1

@@ -74,6 +74,12 @@
     gap: 20px;
     margin-top: 50px;
 }
+
+.footer button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #333;
+}
   
 button {
     padding: 10px 20px;
@@ -81,16 +87,4 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
-}
-  
-.googleButton {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    color: #333;
-}
-  
-.guestButton {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    color: #333;
 }

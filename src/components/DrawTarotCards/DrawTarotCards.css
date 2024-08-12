@@ -17,6 +17,10 @@
     width: 25%;
 }
 
+.card-draw img {
+    width: 80%;
+}
+
 .review-all-cards-button {
     margin: 50px 0px;
 }

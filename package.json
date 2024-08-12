@@ -27,6 +27,7 @@
     "lodash": "^4.17.21",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.4",
+    "nanoid": "^5.0.7",
     "node": "^18.20.0",
     "querystring-es3": "^0.2.1",
     "react": "^18.2.0",
