@@ -42,9 +42,9 @@ export default class TarotCardComponent extends Component <TarotCardProps, Tarot
                     <img className={`flipbtn ${this.state.isFlipping ? 'half-flipped' : ''}`} src={flip} onClick={this.flipCard} />
                 </div>
                 {!this.state.selected ?
-                    <img src={this.props.tarotcard.frontimage} />
+                    <img src={this.props.tarotcard.frontimage} onClick={this.flipCard} />
                 :
-                    <img src={this.props.tarotcard.backimage} />
+                    <img src={this.props.tarotcard.backimage} onClick={this.flipCard} />
                 }
             </div>
         );

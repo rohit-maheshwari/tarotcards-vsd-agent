@@ -199,7 +199,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
         fetch('/api/project/removeCard', {
             method: "DELETE",
             body: JSON.stringify({
-                projectId: 1,
+                projectId: this.props.projectId,
                 cardName: card.title
             }),
             headers: {
@@ -254,7 +254,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
                         <button className='draw-new-card-button' onClick={this.drawCard}>Draw a new card</button>
                     </div>
                     {this.state.currentCard && (
-                        <TarotCardComponent tarotcard={this.state.currentCard}/>
+                        <div className='draw-card-tarotcard'><TarotCardComponent tarotcard={this.state.currentCard}/></div>
                     )}
                     <div className="response">
                         <h3>What is your response to the questions?</h3>

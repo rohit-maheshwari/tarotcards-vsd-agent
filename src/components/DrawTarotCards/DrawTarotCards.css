@@ -21,6 +21,14 @@
     width: 80%;
 }
 
+.draw-card-tarotcard {
+    width: 25%;
+}
+
+.draw-card-tarotcard img {
+    width: 100%;
+}
+
 .review-all-cards-button {
     margin: 50px 0px;
 }

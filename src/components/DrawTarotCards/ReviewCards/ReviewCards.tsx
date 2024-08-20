@@ -24,14 +24,14 @@ type ReviewCardsProps = {
 }
 
 type ReviewCardsState = {
-    orderedCards: any[]
+
 }
 
 class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
     constructor(props: ReviewCardsProps) {
         super(props);
 
-        this.state = { orderedCards: this.props.sortCards() }
+        this.state = {  }
     }
 
     render() {
@@ -40,10 +40,10 @@ class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
             <div className="review-body">
                 <h1 className="review-header">All the Tarot Cards of Tech</h1>
                 <div className="review-cards-container">
-                    {this.state.orderedCards.map((card) => (
+                    {this.props.sortCards().map((card) => (
                         <div key={card.cardName} className="review-card">
                             <div className="card-content">
-                                <img className="card-image" src={card.frontimage} alt="Card" />
+                                <div className="card-image"><TarotCardComponent tarotcard={card}/></div>
                                 <div className="card-response">
                                     <div className='card-functions'>
                                         <label>Your response</label>
@@ -62,7 +62,9 @@ class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
                         </div>
                     ))}
                 </div>
-                <button className="review-back-button" onClick={() => this.props.toggle()}>Back</button>
+                <div className="review-page-buttons">
+                    <button className="review-back-button" onClick={() => this.props.toggle()}>Back</button>
+                </div>
             </div>
         )
     }

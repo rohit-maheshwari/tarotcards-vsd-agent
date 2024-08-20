@@ -1,7 +1,8 @@
 .review-body {
-    position: fixed;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto;
     justify-content: center;
-    align-items: center;
 }
 
 .review-header {
@@ -24,27 +25,39 @@
 }
 
 .review-card {
-    display: flex;
-    flex-direction: row;
-    height: 500px;
-    background-color: white; /* Background color for the card */
-    padding: 10px; /* Padding inside the card */
-    border: 1px solid #ccc; /* Border around the card */
-    border-radius: 8px; /* Rounded corners for the card */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: shadow for the card */
-    box-sizing: border-box; 
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
     margin-top: 20px;
+    flex-basis: calc(50% - 3%); /* Assuming 20px is the gap between cards */
+    margin: 10px; /* Adjust margins to align better */
+
 }
 
 .card-content {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: center;
 }
- 
+
 .card-image {
-    border-radius: 8px; /* Rounded corners for the image */
-    width: 300px;
-    height: 450px;
+    flex: 1;
+}
+
+.card-image img {
+    width: 98%;
+    border-radius: 8px;
+}
+
+.card-response {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Adjust spacing between label and textarea */
+    margin: 10px;
+    flex: 2;
 }
 
 .card-functions {
@@ -55,13 +68,6 @@
 
 .card-buttons {
     cursor: pointer;
-}
-
-.card-response {
-    display: flex;
-    flex-direction: column;
-    gap: 5px; /* Adjust spacing between label and textarea */
-    margin: 10px;
 }
 
 .card-response label {
@@ -86,15 +92,10 @@
     resize: none;
 }
 
-.review-back-button {
-    margin-top: 20px;
-    margin-left: 40px;
-    padding: 10px 20px;
-    background-color: #d3d3d3;
-    color: rgb(0, 0, 0);
-    border: 1px solid black;
-    border-radius: 5px;
-    cursor: pointer;
+
+.review-page-buttons {
+    position: absolute;
+    bottom: 20px;
+    left: 1%;
+    width: 98%;
 }
-
-
