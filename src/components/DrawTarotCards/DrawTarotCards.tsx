@@ -263,8 +263,6 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
                         value={this.state.response}
                         onChange={this.handleResponseChange}
                         placeholder="Your response is ..."
-                        rows={30}
-                        cols={30}
                         />
                     </div>
                 </div>

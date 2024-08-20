@@ -7,9 +7,10 @@
 }
 
 .draw-card-row {
-    margin: 0px 250px;
+    margin: 0px 10%;
     display: flex;
     flex-direction: row;
+    gap: 4%;
 }
   
 .card-draw {
@@ -30,49 +31,47 @@
 }
 
 .review-all-cards-button {
-    margin: 50px 0px;
+    margin: 15% 0px;
 }
   
 .draw-new-card-button {
-    margin: 30px 0px;
+    margin: 20% 0px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
 }
-  
-/* .card {
-    width: 25%;
-    margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-} */
 
 
 .response {
     width: 50%;
-    margin: 0px 40px;
     padding: 10px;
-    font-size: 16px;
+    font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.response h3 {
+    flex-shrink: 0;
 }
 
 .response-textarea {
-    width: 100%;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 8px;
     box-sizing: border-box;
     font-family: sans-serif;
-    font-size: 15px;
+    font-size: 1rem;
     resize: none;
+    width: 100%;
+    flex-grow: 1;
 }
 
 .draw-page-buttons {
     position: absolute;
-    bottom: 20px;
+    bottom: 2%;
     left: 1%;
     width: 98%;
     display: flex;
