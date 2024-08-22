@@ -54,8 +54,6 @@ class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
                                         className='review-card-textarea'
                                         value={card.response ? card.response : ''}
                                         readOnly={true}
-                                        rows={28}
-                                        cols={40}
                                     />
                                 </div>
                             </div>

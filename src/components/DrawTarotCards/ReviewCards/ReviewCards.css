@@ -21,7 +21,7 @@
     border-radius: 5px;
     background: white;
     overflow-y: auto;
-    max-height: 575px;
+    max-height: 70vh;
 }
 
 .review-card {
@@ -53,14 +53,17 @@
 }
 
 .card-response {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 5px; /* Adjust spacing between label and textarea */
     margin: 10px;
     flex: 2;
+    align-self: stretch; 
 }
 
 .card-functions {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -75,11 +78,13 @@
 }
 
 .review-card-textarea {
-    resize: none; /* Prevent resizing */
-    padding: 10px; /* Padding inside the textarea */
     border: 1px solid #ccc; /* Border around the textarea */
     border-radius: 4px; /* Rounded corners for the textarea */
-    
+    padding: 10px; /* Padding inside the textarea */
+    box-sizing: border-box;
+    resize: none; /* Prevent resizing */
+    width: 100%;
+    flex-grow: 1;
 }
 
 .review-response-box {
