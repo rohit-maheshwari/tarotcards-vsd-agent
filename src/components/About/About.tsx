@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { pages } from '../../App';
 import Projects from "../Projects/Projects";
 import './About.css'
-const env = require('../../environment.json');
 
 type Props = {
     pageChange: (page: pages) => void
@@ -35,13 +34,6 @@ class Landing extends Component<Props, LandingState> {
     return (
     <div className="aboutBody">
         <div className="container">
-            <div className="menuButton" onClick={this.toggleMenu}>&#9776;</div>
-            <div className="menu" id="menu">
-                <ul>
-                    <li onClick={() => this.props.pageChange("Landing")}>HOME</li>
-                    <li onClick={() => this.props.pageChange("About")}>ABOUT</li>
-                </ul>
-            </div>
             <div className="aboutheader">
                 <h1 className="aboutH1"><span className="ABOUTUS">ABOUT US</span></h1>
                 <p className="aboutDescription">

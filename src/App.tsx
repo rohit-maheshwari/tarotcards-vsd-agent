@@ -8,6 +8,7 @@ import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarot
 import DrawTarotCards from './components/DrawTarotCards/DrawTarotCards';
 import ReviewCards from './components/DrawTarotCards/ReviewCards/ReviewCards';
 import ReorderCards from './components/ReorderCards/ReorderCards'
+import Navbar from './components/Navbar/Navbar';
 
 const env = require('./environment.json');
 // const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -135,13 +136,37 @@ class App extends Component<Props, AppState> {
     this.setState({landingNextPage: bool})
   }
 
+  updateProjectNextPage = (bool: boolean) => {
+    this.setState({page: "Landing", landingNextPage: true})
+  }
+
 
   render = (): JSX.Element => {
     if (this.state.page === "Landing") {
-      return (<Landing pageChange={this.handlePageChange} handleLogin={this.handleLogin} handleLogout={this.handleLogout} user={this.state.user} loggedIn={this.state.loggedIn} nextPage={this.state.landingNextPage} updateNextPage={this.updateLandingNextPage}/>)
+      return (
+        <>
+          <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
+          <Landing
+            pageChange={this.handlePageChange}
+            handleLogin={this.handleLogin}
+            handleLogout={this.handleLogout}
+            user={this.state.user}
+            loggedIn={this.state.loggedIn}
+            nextPage={this.state.landingNextPage}
+            updateNextPage={this.updateLandingNextPage}
+          />
+        </>
+      )
     }
     else if (this.state.page === "About") {
-      return (<About pageChange={this.handlePageChange}></About>)
+      return (
+        <>
+          <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
+          <About
+            pageChange={this.handlePageChange}
+          />
+        </>
+      )
     }
     else {
       throw new Error("invalid page");

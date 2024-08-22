@@ -10,6 +10,7 @@ import ExportCards from "../ExportCards/ExportCards";
 type ProjectsProps = {
   user: any;
   returnToHomePage: () => void;
+  navbarClick?: boolean;
 }
 
 type ProjectsState = {
