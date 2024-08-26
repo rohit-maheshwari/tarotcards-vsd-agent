@@ -17,6 +17,7 @@ type ProjectDescriptionState = {
   title: string,
   description: string,
   nextPage: boolean,
+  projectId: number | null
 }
 
 class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescriptionState> {
@@ -28,6 +29,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
         title: '',
         description: '',
         nextPage: false,
+        projectId: this.props.projectId
       };
 
       this.saveProject = lodash.debounce(this.saveProject.bind(this), 500);
@@ -35,27 +37,49 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
     
     componentDidMount(): void {
       console.log(this.props.projectId)
-        if (this.props.projectId != null) {
-          fetch('/api/project/get?projectId='+this.props.projectId, {
-            method: "GET",
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-            },
+      console.log(this.props.user)
+      if (this.props.user == null) {
+        fetch('/api/project/create', {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            personEmailAddress: null
           })
-          .then((response) => {
-            if (response.ok) {
-              return response.json()
-            }
-          })
-          .then((data) => {
-            console.log(data)
-            this.setState({subfield: data.subfield, title: data.title, description: data.description})
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-        }
+        })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          this.setState({projectId: data.projectId})
+        })
+      }
+      else if (this.props.projectId != null) {
+        fetch('/api/project/get?projectId='+this.props.projectId, {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          if (response.ok) {
+            return response.json()
+          }
+        })
+        .then((data) => {
+          console.log(data)
+          this.setState({subfield: data.subfield, title: data.title, description: data.description})
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
     }
 
     handleSubfieldChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -87,7 +111,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          projectId: this.props.projectId,
+          projectId: this.state.projectId,
           projectSubfield: this.state.subfield,
           projectTitle: this.state.title,
           projectDescription: this.state.description
@@ -146,7 +170,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
             </div>
           </div>
         :
-        <DrawTarotCards returnToPrevPage={this.togglePage} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.props.projectId} />
+        <DrawTarotCards returnToPrevPage={this.togglePage} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.state.projectId} />
       );
     };
 }

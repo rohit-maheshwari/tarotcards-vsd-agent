@@ -116,6 +116,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
             : this.state.userProjects.map((project: any) => {
               return (
                 <li className='projects-project'>
+                  {console.log(project)}
                   {project.projectTitle}
                   <div className='project-buttons'>
                     <img src={editbutton} onClick={() => this.setState({nextPage: true, selectedProjectId: project.projectId})}/>
