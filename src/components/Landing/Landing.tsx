@@ -41,7 +41,7 @@ class Landing extends Component<LandingProps, LandingState> {
                 <p className="landingDescription">
                   This is a system made for Allen school researchers to think about the potential unintended consequences of their research. 
                   You can use a few short sentences about your project or abstract. The entire process is quick and should take approximately 
-                  10 minutes to complete and should ideally be done a few times, either at different stages in your project or with different projects.
+                  10 minutes to complete. It should ideally be done a few times, either at different stages in your project or with different projects.
                 </p>
               </div>
               <div className="main">

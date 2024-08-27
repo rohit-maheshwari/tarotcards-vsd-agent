@@ -244,7 +244,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
             <div className="draw-tarot-cards">
                 <ProgressBar step={2}/>
                 <header className='header-brainstorm'>
-                    <h1 className='title'>Please draw a card from the stack</h1>
+                    <h1 className='title'>Please draw a card from the stack.</h1>
                     <h3 className='description'>Each card will guide you to anticipate impacts from different perspectives. Write down your reflection.</h3>
                 </header>
                 <div className='draw-card-row'>
