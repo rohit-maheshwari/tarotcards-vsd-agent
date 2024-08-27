@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { pages } from '../../App';
 import Projects from "../Projects/Projects";
 import './About.css'
+import aboutInformation from './About.json';
 
 type Props = {
     pageChange: (page: pages) => void
@@ -41,18 +42,14 @@ class Landing extends Component<Props, LandingState> {
                 </p>
             </div>
             <div className="main">
-                <div className="person">
-                    <h2 className="personH2">Person 1</h2>
-                    <div className="box"></div>
-                </div>
-                <div className="person">
-                    <h2 className="personH2">Person 2</h2>
-                    <div className="box"></div>
-                </div>
-                <div className="person">
-                    <h2 className="personH2">Person 3</h2>
-                    <div className="box"></div>
-                </div>
+                {aboutInformation.people.map((person) => {
+                    return (
+                        <a className="person" href={person.link != "" ? person.link : undefined} target="_blank">
+                            <h2>{person.name}</h2>
+                            <p>{person.title}</p>
+                        </a>
+                    )
+                })}
             </div>
         </div>
     </div>

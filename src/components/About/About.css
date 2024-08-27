@@ -71,29 +71,32 @@
   
 .main {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-bottom: 50px;
     gap: 20px;
 }
   
 .person {
+    text-decoration: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-  
-.person .box {
-    width: 200px;
+    width: 30%;
     height: 150px;
-    background-color: #ccc;
-    margin-bottom: 10px;
+    border: 1px solid #222;
+    border-radius: 10px;
 }
   
-.person .personH2 {
+.person h2 {
     font-size: 16px;
     font-weight: bold;
     text-align: center;
+    color: #000;
+}
+
+.person p {
+    color: #444;
 }
   
 .footer {
