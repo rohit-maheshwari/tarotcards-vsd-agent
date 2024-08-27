@@ -116,8 +116,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
             : this.state.userProjects.map((project: any) => {
               return (
                 <li className='projects-project'>
-                  {console.log(project)}
-                  {project.projectTitle}
+                  <p>{project.projectTitle}</p>
                   <div className='project-buttons'>
                     <img src={editbutton} onClick={() => this.setState({nextPage: true, selectedProjectId: project.projectId})}/>
                     <img src={deletebutton} onClick={() => this.deleteProject(project.projectId)}/>
@@ -126,12 +125,9 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
               )
             })}
             </ul>
-            <div className="projects-page-buttons">
-              <button onClick={() => this.props.returnToHomePage()}>Home</button>
-            </div>
           </div>
         :
-          <ProjectDescription returnToPrevPage={() => this.setState({nextPage: false})} user={this.props.user} projectId={this.state.selectedProjectId}/>
+          <ProjectDescription returnToPrevPage={() => this.setState({nextPage: false})} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.state.selectedProjectId}/>
       );
     };
 }
