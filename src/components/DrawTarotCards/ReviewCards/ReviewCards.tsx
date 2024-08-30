@@ -38,7 +38,7 @@ class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
         console.log(this.props.finishedCardsWithResponse)
         return (
             <div className="review-body">
-                <h1 className="review-header">Review All Tarot Cards</h1>
+                <h1 className="review-header">Tarot Cards of Tech Deck</h1>
                 <div className="review-cards-container">
                     {this.props.sortCards().map((card) => (
                         <div key={card.cardName} className="review-card">
