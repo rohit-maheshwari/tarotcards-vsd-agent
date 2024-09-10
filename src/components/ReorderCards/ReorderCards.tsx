@@ -1,15 +1,16 @@
 import React, { useState, createRef, Component } from 'react';
 import { pages } from '../../App';
-import { tarotcards } from '../SelectingTarotCards/tarotcards';
+import { tarotcards } from '../oldComponents/SelectingTarotCards/tarotcards';
 import './ReorderCards.css';
-import TarotCardComponent from '../NewTarotCard/NewTarotCard'
-import ProgressBar from '../NewProgressBar/ProgressBar';
+import TarotCardComponent from '../TarotCard/TarotCard'
+import ProgressBar from '../ProgressBar/ProgressBar';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import editbutton from './editbutton.svg'
 import deletebutton from './deletebutton.svg'
 import ExportCards from '../ExportCards/ExportCards';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import PageButtons from '../PageButtons/PageButtons';
 
 const lodash = require('lodash')
 
@@ -236,10 +237,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
                         rows={5}
                     />
                 </div>
-                <div className="reorder-page-buttons">
-                    <button className='reorder-back-button' onClick={() => this.props.returnToPrevPage()}>Back</button>
-                    <button className='reorder-next-button' onClick={() => this.setState({nextPage: true})}>Next</button>
-                </div>
+                <PageButtons back={this.props.returnToPrevPage} next={() => this.setState({nextPage: true})} />
             </div>
             :
             <ExportCards finalCards={this.state.cardsWithResponse} returnToPrevPage={() => this.setState({nextPage: false})} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.props.projectId}/>

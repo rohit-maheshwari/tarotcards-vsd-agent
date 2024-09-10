@@ -1,15 +1,12 @@
 import React, { useState, Component } from 'react';
 import { Page, Text, View, Document, Image, Line, Svg, PDFViewerProps, pdf } from '@react-pdf/renderer';
 import './ExportCards.css';
-import ProgressBar from '../NewProgressBar/ProgressBar';
+import ProgressBar from '../ProgressBar/ProgressBar';
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import Doc from './PDF/PDF';
 import Projects from '../Projects/Projects';
 import Landing from '../Landing/Landing';
-
-type CustomPDFViewerProps = {
-    pdfData: string
-}
+import PageButtons from '../PageButtons/PageButtons';
 
 type ExportCardsProps = {
     finalCards: any[],
@@ -66,15 +63,19 @@ class ExportCards extends Component<ExportCardsProps, ExportCardsState> {
                     <PDFViewer width='80%' height={600} showToolbar={false}>
                         <Doc title={this.state.title} description={this.state.description} takeaways={this.state.takeaways} finalCards={this.props.finalCards}/>
                     </PDFViewer>
-                    <PDFDownloadLink className="export-cards-pdf-download" document={<Doc title={this.state.title} description={this.state.description} takeaways={this.state.takeaways} finalCards={this.props.finalCards}/>} fileName="tarotcards.pdf">
+                    <PDFDownloadLink className="export-cards-pdf-download"
+                        document={<Doc 
+                                    title={this.state.title} 
+                                    description={this.state.description} 
+                                    takeaways={this.state.takeaways} 
+                                    finalCards={this.props.finalCards} />} 
+                        fileName="tarotcards.pdf">
                         {({ blob, url, loading, error }) =>
-                        loading ? 'Loading document...' : 'DOWNLOAD PDF'
+                            loading ? 'LOADING PDF...' : 'DOWNLOAD PDF'
                         }
                     </PDFDownloadLink>
                 </div>
-                <div className="export-cards-buttons">
-                    <button onClick={() => this.props.returnToPrevPage()}>Back</button>
-                </div>
+                <PageButtons back={this.props.returnToPrevPage} next={null} />
             </div>
         )
     }

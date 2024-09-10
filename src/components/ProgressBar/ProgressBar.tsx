@@ -1,55 +1,20 @@
-import { Component } from "react";
-import "./ProgressBar.css";
-import Tooltip from '@mui/material/Tooltip';
-import {tarotcards} from '../SelectingTarotCards/tarotcards';
-
-type TarotCardType = {
-  title: string,
-  image: string,
-  questions: string[],
-  color: string
-}
+import React, { Component } from "react";
+import './ProgressBar.css'
 
 type ProgressBarProps = {
-  allCards: typeof tarotcards
-  finishedCards: {[key: string]: boolean}
+    step: number
 }
 
-type ProgressBarState = {
-
-}
-
-class ProgressBar extends Component<ProgressBarProps, ProgressBarState> {
-  constructor(props: ProgressBarProps) {
-    super(props);
-    this.state = { };
-  }
-
-  handleDrawCircles = () : JSX.Element => {
-    const circles: JSX.Element[] = [];
-    for (let i: number = 0; i < this.props.allCards.length; i++) {
-        const name = this.props.allCards[i].title;
-        if (this.props.finishedCards[this.props.allCards[i]?.title]) {
-          circles.push(<Tooltip title={name}><div key={name} className="completed-circle" style={{backgroundColor: this.props.allCards[i].color}}></div></Tooltip>);
-        } else {
-          circles.push(<Tooltip title={name}><div key={name} className="in-progress-circle"></div></Tooltip>);
-        }
+class ProgressBar extends Component<ProgressBarProps, {}> {
+    render() {
+        return (
+            <ul className="progress-bar">
+                <li className={this.props.step === 1 ? "active" : this.props.step > 1 ? "completed" : "incomplete"} data-step="1">Create Project</li>
+                <li className={this.props.step === 2 ? "active" : this.props.step > 2 ? "completed" : "incomplete"} data-step="2">Brainstorm</li>
+                <li className={this.props.step === 3 ? "active" : this.props.step > 3 ? "completed" : "incomplete"} data-step="3">Review and Reorder</li>
+            </ul>
+        );
     }
-    return (
-      <div>{circles}</div>
-    )
-  }
-
-  render = (): JSX.Element => {
-    // console.log("Selected cards:", this.props.selectedCards);
-    // console.log("Dictionary:", this.state.dictionary);
-    // console.log("finished cards: ", this.props.finishedCards);
-    return (
-      <div className="circle-container">
-        {this.handleDrawCircles()}
-      </div>
-    )
-  };
 }
 
 export default ProgressBar;

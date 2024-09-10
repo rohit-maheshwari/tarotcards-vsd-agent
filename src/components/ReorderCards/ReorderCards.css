@@ -80,12 +80,3 @@
     width: 80%;
     font-size: 18px;
 }
-
-.reorder-page-buttons {
-    position: absolute;
-    bottom: 2%;
-    left: 1%;
-    width: 98%;
-    display: flex;
-    justify-content: space-between;
-}

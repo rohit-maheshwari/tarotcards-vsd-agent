@@ -88,12 +88,3 @@ button {
     cursor: pointer;
     font-size: 14px;
 }
-
-.landing-page-buttons {
-    position: absolute;
-    bottom: 2%;
-    left: 1%;
-    width: 98%;
-    display: flex;
-    justify-content: flex-end;
-}

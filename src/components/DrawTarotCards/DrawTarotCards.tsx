@@ -1,12 +1,13 @@
 import React, { useState, Component } from 'react';
 import { pages } from '../../App';
-import { tarotcards } from '../SelectingTarotCards/tarotcards';
+import { tarotcards } from '../oldComponents/SelectingTarotCards/tarotcards';
 import './DrawTarotCards.css';
-import TarotCardComponent from '../NewTarotCard/NewTarotCard'
-import ProgressBar from '../NewProgressBar/ProgressBar';
+import TarotCardComponent from '../TarotCard/TarotCard'
+import ProgressBar from '../ProgressBar/ProgressBar';
 import drawCardLogo from "./drawCardLogo.svg";
 import ReviewCards from './ReviewCards/ReviewCards';
 import ReorderCards from '../ReorderCards/ReorderCards';
+import PageButtons from '../PageButtons/PageButtons';
 
 const lodash = require('lodash');
 
@@ -266,10 +267,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
                         />
                     </div>
                 </div>
-                <div className="draw-page-buttons">
-                    <button className='draw-back-button' onClick={() => this.props.returnToPrevPage()}>Back</button>
-                    <button className='draw-next-button' onClick={() => this.setState({nextPage: true})}>Next</button>
-                </div>
+                <PageButtons back={this.props.returnToPrevPage} next={() => this.setState({nextPage: true})} />
             </div>
         :
             <ReorderCards setCard={this.setCard} returnToPrevPage={() => this.setState({nextPage: false})} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.props.projectId} />

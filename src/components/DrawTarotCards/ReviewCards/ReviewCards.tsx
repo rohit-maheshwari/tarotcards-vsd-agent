@@ -1,11 +1,12 @@
 import React, { useState, Component } from 'react';
 import { pages } from '../../../App';
-import { tarotcards } from '../../SelectingTarotCards/tarotcards';
+import { tarotcards } from '../../oldComponents/SelectingTarotCards/tarotcards';
 import './ReviewCards.css';
-import TarotCardComponent from '../../NewTarotCard/NewTarotCard'
-import ProgressBar from '../../NewProgressBar/ProgressBar';
+import TarotCardComponent from '../../TarotCard/TarotCard'
+import ProgressBar from '../../ProgressBar/ProgressBar';
 import editbutton from './editbutton.svg'
 import deletebutton from './deletebutton.svg'
+import PageButtons from '../../PageButtons/PageButtons';
 
 type Card = {
     title: string;
@@ -60,9 +61,7 @@ class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
                         </div>
                     ))}
                 </div>
-                <div className="review-page-buttons">
-                    <button className="review-back-button" onClick={() => this.props.toggle()}>Back</button>
-                </div>
+                <PageButtons back={this.props.toggle} next={null} />
             </div>
         )
     }

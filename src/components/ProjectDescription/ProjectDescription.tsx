@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import ProgressBar from "../NewProgressBar/ProgressBar";
+import ProgressBar from "../ProgressBar/ProgressBar";
 import './ProjectDescription.css';
 import DrawTarotCards from "../DrawTarotCards/DrawTarotCards";
+import PageButtons from "../PageButtons/PageButtons";
 
 const lodash = require('lodash')
 
@@ -164,10 +165,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
                 cols={50}
               />
             </div>
-            <div className="project-description-buttons">
-              <button className="project-description-back-button" onClick={() => this.props.returnToPrevPage()}>Back</button>
-              <button className="project-description-next-button" onClick={this.nextPage}>Next</button>
-            </div>
+            <PageButtons back={this.props.returnToPrevPage} next={this.nextPage} />
           </div>
         :
         <DrawTarotCards returnToPrevPage={this.togglePage} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.state.projectId} />

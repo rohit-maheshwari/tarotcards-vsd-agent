@@ -3,6 +3,7 @@ import { pages } from '../../App';
 import Projects from "../Projects/Projects";
 import './Landing.css'
 import ProjectDescription from "../ProjectDescription/ProjectDescription";
+import PageButtons from "../PageButtons/PageButtons";
 
 type LandingProps = {
     pageChange: (page: pages) => void,
@@ -65,7 +66,7 @@ class Landing extends Component<LandingProps, LandingState> {
                 {!this.props.loggedIn && <button className="guestButton" onClick={() => this.props.updateNextPage(true)}>Guest</button>}
               </div>
             </div>
-            {this.props.loggedIn && <div className="landing-page-buttons"><button onClick={() => this.props.updateNextPage(true)}>Next</button></div>}
+            {this.props.loggedIn && <PageButtons back={null} next={() => this.props.updateNextPage(true)} />}
         </div>
     );
   };

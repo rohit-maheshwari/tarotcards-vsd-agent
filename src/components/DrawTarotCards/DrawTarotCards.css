@@ -68,12 +68,3 @@
     width: 100%;
     flex-grow: 1;
 }
-
-.draw-page-buttons {
-    position: absolute;
-    bottom: 2%;
-    left: 1%;
-    width: 98%;
-    display: flex;
-    justify-content: space-between;
-}

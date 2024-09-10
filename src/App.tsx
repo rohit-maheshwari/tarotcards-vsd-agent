@@ -4,7 +4,7 @@ import Landing from './components/Landing/Landing';
 import About from './components/About/About'
 import Projects from './components/Projects/Projects';
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
-import SelectingTarotCards from './components/SelectingTarotCards/SelectingTarotCards';
+import SelectingTarotCards from './components/oldComponents/SelectingTarotCards/SelectingTarotCards';
 import DrawTarotCards from './components/DrawTarotCards/DrawTarotCards';
 import ReviewCards from './components/DrawTarotCards/ReviewCards/ReviewCards';
 import ReorderCards from './components/ReorderCards/ReorderCards'

@@ -27,7 +27,6 @@
     color: white;
     text-decoration: none;
     padding: 20px;
-    margin-top: 20px; /* Adjust the spacing as needed */
 }
 
 .export-cards-pdf-download:hover {
@@ -36,5 +35,4 @@
     color: rgb(69, 69, 69);
     text-decoration: none;
     padding: 20px;
-    margin-top: 20px; /* Adjust the spacing as needed */
 }
