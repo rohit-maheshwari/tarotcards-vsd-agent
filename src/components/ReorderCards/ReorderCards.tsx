@@ -1,25 +1,13 @@
-import React, { useState, createRef, Component } from 'react';
-import { pages } from '../../App';
+import React, { Component } from 'react';
 import { tarotcards } from '../oldComponents/SelectingTarotCards/tarotcards';
 import './ReorderCards.css';
-import TarotCardComponent from '../TarotCard/TarotCard'
 import ProgressBar from '../ProgressBar/ProgressBar';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
 import editbutton from './editbutton.svg'
 import deletebutton from './deletebutton.svg'
 import ExportCards from '../ExportCards/ExportCards';
-import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import PageButtons from '../PageButtons/PageButtons';
 
 const lodash = require('lodash')
-
-type Card = {
-    title: string;
-    image: string;
-    questions: string[];
-    color: string
-}
 
 type ReorderCardsProps = {
     setCard: (card: any) => void;
@@ -224,7 +212,9 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
                                     <h3 className='reorder-card-title'>{card.title}</h3>
                                     <p className='reorder-card-response'>{card.response}</p>
                                 </div>
-                                <button className='reorder-card-edit-button' onClick={() => this.props.setCard(card)}>Edit</button>
+                                <div className="reorder-card-card-buttons">
+                                    <img src={editbutton} onClick={() => this.props.setCard(card)} />
+                                </div>
                             </div>
                         </div>
                     )}

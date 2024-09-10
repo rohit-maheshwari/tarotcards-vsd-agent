@@ -1,4 +1,4 @@
-import React, { useState, Component } from 'react';
+import { Component } from 'react';
 import { pages } from '../../App';
 import './Navbar.css';
 

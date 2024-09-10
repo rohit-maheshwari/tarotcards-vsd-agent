@@ -1,9 +1,6 @@
-import React, { useState, Component } from 'react';
-import { pages } from '../../../App';
-import { tarotcards } from '../../oldComponents/SelectingTarotCards/tarotcards';
+import { Component } from 'react';
 import './ReviewCards.css';
 import TarotCardComponent from '../../TarotCard/TarotCard'
-import ProgressBar from '../../ProgressBar/ProgressBar';
 import editbutton from './editbutton.svg'
 import deletebutton from './deletebutton.svg'
 import PageButtons from '../../PageButtons/PageButtons';

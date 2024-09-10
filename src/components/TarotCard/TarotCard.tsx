@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import "./TarotCard.css";
 import flip from "./flipbutton.svg";
 
@@ -19,7 +19,7 @@ type TarotCardState = {
     isFlipping: boolean
 }
 
-export default class TarotCardComponent extends Component <TarotCardProps, TarotCardState> {
+class TarotCardComponent extends Component <TarotCardProps, TarotCardState> {
     constructor(props: TarotCardProps) {
         super(props);
 
@@ -51,3 +51,5 @@ export default class TarotCardComponent extends Component <TarotCardProps, Tarot
         
     };
 };
+
+export default TarotCardComponent;

@@ -1,11 +1,8 @@
-import React, { useState, Component } from 'react';
-import { Page, Text, View, Document, Image, Line, Svg, PDFViewerProps, pdf } from '@react-pdf/renderer';
+import { Component } from 'react';
 import './ExportCards.css';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import Doc from './PDF/PDF';
-import Projects from '../Projects/Projects';
-import Landing from '../Landing/Landing';
 import PageButtons from '../PageButtons/PageButtons';
 
 type ExportCardsProps = {

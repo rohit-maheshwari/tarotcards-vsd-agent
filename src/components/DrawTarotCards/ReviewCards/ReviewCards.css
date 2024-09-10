@@ -86,14 +86,3 @@
     width: 100%;
     flex-grow: 1;
 }
-
-.review-response-box {
-    width: 100%;
-    height: 100px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    resize: none;
-}
-

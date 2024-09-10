@@ -1,5 +1,4 @@
-import React, { useState, Component } from 'react';
-import { pages } from '../../App';
+import React, { Component } from 'react';
 import { tarotcards } from '../oldComponents/SelectingTarotCards/tarotcards';
 import './DrawTarotCards.css';
 import TarotCardComponent from '../TarotCard/TarotCard'
@@ -120,24 +119,6 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
         this.setFinishedCardsFromDB();
     }
 
-    // handleCardUpdate = () => {
-    //     fetch('/api/project/getCard?projectId='+'1&cardName='+this.state.currentCard?.title, {
-    //         method: "GET",
-    //     }).then((response) => {
-    //         if (response.ok) {
-    //             return response.json()
-    //         }
-    //     }).then((data) => {
-    //         if (data.card != null) {
-    //             this.setState({response: data.card.answers})
-    //         } else {
-    //             this.setState({response: ''});
-    //         }
-    //     }).catch((error) => {
-    //         console.log(error.message)
-    //     })
-    // }
-
     saveResponse = async () => {
         fetch('/api/project/addOrUpdateCard', {
             method: "PUT",
@@ -194,7 +175,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
         this.setState({currentCard: card, response: card.response, showReviewCards: false, nextPage: false});
     }
 
-    deleteCard = (card: any, calledFromSaveResponse: boolean) => {
+    deleteCard = (card: any, calledFromOtherPage: boolean) => {
         console.log(card)
         
         fetch('/api/project/removeCard', {
@@ -214,22 +195,19 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
         }).then((data) => {
             console.log(data);
             const newFinishedCardsWithResponse = this.state.finishedCardsWithResponse.filter((c) => c.title != card.title)
-            this.updateCardsAfterDelete(newFinishedCardsWithResponse, calledFromSaveResponse);
-            // this.setState({cards: updatedCards})
-            // const newCard = updatedCards[Math.floor(Math.random() * updatedCards.length)];
-            // this.props.setCard(newCard, true);
+            this.updateCardsAfterDelete(newFinishedCardsWithResponse, calledFromOtherPage);
         }).catch((err) => {
             console.error(err)
         })
         console.log(this.state)
     }
 
-    updateCardsAfterDelete = (newFinishedCardsWithResponse: any[], calledFromSaveResponse: boolean) => {
+    updateCardsAfterDelete = (newFinishedCardsWithResponse: any[], calledFromOtherPage: boolean) => {
         const newFinishedCardsWithResponseNames = newFinishedCardsWithResponse.map(card => card.title)
         const unfinishedCards = cards.filter(card => !newFinishedCardsWithResponseNames.includes(card.title));
         console.log(newFinishedCardsWithResponse)
         console.log(unfinishedCards)
-        this.setState({finishedCardsWithResponse: newFinishedCardsWithResponse, unfinishedCards: unfinishedCards}, () => {!calledFromSaveResponse && this.drawCard()})
+        this.setState({finishedCardsWithResponse: newFinishedCardsWithResponse, unfinishedCards: unfinishedCards}, () => {!calledFromOtherPage && this.drawCard()})
     }
 
     toggle = () => {

@@ -62,8 +62,8 @@ class Landing extends Component<LandingProps, LandingState> {
                 </div>
               </div>
               <div className="footer">
-                <button className="googleButton" onClick={this.props.loggedIn ? this.props.handleLogout : this.props.handleLogin}>{this.props.loggedIn ? "Sign Out" : "Sign in with Google"}</button>
-                {!this.props.loggedIn && <button className="guestButton" onClick={() => this.props.updateNextPage(true)}>Guest</button>}
+                <button onClick={this.props.loggedIn ? this.props.handleLogout : this.props.handleLogin}>{this.props.loggedIn ? "Sign Out" : "Sign in with Google"}</button>
+                {!this.props.loggedIn && <button onClick={() => this.props.updateNextPage(true)}>Guest</button>}
               </div>
             </div>
             {this.props.loggedIn && <PageButtons back={null} next={() => this.props.updateNextPage(true)} />}

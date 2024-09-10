@@ -18,8 +18,17 @@
     width: 25%;
 }
 
-.card-draw img {
+.review-all-cards-button {
+    margin: 15% 0px;
+}
+
+.draw-card-logo {
     width: 80%;
+}
+
+.draw-new-card-button {
+    margin: 20% 0px;
+    font-size: 16px;
 }
 
 .draw-card-tarotcard {
@@ -29,18 +38,6 @@
 .draw-card-tarotcard img {
     width: 100%;
 }
-
-.review-all-cards-button {
-    margin: 15% 0px;
-}
-  
-.draw-new-card-button {
-    margin: 20% 0px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
 
 .response {
     width: 50%;

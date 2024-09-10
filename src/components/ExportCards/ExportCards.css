@@ -6,15 +6,6 @@
     text-align: center;
 }
 
-.export-cards-buttons {
-    position: absolute;
-    bottom: 2%;
-    left: 1%;
-    width: 98%;
-    display: flex;
-    justify-content: space-between;
-}
-
 .export-cards-pdf-container {
     display: flex;
     flex-direction: column;

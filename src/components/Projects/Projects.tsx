@@ -1,11 +1,8 @@
-import React, { Component } from "react";
-import { pages } from '../../App';
+import { Component } from "react";
 import './Projects.css'
 import ProjectDescription from "../ProjectDescription/ProjectDescription";
 import editbutton from './editbutton.svg'
 import deletebutton from './deletebutton.svg'
-import pdfbutton from './pdfbutton.svg'
-import ExportCards from "../ExportCards/ExportCards";
 
 type ProjectsProps = {
   user: any;
@@ -115,13 +112,13 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
               <div> no projects yet... </div>
             : this.state.userProjects.map((project: any) => {
               return (
-                <li className='projects-project'>
+                <div className='projects-project'>
                   <p>{project.projectTitle}</p>
                   <div className='project-buttons'>
                     <img src={editbutton} onClick={() => this.setState({nextPage: true, selectedProjectId: project.projectId})}/>
                     <img src={deletebutton} onClick={() => this.deleteProject(project.projectId)}/>
                   </div>
-                </li>
+                </div>
               )
             })}
             </ul>

@@ -96,7 +96,6 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
     };
 
     nextPage = () => {
-      // SAVE TO DB FETCH HERE
       this.togglePage();
     }
     

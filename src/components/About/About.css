@@ -17,39 +17,6 @@
     padding: 20px;
 }
 
-.menuButton {
-    position: absolute;
-    top: 50x;
-    right: 50px;
-    font-size: 48px;
-    cursor: pointer;
-}
-
-.menu {
-    display: none;
-    position: absolute;
-    top: 190px;
-    right: 100px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-}
-
-.menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.menu li {
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    padding: 10px;
-    cursor: pointer;
-}
-  
 .aboutheader {
     margin-bottom: 50px;
 }
@@ -97,21 +64,4 @@
 
 .person p {
     color: #444;
-}
-  
-.footer {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 50px;
-}
-  
-.aboutButton {
-    background-color: #ccc;
-    border: 2px solid #222;
-    font-weight: bold;
-    color: #333;
-    position: absolute;
-    bottom: 100px;
-    right: 250px;
 }

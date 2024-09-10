@@ -46,24 +46,3 @@
     font-size: 18px;
     resize: none;
 }
-
-.projectDescriptionButton { 
-    position: absolute;
-    right: 20px;
-    background-color: #6200EA;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    color: white; 
-    font-weight: bold; 
-    cursor: pointer;
-}
-
-.project-description-buttons { 
-    position: absolute;
-    bottom: 2%;
-    left: 1%;
-    width: 98%;
-    display: flex;
-    justify-content: space-between;
-}

@@ -31,19 +31,21 @@
     display: flex;
     flex-direction: row;
     margin: 0px 50px;
+    height: 200px;
 }
 
 
 .reorder-body .reorder-card-content {
     display: flex;
+    flex-direction: row;
     list-style: none;
     margin: 20px 0;
     border: 1px solid #ccc;
     border-radius: 10px;
     overflow: hidden;
     background-color: #fcfcfc;
-    position: relative;
     width: 100%;
+    gap: 30px;
 }
 
 .reorder-body .reorder-buttons {
@@ -61,21 +63,26 @@
     width: 10%;
 }
 
-.reorder-card-text {
-    margin-left: 30px;
+.reorder-card-card-buttons {
+    display: flex;
+    margin: auto;
+    margin-right: 30px;
 }
 
-.reorder-card-edit-button {
-    margin: auto 50px auto auto;
-    border: 1px solid #999;
-    background-color: #bbb;
+.reorder-card-card-buttons img {
+    width: 30px !important;
+    cursor: pointer;
 }
+
 
 .reorder-takeaways {
     text-align: center;
 }
 
 .reorder-takeaways textarea {
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 10px;
     resize: none;
     width: 80%;
     font-size: 18px;
