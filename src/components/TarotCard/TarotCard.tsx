@@ -1,66 +1,55 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import "./TarotCard.css";
-import { FrontTarotCardComponent } from "./Front/FrontTarotCard";
-import { BackTarotCardComponent } from "./Back/BackTarotCard";
 import flip from "./flipbutton.svg";
 
-type TarotCardType = {
+type Card = {
     title: string,
-    image: string,
+    frontimage: string,
+    backimage: string,
     questions: string[],
     color: string
 }
 
 type TarotCardProps = {
-    title: string,
-    description: string,
-    key: number | undefined,
-    tarotcard: TarotCardType,
-    handleCardSelect: (card: TarotCardType) => void,
-    showComponent: boolean,
-    finishedCards: {[key: string]: boolean},
-    updateCard: (card: TarotCardType) => void,
-    initialResponse: string
+    tarotcard: Card,
 }
 
 type TarotCardState = {
+    selected: boolean,
     isFlipping: boolean
 }
 
-export class TarotCardComponent extends Component <TarotCardProps, TarotCardState> {
+class TarotCardComponent extends Component <TarotCardProps, TarotCardState> {
     constructor(props: TarotCardProps) {
         super(props);
 
-        this.state = { isFlipping: false }
+        this.state = { selected: false, isFlipping: false }
     }
 
     flipCard = () => {
         this.setState({ isFlipping: true });
 
         setTimeout(() => {
-            this.props.handleCardSelect(this.props.tarotcard);
-        }, 150);
-
-        setTimeout(() => {
-            this.setState({ isFlipping: false });
+            this.setState({ isFlipping: false, selected: !this.state.selected });
         }, 150);
     }
 
     render = (): JSX.Element => {
+        console.log(this.state.selected)
         return (
-            <div className={`card ${this.state.isFlipping ? 'half-flipped' : ''}`}>
+            <div className={`card-pic ${this.state.isFlipping ? 'half-flipped' : ''}`}>
                 <div className="flipbuttoncontainer">
                     <img className={`flipbtn ${this.state.isFlipping ? 'half-flipped' : ''}`} src={flip} onClick={this.flipCard} />
                 </div>
-                {this.props.showComponent ?
-                    <FrontTarotCardComponent tarotcard={this.props.tarotcard} />
+                {!this.state.selected ?
+                    <img src={this.props.tarotcard.frontimage} onClick={this.flipCard} />
                 :
-                <div className="card-back">
-                    <BackTarotCardComponent title={this.props.title} description={this.props.description} tarotcard={this.props.tarotcard} finishedCards={this.props.finishedCards} updateCard={this.props.updateCard} initialResponse={this.props.initialResponse}/>
-                </div>
+                    <img src={this.props.tarotcard.backimage} onClick={this.flipCard} />
                 }
             </div>
         );
         
     };
 };
+
+export default TarotCardComponent;

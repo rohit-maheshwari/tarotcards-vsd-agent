@@ -1,0 +1,34 @@
+{
+    "people": [
+        {
+            "name": "Katharina Reinecke",
+            "title": "Wildlab Director and Associate Professor",
+            "link": "https://homes.cs.washington.edu/~reinecke/"
+        },
+        {
+            "name": "Alice Gao",
+            "title": "PhD Student",
+            "link": "https://atgao.github.io/"
+        },
+        {
+            "name": "Nino Migineishvili",
+            "title": "PhD Student",
+            "link": ""
+        },
+        {
+            "name": "Rock Yuren Pang",
+            "title": "PhD Student",
+            "link": "https://homes.cs.washington.edu/~ypang2/"
+        },
+        {
+            "name": "Rohit Maheshwari",
+            "title": "Undergraduate Student",
+            "link": "https://www.linkedin.com/in/rohitmaheshwari0"
+        },
+        {
+            "name": "Julie Yu",
+            "title": "Undergraduate Student",
+            "link": "https://www.linkedin.com/in/julie-yu-b252b0139/"
+        }
+    ]
+}

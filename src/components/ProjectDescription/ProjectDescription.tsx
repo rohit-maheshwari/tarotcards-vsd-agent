@@ -1,88 +1,173 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
+import ProgressBar from "../ProgressBar/ProgressBar";
 import './ProjectDescription.css';
-import Sprite from '../Sprite/Sprite';
+import DrawTarotCards from "../DrawTarotCards/DrawTarotCards";
+import PageButtons from "../PageButtons/PageButtons";
 
-type pages = "ProjectDescription" | "SelectingTarotCards";
+const lodash = require('lodash')
 
-type Props = {
-  pageChange: (page: pages) => void,
-  finishedChange: (finished: boolean) => void,
-  titleChange: (title: string) => void,
-  descriptionChange: (description: string) => void,
+type ProjectDescriptionProps = {
+  returnToPrevPage: () => void;
+  returnToHomePage: () => void;
+  user: any;
+  projectId: number | null;
 }
 
 type ProjectDescriptionState = {
+  subfield: string,
   title: string,
   description: string,
-  finished: boolean,
+  nextPage: boolean,
+  projectId: number | null
 }
 
-class ProjectDescription extends Component<Props, ProjectDescriptionState> {
-    constructor(props: Props) {
+class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescriptionState> {
+    constructor(props: ProjectDescriptionProps) {
       super(props);
   
       this.state = {
-        title: 'RASSAR',
-        description: 'RASSAR is a prototype that identifies, categorizes, and localizes indoor accessibility and safety issues using LiDAR camera data, machine learning, and AR.',
-        finished: false
+        subfield: '',
+        title: '',
+        description: '',
+        nextPage: false,
+        projectId: this.props.projectId
       };
+
+      this.saveProject = lodash.debounce(this.saveProject.bind(this), 500);
+    }
+    
+    componentDidMount(): void {
+      console.log(this.props.projectId)
+      console.log(this.props.user)
+      if (this.props.user == null) {
+        fetch('/api/project/create', {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            personEmailAddress: null
+          })
+        })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log(data);
+          this.setState({projectId: data.projectId})
+        })
+      }
+      else if (this.props.projectId != null) {
+        fetch('/api/project/get?projectId='+this.props.projectId, {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          if (response.ok) {
+            return response.json()
+          }
+        })
+        .then((data) => {
+          console.log(data)
+          this.setState({subfield: data.subfield, title: data.title, description: data.description})
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
     }
 
+    handleSubfieldChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      this.setState({ subfield: event.target.value }, () => this.saveProject());
+    };
+
     handleTitleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      this.setState({ title: event.target.value });
+      this.setState({ title: event.target.value }, () => this.saveProject());
     };
 
     handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      this.setState({ description: event.target.value });
-    };
-  
-    handleSubmit = () => {
-      this.setState({finished: !this.state.finished});
-      this.props.titleChange(this.state.title);
-      this.props.descriptionChange(this.state.description);
-      this.props.finishedChange(this.state.finished);
+      this.setState({ description: event.target.value }, () => this.saveProject());
     };
 
-    handleUserSubmit = () => {
-      this.props.pageChange('SelectingTarotCards');
+    nextPage = () => {
+      this.togglePage();
+    }
+    
+    togglePage = () => {
+      this.setState({nextPage: !this.state.nextPage});
+    }
+
+    saveProject = () => {
+      fetch('/api/project/update', {
+        method: "PUT",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          projectId: this.state.projectId,
+          projectSubfield: this.state.subfield,
+          projectTitle: this.state.title,
+          projectDescription: this.state.description
+        })
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     }
   
 
     render = (): JSX.Element => {
 
       return (
-        <>
+        !this.state.nextPage ? 
           <div className="project">
-            <textarea 
-              readOnly={this.state.finished}
-              value={this.state.title}
-              onChange={this.handleTitleChange}
-              className="projectTitleTextArea"
-              rows={1}
-              cols={50}
-            />
-            <textarea
-              readOnly={this.state.finished}
-              value={this.state.description}
-              onChange={this.handleDescriptionChange}
-              className="projectDescriptionTextArea"
-              rows={4}
-              cols={50}
-            />
-            <button
-              onClick={this.handleSubmit}
-              className="projectDescriptionButton"
-            >
-            {this.state.finished ? "EDIT" : "DONE"}
-            </button>
-          </div>
-          {this.state.finished &&
-            <div className="buttons">
-              <button className="button" onClick={this.handleUserSubmit}>Show me the Tarot Cards!</button>
+            <ProgressBar step={1}/>
+            <h2 className="project-description-title">Enter title and description of your project. This will help us generate your export later.</h2>
+            <div className="project-description-content">
+              <p>Subfield</p>
+              <textarea 
+                value={this.state.subfield}
+                onChange={this.handleSubfieldChange}
+                className="project-description-subfield-text-area"
+                rows={1}
+                cols={50}
+              />
+              <p>Title</p>
+              <textarea
+                value={this.state.title}
+                onChange={this.handleTitleChange}
+                className="project-description-title-text-area"
+                rows={1}
+                cols={50}
+              />
+              <p>Description</p>
+              <textarea
+                value={this.state.description}
+                onChange={this.handleDescriptionChange}
+                className="project-description-description-text-area"
+                rows={20}
+                cols={50}
+              />
             </div>
-          }
-          <Sprite page = {"ProjectDescription"} finished = {this.state.finished} />
-        </>
+            <PageButtons back={this.props.returnToPrevPage} next={this.nextPage} />
+          </div>
+        :
+        <DrawTarotCards returnToPrevPage={this.togglePage} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.state.projectId} />
       );
     };
 }
