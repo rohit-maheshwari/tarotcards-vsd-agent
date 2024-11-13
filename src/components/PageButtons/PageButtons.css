@@ -1,0 +1,16 @@
+.page-buttons { 
+    display: flex;
+    justify-content: space-between;
+}
+
+.page-buttons-back-button {
+    position: absolute;
+    bottom: 2%;
+    left: 1%;
+}
+
+.page-buttons-next-button {
+    position: absolute;
+    bottom: 2%;
+    right: 1%;
+}

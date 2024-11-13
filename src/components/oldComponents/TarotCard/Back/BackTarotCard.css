@@ -1,0 +1,13 @@
+.card-back {
+    text-align: center;
+    overflow-y: scroll;
+}
+
+.card-back h1 {
+    margin-top: 0;
+    padding-top: 1.5rem;
+}
+
+.card-back input {
+    width: 75%;
+}
