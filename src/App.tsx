@@ -9,6 +9,7 @@ import DrawTarotCards from './components/DrawTarotCards/DrawTarotCards';
 import ReviewCards from './components/DrawTarotCards/ReviewCards/ReviewCards';
 import ReorderCards from './components/ReorderCards/ReorderCards'
 import Navbar from './components/Navbar/Navbar';
+import TechnologyDashboard from './components/Learn/Learn';
 
 const env = require('./environment.json');
 // const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -25,7 +26,7 @@ type TarotCardType = {
   color: string
 }
 
-export type pages = "Landing" | "About" | "Projects" | "ProjectDescription" | "DrawTarotCards" | "Reorder" | "Export";
+export type pages = "Landing" | "About" | "Projects" | "ProjectDescription" | "DrawTarotCards" | "Reorder" | "Export" | "Learn";
 
 type AppState = {
   loggedIn: boolean,
@@ -165,6 +166,14 @@ class App extends Component<Props, AppState> {
           <About
             pageChange={this.handlePageChange}
           />
+        </>
+      )
+    }
+    else if (this.state.page == "Learn") {
+      return (
+        <>
+          <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
+          <TechnologyDashboard />
         </>
       )
     }
