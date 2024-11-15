@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import './App.css';
-import Landing from './components/Landing/Landing';
+import Landing from './components/Landing/LandingNew';
 import About from './components/About/About'
 import Projects from './components/Projects/Projects';
 import ProjectDescription from './components/ProjectDescription/ProjectDescription';
