@@ -52,7 +52,7 @@ class Landing extends Component<LandingProps, LandingState> {
                       <h2 className="cardTitle">Learn from the Past</h2>
                       <p className="cardDescription">Learn ways to prevent consequences within your project from past researchers.</p>
                     </div>
-                    <button className="button" onClick={() => this.props.pageChange("Advise")}>Consult</button>
+                    <button className="button" onClick={() => this.props.pageChange("Learn")}>Consult</button>
                 </div>
                 <div className="card">
                     <div className="cardText">
