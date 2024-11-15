@@ -35,7 +35,7 @@ class Landing extends Component<Props, LandingState> {
     <div className="aboutBody">
         <div className="container">
             <div className="aboutheader">
-                <h1 className="aboutH1"><span className="ABOUTUS">ABOUT US</span></h1>
+                <h1 className="aboutH1"><span className="ABOUTUS">About Us</span></h1>
                 <p className="aboutDescription">
                 This is an overview of our project
                 </p>

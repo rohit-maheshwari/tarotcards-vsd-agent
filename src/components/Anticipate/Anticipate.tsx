@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { pages } from '../../App';
 import Projects from "../Projects/Projects";
-import './Landing.css'
+import './Anticipate.css'
 import ProjectDescription from "../ProjectDescription/ProjectDescription";
 import PageButtons from "../PageButtons/PageButtons";
 
-type LandingProps = {
+type AnticipateProps = {
     pageChange: (page: pages) => void,
     handleLogin: () => void;
     handleLogout: () => void;
@@ -15,12 +15,12 @@ type LandingProps = {
     updateNextPage: (_: boolean) => void;
 }
 
-type LandingState = {
+type AnticipateState = {
   
 }
 
-class Landing extends Component<LandingProps, LandingState> {
-  constructor(props: LandingProps) {
+class Anticipate extends Component<AnticipateProps, AnticipateState> {
+  constructor(props: AnticipateProps) {
     super(props);
 
     this.state = { nextPage: false };
@@ -37,19 +37,15 @@ class Landing extends Component<LandingProps, LandingState> {
       ):
         <div className="landingBody">
           <div className="container">
-              <div className="landingheader">
-                <h1 className="landingH1"><span className="PEACE">PEACE</span> is a place where you proactively explore and anticipate consequences and ethics.</h1>
-                <p className="landingDescription">
-                  This is a system for Allen school researchers to think about the potential unintended consequences of their research. 
+          <div className="aboutheader">
+                <h1 className="aboutH1"><span className="ABOUTUS">Tarot Cards</span></h1>
+                <p>
+                The Tarot Cards tool is a system for Allen school researchers to think about the potential unintended consequences of their research. </p> 
+                <p> 
                   You can use a few short sentences about your project or abstract. The entire process is quick and should take approximately 
                   10 minutes to complete. It should ideally be done a few times, either at different stages in your project or with different projects.
                 </p>
-
-                <p>
-                  You can also learn about how examples of how researchers mitigate the consequences of their research projects and ask for advice.  
-                </p>
-
-              </div>
+            </div>
               <div className="main">
                 <div className="step">
                   <h2 className="stepH2">Describe Project</h2>
@@ -77,4 +73,4 @@ class Landing extends Component<LandingProps, LandingState> {
   };
 }
 
-export default Landing;
+export default Anticipate;
