@@ -94,15 +94,15 @@ const TechnologyDashboard: React.FC = () => {
   return (
     <div className="min-vh-100 bg-light py-4">
       <div className="container mt-0">
-        <div className="card shadow-sm mb-4">
+        <div className="card shadow-sm mb-12">
           <div className="card-body">
             <div className="row align-items-center mb-4">
-              <div className="col-md-6 mb-3 mb-md-0">
-                <h1 className="h3 fw-bold mb-1">Technology Assessment Dashboard</h1>
-                <p className="text-muted mb-0">Monitor and analyze technology impacts and risks</p>
+              <div className="col-md-12 mb-3 mb-md-0">
+                <h1 className="h3 fw-bold mb-1">Learn about existing undesirable consequences in computing research</h1>
+                <p className="text-muted mb-0">More importantly, existing mitigation strategies by researchers</p>
               </div>
               
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <div className="position-relative">
                   <Search className="position-absolute top-50 translate-middle-y" style={{ left: '12px' }} size={20} />
                   <input
@@ -122,7 +122,7 @@ const TechnologyDashboard: React.FC = () => {
                     </button>
                   )}
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="d-flex gap-2 overflow-auto pb-2">

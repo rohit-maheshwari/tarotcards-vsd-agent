@@ -40,10 +40,15 @@ class Landing extends Component<LandingProps, LandingState> {
               <div className="landingheader">
                 <h1 className="landingH1"><span className="PEACE">PEACE</span> is a place where you proactively explore and anticipate consequences and ethics.</h1>
                 <p className="landingDescription">
-                  This is a system made for Allen school researchers to think about the potential unintended consequences of their research. 
+                  This is a system for Allen school researchers to think about the potential unintended consequences of their research. 
                   You can use a few short sentences about your project or abstract. The entire process is quick and should take approximately 
                   10 minutes to complete. It should ideally be done a few times, either at different stages in your project or with different projects.
                 </p>
+
+                <p>
+                  You can also learn about how examples of how researchers mitigate the consequences of their research projects and ask for advice.  
+                </p>
+
               </div>
               <div className="main">
                 <div className="step">
