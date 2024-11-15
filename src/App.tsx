@@ -11,6 +11,7 @@ import ReorderCards from './components/ReorderCards/ReorderCards'
 import Navbar from './components/Navbar/Navbar';
 import TechnologyDashboard from './components/Learn/Learn';
 import AdvisePage from './components/Advise/Advise';
+import Anticipate from './components/Anticipate/Anticipate';
 
 const env = require('./environment.json');
 // const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -27,7 +28,7 @@ type TarotCardType = {
   color: string
 }
 
-export type pages = "Landing" | "About" | "Projects" | "ProjectDescription" | "DrawTarotCards" | "Reorder" | "Export" | "Learn" | "Advise";
+export type pages = "Landing" | "About" | "Projects" | "ProjectDescription" | "DrawTarotCards" | "Reorder" | "Export" | "Learn" | "Advise" | "Anticipate";
 
 type AppState = {
   loggedIn: boolean,
@@ -186,7 +187,24 @@ class App extends Component<Props, AppState> {
         </>
       )
     }
-    else {
+    else if (this.state.page === "Anticipate") {
+      return (
+        <>
+          <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
+          <Anticipate
+          
+          pageChange={this.handlePageChange}
+            handleLogin={this.handleLogin}
+            handleLogout={this.handleLogout}
+            user={this.state.user}
+            loggedIn={this.state.loggedIn}
+            nextPage={this.state.landingNextPage}
+            updateNextPage={this.updateLandingNextPage}
+            />
+        </>
+      )
+    }
+      else {
       throw new Error("invalid page");
     }
     
