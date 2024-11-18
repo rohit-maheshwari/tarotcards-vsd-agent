@@ -1,25 +1,24 @@
-.navbar {
+.custom-navbar {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background-color: #4b2e83;
     color: #fff;
 }
 
-.navbar-list {
+.custom-navbar-list {
     list-style-type: none;
     display: flex;
     margin: 0;
     padding: 0;
 }
 
-.navbar-item {
+.custom-navbar-item {
     padding: 1rem;
-    margin: 0 0.5rem;
     cursor: pointer;
 }
 
-.navbar-item:hover {
+.custom-navbar-item:hover {
     background-color: #8871b7;
     cursor: pointer;
 }
