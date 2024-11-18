@@ -4,13 +4,13 @@
 }
 
 .page-buttons-back-button {
-    position: absolute;
+    position: fixed;
     bottom: 2%;
     left: 1%;
 }
 
 .page-buttons-next-button {
-    position: absolute;
+    position: fixed;
     bottom: 2%;
     right: 1%;
 }
