@@ -91,6 +91,14 @@ const TechnologyDashboard: React.FC = () => {
     return matchesSearch && item.Subfield === selectedFilter;
   });
 
+  const setFilter = (filter: string) => {
+    if (selectedFilter === "all") {
+      setSelectedFilter(filter);
+    } else {
+      setSelectedFilter("all");
+    }
+  }
+
   return (
     <div className="min-vh-100 bg-light py-4">
       <div className="container mt-0">
@@ -129,7 +137,7 @@ const TechnologyDashboard: React.FC = () => {
               {filters.map((filter) => (
                 <button
                   key={filter}
-                  onClick={() => setSelectedFilter(filter)}
+                  onClick={() => setFilter(filter)}
                   className={`btn ${
                     selectedFilter === filter
                       ? 'btn-primary'
