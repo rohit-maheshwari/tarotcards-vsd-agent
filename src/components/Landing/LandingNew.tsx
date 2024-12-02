@@ -3,7 +3,6 @@ import { pages } from '../../App';
 import Projects from "../Projects/Projects";
 import './Landing.css'
 import ProjectDescription from "../ProjectDescription/ProjectDescription";
-import PageButtons from "../PageButtons/PageButtons";
 
 type LandingProps = {
     pageChange: (page: pages) => void,
@@ -15,19 +14,15 @@ type LandingProps = {
     updateNextPage: (_: boolean) => void;
 }
 
-type LandingState = {
-  
-}
+type LandingState = {}
 
 class Landing extends Component<LandingProps, LandingState> {
   constructor(props: LandingProps) {
     super(props);
-
     this.state = { nextPage: false };
   }
 
   render = (): JSX.Element => {
-    console.log(this.state, this.props)
     return (
       this.props.nextPage ?
       (this.props.loggedIn ?
@@ -38,35 +33,34 @@ class Landing extends Component<LandingProps, LandingState> {
         <div className="landingBody">
           <div className="container">
               <div className="landingheader">
-                <h1 className="landingH1"><span className="PEACE">PEACE</span> is a place where you proactively explore and anticipate consequences and ethics.</h1>
+                <h1 className="PEACE">PEACE</h1>
+                <h2 className="subheader">where you <u>P</u>roactively <u>E</u>xplore and <u>A</u>nticipate <u>C</u>onsequences and <u>E</u>thics</h2>
                 <p className="landingDescription">
-                    Our goal is to help researchers think about the potential unintended consequences of their research. 
-                    Researchers can learn about how unintended consequences were addressed in the past, use our
-                    anticipation tool, or consult our experts to explore the potential consequences of their research.
+                    The PEACE Initiative aims to support Allen school researchers to routinely and proactively address undesirable consequences of their research innovations. This initiative is funded by NSF Institutional Transformation fund.
                 </p>
               </div>
               <div className="landingCards">
                 <div className="card">
                     <div className="cardText">
-                      <h4 className="cardHeader">See Past Outcomes</h4>
-                      <h2 className="cardTitle">Learn from the Past</h2>
-                      <p className="cardDescription">Learn ways to prevent consequences within your project from past researchers.</p>
+                    {/* <h4 className="cardHeader">See Past Outcomes</h4> */}
+                      <h4 className="cardHeader">Learn from the past</h4>
+                      <h2 className="cardTitle">Learn how other researchers have addressed undesirable consequences in the past.</h2>
                     </div>
-                    <button className="button" onClick={() => this.props.pageChange("Advise")}>Consult</button>
+                    <button className="button" onClick={() => this.props.pageChange("Learn")}>Learn</button>
                 </div>
                 <div className="card">
                     <div className="cardText">
-                      <h4 className="cardHeader">Tarot Cards</h4>
-                      <h2 className="cardTitle">Anticipate Consequences</h2>
-                      <p className="cardDescription">Anticipate potential consequences with the Tarot Cards tool!</p>
+                    {/* <h4 className="cardHeader">Tarot Cards</h4> */}
+                      <h4 className="cardHeader">Anticipate Consequences</h4>
+                      <h2 className="cardTitle">Anticipate potential consequences of your project with the Tarot Cards of Tech.</h2>
                     </div>
                     <button className="button" onClick={() => this.props.pageChange("Anticipate")}>Anticipate</button>
                 </div>
                 <div className="card">
                     <div className="cardText">
-                      <h4 className="cardHeader">Advisory Board</h4>
-                      <h2 className="cardTitle">Consult Experts</h2>
-                      <p className="cardDescription">Talk to PEACE's advisory board of experts in many diferent fields about your project!</p>
+                    {/* <h4 className="cardHeader">Advisory Board</h4> */}
+                      <h4 className="cardHeader">Consult Experts</h4>
+                      <h2 className="cardTitle">Talk to the PEACE ethics advisory board with experts across many disciplines.</h2>
                     </div>
                     <button className="button" onClick={() => this.props.pageChange("Advise")}>Consult</button>
                 </div>

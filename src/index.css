@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Anybody', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -10,5 +10,5 @@ code {
 }
 
 textarea {
-  font-family: Arial, sans-serif;
+  font-family: 'Anybody', sans-serif;
 }

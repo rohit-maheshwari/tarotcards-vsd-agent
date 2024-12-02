@@ -1,6 +1,7 @@
 html {
   margin-bottom: 100px;
   overflow-y: hidden;
+  font-family: 'Anybody', sans-serif;
 }
 
 #root {
