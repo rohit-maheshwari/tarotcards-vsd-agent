@@ -1,5 +1,31 @@
-.scrollable-container {
-    max-height: 70vh;
+.tasks {
+    font-family: 'Anybody', sans-serif;
+    max-height: 100vh; 
     overflow-y: auto;
 }
 
+.learn-dashboard {
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+.page-header {
+    margin-bottom: 30px;
+    width: 100%;
+    margin: auto;
+}
+
+.page-header-title {
+    font-size: 72px;
+    color: #000; /* Black text */
+    font-weight: bold;
+    text-align: left;
+    left: 0;
+}
+
+.page-subheader {
+    font-size: 24px;
+    color: #000; 
+    margin-bottom: 20px;
+    text-align: left;
+}
