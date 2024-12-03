@@ -40,6 +40,14 @@
     align-items: center;
 }
 
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+  }
+
+
 .login-buttons {
     display: flex;
     justify-content: center;
