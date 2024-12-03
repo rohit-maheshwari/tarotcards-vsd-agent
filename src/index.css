@@ -1,14 +1,14 @@
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Anybody', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: Arial, sans-serif;
+  font-family: 'Anybody', sans-serif;
 }
 
 textarea {
-  font-family: Arial, sans-serif;
+  font-family: 'Anybody', sans-serif;
 }
