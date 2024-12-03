@@ -43,7 +43,7 @@ const AdvisePage: FC = () => {
   ];
 
   return (
-    <div className="min-vh-100 bg-light">
+    <div className="bg-light">
       <div className="container mt-0 tasks">
         <div className="page-header">
           <h3 className="page-header-title">Consult</h3>

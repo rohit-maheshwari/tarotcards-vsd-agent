@@ -12,6 +12,7 @@ import Navbar from './components/Navbar/Navbar';
 import TechnologyDashboard from './components/Learn/Learn';
 import AdvisePage from './components/Advise/Advise';
 import Anticipate from './components/Anticipate/Anticipate';
+import Footer from './components/Footer/Footer';
 
 const env = require('./environment.json');
 // const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
@@ -145,10 +146,11 @@ class App extends Component<Props, AppState> {
 
 
   render = (): JSX.Element => {
+    let content;
+
     if (this.state.page === "Landing") {
-      return (
+      content = (
         <>
-          {/* <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/> */}
           <Navbar 
               pageChange={this.handlePageChange} 
               updateNextPage={this.updateLandingNextPage} 
@@ -167,10 +169,9 @@ class App extends Component<Props, AppState> {
             updateNextPage={this.updateLandingNextPage}
           />
         </>
-      )
-    }
-    else if (this.state.page === "About") {
-      return (
+      );
+    } else if (this.state.page === "About") {
+      content = (
         <>
           <Navbar 
               pageChange={this.handlePageChange} 
@@ -184,10 +185,9 @@ class App extends Component<Props, AppState> {
             pageChange={this.handlePageChange}
           />
         </>
-      )
-    }
-    else if (this.state.page == "Learn") {
-      return (
+      );
+    } else if (this.state.page === "Learn") {
+      content = (
         <>
           <Navbar 
               pageChange={this.handlePageChange} 
@@ -199,10 +199,9 @@ class App extends Component<Props, AppState> {
           />
           <TechnologyDashboard />
         </>
-      )
-    }
-    else if (this.state.page == "Advise") {
-      return (
+      );
+    } else if (this.state.page === "Advise") {
+      content = (
         <>
           <Navbar 
               pageChange={this.handlePageChange} 
@@ -214,10 +213,9 @@ class App extends Component<Props, AppState> {
           />
           <AdvisePage />
         </>
-      )
-    }
-    else if (this.state.page === "Anticipate") {
-      return (
+      );
+    } else if (this.state.page === "Anticipate") {
+      content = (
         <>
           <Navbar 
               pageChange={this.handlePageChange} 
@@ -228,22 +226,26 @@ class App extends Component<Props, AppState> {
               handleLogout={this.handleLogout}
           />
           <Anticipate
-          
-          pageChange={this.handlePageChange}
+            pageChange={this.handlePageChange}
             handleLogin={this.handleLogin}
             handleLogout={this.handleLogout}
             user={this.state.user}
             loggedIn={this.state.loggedIn}
             nextPage={this.state.landingNextPage}
             updateNextPage={this.updateLandingNextPage}
-            />
+          />
         </>
-      )
-    } 
-      else {
+      );
+    } else {
       throw new Error("invalid page");
     }
-    
+
+    return (
+      <>
+        {content}
+        <Footer />
+      </>
+    );
   };
 }
 

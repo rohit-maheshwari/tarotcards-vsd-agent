@@ -1,9 +1,26 @@
-html {
-  margin-bottom: 100px;
-  overflow-y: hidden;
-  font-family: 'Anybody', sans-serif;
+/* In your CSS file */
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
 #root {
-  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  flex: 1;
+}
+
+.footer {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+}
+
+
+.bg-light {
+  flex: 1; 
 }

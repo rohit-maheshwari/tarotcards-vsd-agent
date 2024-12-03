@@ -1,7 +1,5 @@
 .tasks {
     font-family: 'Anybody', sans-serif;
-    max-height: 100vh; 
-    overflow-y: auto;
 }
 
 .learn-dashboard {

@@ -1,0 +1,20 @@
+.footer {
+    background-color: #f8f9fa;
+    color: #666;
+    font-size: 14px;
+    border-top: 1px solid #e7e7e7;
+  }
+  
+  .footer p {
+    margin: 0;
+  }
+  
+  .footer-link {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 5px;
+  }
+  
+  .footer-link:hover {
+    text-decoration: underline;
+  }
