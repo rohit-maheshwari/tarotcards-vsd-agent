@@ -148,7 +148,15 @@ class App extends Component<Props, AppState> {
     if (this.state.page === "Landing") {
       return (
         <>
-          <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
+          {/* <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/> */}
+          <Navbar 
+              pageChange={this.handlePageChange} 
+              updateNextPage={this.updateLandingNextPage} 
+              user={this.state.user} 
+              loggedIn={this.state.loggedIn}
+              handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
+          />
           <Landing
             pageChange={this.handlePageChange}
             handleLogin={this.handleLogin}
@@ -164,7 +172,14 @@ class App extends Component<Props, AppState> {
     else if (this.state.page === "About") {
       return (
         <>
-          <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
+          <Navbar 
+              pageChange={this.handlePageChange} 
+              updateNextPage={this.updateLandingNextPage} 
+              user={this.state.user} 
+              loggedIn={this.state.loggedIn}
+              handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
+          />
           <About
             pageChange={this.handlePageChange}
           />
@@ -174,7 +189,14 @@ class App extends Component<Props, AppState> {
     else if (this.state.page == "Learn") {
       return (
         <>
-          <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
+          <Navbar 
+              pageChange={this.handlePageChange} 
+              updateNextPage={this.updateLandingNextPage} 
+              user={this.state.user} 
+              loggedIn={this.state.loggedIn}
+              handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
+          />
           <TechnologyDashboard />
         </>
       )
@@ -182,7 +204,14 @@ class App extends Component<Props, AppState> {
     else if (this.state.page == "Advise") {
       return (
         <>
-          <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
+          <Navbar 
+              pageChange={this.handlePageChange} 
+              updateNextPage={this.updateLandingNextPage} 
+              user={this.state.user} 
+              loggedIn={this.state.loggedIn}
+              handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
+          />
           <AdvisePage />
         </>
       )
@@ -190,7 +219,14 @@ class App extends Component<Props, AppState> {
     else if (this.state.page === "Anticipate") {
       return (
         <>
-          <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
+          <Navbar 
+              pageChange={this.handlePageChange} 
+              updateNextPage={this.updateLandingNextPage} 
+              user={this.state.user} 
+              loggedIn={this.state.loggedIn}
+              handleLogin={this.handleLogin}
+              handleLogout={this.handleLogout}
+          />
           <Anticipate
           
           pageChange={this.handlePageChange}
@@ -203,7 +239,7 @@ class App extends Component<Props, AppState> {
             />
         </>
       )
-    }
+    } 
       else {
       throw new Error("invalid page");
     }
