@@ -6,12 +6,6 @@
     height: 100%;
 }
 
-.container {
-    text-align: center;
-    max-width: 1200px;
-    padding: 20px;
-}
-
 .anticipate-overview {
     display: flex;
     justify-content: center;

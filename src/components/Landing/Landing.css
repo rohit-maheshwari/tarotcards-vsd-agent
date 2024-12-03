@@ -8,12 +8,9 @@
     flex-direction: column;
     background-color: #fff;
     font-family: 'Anybody', sans-serif;
-}
+    /* min-height: calc(100vh - );  */
+    /* 1oovh - .nav and .footer */
 
-.container {
-    max-width: 1200px;
-    padding: 20px;
-    text-align: left; /* Left align text */
 }
 
 .landingheader {
@@ -28,6 +25,7 @@
     font-weight: bold;
     text-align: left;
     left: 0;
+    margin-top: 60px;
 }
 
 .subheader {

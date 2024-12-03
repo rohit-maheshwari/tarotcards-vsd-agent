@@ -32,7 +32,7 @@ class Anticipate extends Component<AnticipateProps, AnticipateState> {
   render = (): JSX.Element => {
     console.log(this.state, this.props)
     return (
-      <div className="min-vh-100 bg-light">
+      <div className="bg-light">
         <div className="container mt-0 tasks">
             <div className="page-header">
               <h3 className="page-header-title">Anticipate</h3>
