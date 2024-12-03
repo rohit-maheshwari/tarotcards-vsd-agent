@@ -14,6 +14,7 @@
 }
 
 .page-header-title {
+    margin-top: 60px;
     font-size: 72px;
     color: #000; /* Black text */
     font-weight: bold;
