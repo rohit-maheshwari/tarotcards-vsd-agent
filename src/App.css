@@ -1,14 +1,19 @@
 /* In your CSS file */
-html, body {
+html body {
   height: 100%;
+  width: 100vw;
   margin: 0;
+  overscroll-behavior: none;
 }
+
 
 #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
+
+
 
 .container {
   flex: 1;
@@ -23,4 +28,21 @@ html, body {
 
 .bg-light {
   flex: 1; 
+}
+
+/* For WebKit browsers (Chrome, Safari) */
+body::-webkit-scrollbar {
+    width: 0.5em; /* Adjust width as needed */
+    background-color: transparent; /* Make the scrollbar track transparent */
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5); /* Color of the scrollbar thumb */
+    border-radius: 10px; /* Rounded corners for the scrollbar thumb */
+}
+
+/* For Firefox */
+body {
+    scrollbar-width: thin; /* Makes the scrollbar thinner */
+    scrollbar-color: rgba(0, 0, 0, 0.5) transparent; /* Thumb and track color */
 }
