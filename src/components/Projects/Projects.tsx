@@ -46,7 +46,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
     }
 
     componentDidUpdate(prevProps: Readonly<ProjectsProps>, prevState: Readonly<ProjectsState>, snapshot?: any): void {
-        if (prevState.nextPage == true && this.state.nextPage == false) {
+        if (prevState.nextPage === true && this.state.nextPage === false) {
           this.componentDidMount();
         }
     }
@@ -108,7 +108,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
               <button onClick={() => this.createProject()}>Create a New Project</button>
             </div>
             <ul className='projects-container'>
-            {this.state.userProjects.length == 0 ? 
+            {this.state.userProjects.length === 0 ? 
               <div> no projects yet... </div>
             : this.state.userProjects.map((project: any) => {
               return (

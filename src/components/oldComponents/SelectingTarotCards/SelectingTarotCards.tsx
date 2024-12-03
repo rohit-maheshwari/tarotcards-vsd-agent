@@ -49,7 +49,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
   }
 
   componentDidMount(): void {
-    if (this.props.user == null) {
+    if (this.props.user === null) {
       this.setState({finishedCards: {}, responses: {}});
     } else {
       const googleId = this.props.user.googleId;

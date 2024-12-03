@@ -6,7 +6,7 @@ router.get("/card/getAll", async (req, res) => {
     console.log("Handling /card/getAll");
     const cards = await Card.find();
 
-    if (cards.length == 12) {
+    if (cards.length === 12) {
         console.log("Found 12 cards");
         res.status(200).json({
           cards: cards

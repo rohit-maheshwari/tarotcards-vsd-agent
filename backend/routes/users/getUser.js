@@ -8,7 +8,7 @@ router.get("/user/get", async (req, res) => {
     try {
         const person = await Person.findOne({emailAddress: emailAddress})
         console.log(person)
-        if (person != null) {
+        if (person !== null) {
             res.status(200).json(person);
             console.log(person)
         } else {

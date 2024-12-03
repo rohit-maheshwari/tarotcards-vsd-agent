@@ -43,7 +43,7 @@ class Landing extends Component<Props, LandingState> {
             <div className="main">
                 {aboutInformation.people.map((person) => {
                     return (
-                        <a className="person" href={person.link != "" ? person.link : undefined} target="_blank">
+                        <a className="person" href={person.link !== "" ? person.link : undefined} target="_blank">
                             <h2>{person.name}</h2>
                             <p>{person.title}</p>
                         </a>

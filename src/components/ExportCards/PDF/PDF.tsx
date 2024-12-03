@@ -20,7 +20,7 @@ class Doc extends Component<DocProps, DocState> {
     
         this.state = { }
         console.log(this.props.finalCards)
-        console.log(this.props.takeaways == '')
+        console.log(this.props.takeaways === '')
     }
     
 
@@ -32,13 +32,13 @@ class Doc extends Component<DocProps, DocState> {
                     <View>
                         <Text style={styles.title}>{this.props.title}</Text>
                         <Svg height="20" width="475"><Line x1={0} x2={475} y1={0} y2={0} strokeWidth={2} stroke="rgb(0, 0, 0)"/></Svg>
-                        {this.props.description != '' &&
+                        {this.props.description !== '' &&
                             <>
                                 <Text style={styles.description}>{this.props.description}</Text>
                                 <Svg height="20" width="475"><Line x1={0} x2={475} y1={0} y2={0} strokeWidth={2} stroke="rgb(0, 0, 0)"/></Svg>
                             </>
                         }
-                        {this.props.takeaways != '' &&
+                        {this.props.takeaways !== '' &&
                             <>
                                 <Text style={styles.takeaways}>{this.props.takeaways}</Text>
                                 <Svg height="20" width="475"><Line x1={0} x2={475} y1={0} y2={0} strokeWidth={2} stroke="rgb(0, 0, 0)"/></Svg>

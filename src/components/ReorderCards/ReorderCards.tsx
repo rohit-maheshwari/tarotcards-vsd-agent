@@ -65,7 +65,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
             const cardNames = data.cards.map((card: any) => card.cardName)
             const answeredCards = tarotcards.filter((card) => cardNames.includes(card.title));
             const cardsWithResponse = answeredCards.map((card) => {
-                return {...card, 'response': data.cards.find((c: any) => c.cardName == card.title)?.answers}
+                return {...card, 'response': data.cards.find((c: any) => c.cardName === card.title)?.answers}
             })
             console.log(cardsWithResponse.sort((a, b) => a.response.length - b.response.length))
             this.setState({cardsWithResponse: cardsWithResponse.sort((a, b) => b.response.length - a.response.length)})
@@ -99,7 +99,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
         let newCardsWithResponse = this.state.cardsWithResponse;
         const currIndex = newCardsWithResponse.findIndex(c => c.title === card.title);
 
-        if (currIndex == 0) {
+        if (currIndex === 0) {
             return;
         }
 
@@ -115,7 +115,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
         let newCardsWithResponse = this.state.cardsWithResponse;
         const currIndex = newCardsWithResponse.findIndex(c => c.title === card.title);
 
-        if (currIndex == newCardsWithResponse.length - 1) {
+        if (currIndex === newCardsWithResponse.length - 1) {
             return;
         }
 

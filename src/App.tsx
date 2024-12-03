@@ -171,7 +171,7 @@ class App extends Component<Props, AppState> {
         </>
       )
     }
-    else if (this.state.page == "Learn") {
+    else if (this.state.page === "Learn") {
       return (
         <>
           <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>
@@ -179,7 +179,7 @@ class App extends Component<Props, AppState> {
         </>
       )
     }
-    else if (this.state.page == "Advise") {
+    else if (this.state.page === "Advise") {
       return (
         <>
           <Navbar pageChange={this.handlePageChange} updateNextPage={this.updateLandingNextPage} user={this.state.user} loggedIn={this.state.loggedIn}/>

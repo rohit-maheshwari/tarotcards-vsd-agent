@@ -7,7 +7,7 @@ router.get("/card/get", async (req, res) => {
     console.log("Handling /card/get");
     const card = await Card.findOne({cardName: cardName});
     console.log(card)
-    if (card != null) {
+    if (card !== null) {
         console.log("Returned one card");
         res.status(200).json({
           cardName: card.cardName,

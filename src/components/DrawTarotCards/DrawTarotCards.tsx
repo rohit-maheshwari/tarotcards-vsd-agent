@@ -138,12 +138,12 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
             console.log(data.message);
             if (this.state.finishedCardsWithResponse.map(card => card.title).includes(this.state.currentCard?.title)) {
                 let newFinishedCardsWithResponse = this.state.finishedCardsWithResponse.map(card => 
-                    (card.title == this.state.currentCard?.title && this.state.response != '')
+                    (card.title === this.state.currentCard?.title && this.state.response !== '')
                     ? {...card, response: this.state.response}
                     : card
                 )
                 // newFinishedCardsWithResponse.push({...this.state.currentCard, response: this.state.response});
-                if (this.state.response == '') {
+                if (this.state.response === '') {
                     this.deleteCard(this.state.currentCard, true);
                 }
                 this.setState({finishedCardsWithResponse: newFinishedCardsWithResponse});
@@ -194,7 +194,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
             }
         }).then((data) => {
             console.log(data);
-            const newFinishedCardsWithResponse = this.state.finishedCardsWithResponse.filter((c) => c.title != card.title)
+            const newFinishedCardsWithResponse = this.state.finishedCardsWithResponse.filter((c) => c.title !== card.title)
             this.updateCardsAfterDelete(newFinishedCardsWithResponse, calledFromOtherPage);
         }).catch((err) => {
             console.error(err)

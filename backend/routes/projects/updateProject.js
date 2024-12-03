@@ -7,14 +7,14 @@ router.put('/project/update', async (req, res) => {
     try {
         const { projectId, projectSubfield, projectTitle, projectDescription, projectTakeaways } = req.body;
         const project = await Project.findOne({ projectId: projectId });
-        if (project == null) {
+        if (project === null) {
             return;
         }
         const editedProject = {
-            projectSubfield: projectSubfield != null ? projectSubfield : project.projectSubfield,
-            projectTitle: projectTitle != null ? projectTitle : project.projectTitle,
-            projectDescription: projectDescription != null ? projectDescription : project.projectDescription,
-            projectTakeaways: projectTakeaways != null ? projectTakeaways : project.projectTakeaways,
+            projectSubfield: projectSubfield !== null ? projectSubfield : project.projectSubfield,
+            projectTitle: projectTitle !== null ? projectTitle : project.projectTitle,
+            projectDescription: projectDescription !== null ? projectDescription : project.projectDescription,
+            projectTakeaways: projectTakeaways !== null ? projectTakeaways : project.projectTakeaways,
         };
         const response = await Project.findOneAndUpdate({ projectId: projectId }, { $set: editedProject }, { new: true })
         if (response) {

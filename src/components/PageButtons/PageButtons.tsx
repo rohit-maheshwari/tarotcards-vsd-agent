@@ -21,8 +21,8 @@ class PageButtons extends Component<PageButtonsProps, PageButtonsState> {
     render() {
         return (
             <div className="page-buttons">
-                {this.props.back != null && <button className="page-buttons-back-button" onClick={this.props.back}>Back</button>}
-                {this.props.next != null && <button className="page-buttons-next-button" onClick={this.props.next}>Next</button>}
+                {this.props.back !== null && <button className="page-buttons-back-button" onClick={this.props.back}>Back</button>}
+                {this.props.next !== null && <button className="page-buttons-next-button" onClick={this.props.next}>Next</button>}
             </div>
         )
     }

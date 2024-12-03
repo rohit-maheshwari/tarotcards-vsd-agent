@@ -39,7 +39,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
     componentDidMount(): void {
       console.log(this.props.projectId)
       console.log(this.props.user)
-      if (this.props.user == null) {
+      if (this.props.user === null) {
         fetch('/api/project/create', {
           method: "POST",
           headers: {
@@ -60,7 +60,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
           this.setState({projectId: data.projectId})
         })
       }
-      else if (this.props.projectId != null) {
+      else if (this.props.projectId !== null) {
         fetch('/api/project/get?projectId='+this.props.projectId, {
           method: "GET",
           headers: {

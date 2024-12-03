@@ -8,7 +8,7 @@ router.post('/user/create', async (req, res) => {
         const { name, emailAddress, classStanding, graduationDate } = req.body;
         console.log(name, emailAddress, classStanding, graduationDate)
         const person = await Person.findOne({ emailAddress: emailAddress });
-        if (person == null) { // POST Create a new person
+        if (person === null) { // POST Create a new person
             const newPerson = new Person({
                 name: name,
                 emailAddress: emailAddress,

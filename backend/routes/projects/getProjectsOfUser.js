@@ -18,7 +18,7 @@ router.get("/project/getUsers", async (req, res) => {
             const currProject = await Project.findOne({projectId: projectId});
             projects.push(currProject)
         }
-        if (projects.length != 0) {
+        if (projects.length !== 0) {
             res.status(200).json({
                 projects: projects
             });

@@ -46,7 +46,7 @@ class ReviewCards extends Component<ReviewCardsProps, ReviewCardsState> {
                                     <div className='card-functions'>
                                         <label>Your response</label>
                                         <img className='card-buttons' src={editbutton} onClick={() => this.props.setCard(card)}/>
-                                        {(card.response == '' || card.response != null) && <img className='card-buttons' src={deletebutton} onClick={() => this.props.deleteCard(card, false)}/>}
+                                        {(card.response === '' || card.response !== null) && <img className='card-buttons' src={deletebutton} onClick={() => this.props.deleteCard(card, false)}/>}
                                     </div>
                                     <textarea
                                         className='review-card-textarea'
