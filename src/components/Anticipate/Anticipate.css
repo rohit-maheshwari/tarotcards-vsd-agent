@@ -12,48 +12,29 @@
     padding: 20px;
 }
 
-.landingheader {
-    margin-bottom: 50px;
-}
-
-
-.landingheader .landingH1 {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
-
-.landingheader .PEACE {
-    font-size: 96px;
-}
-
-.landingheader .landingDescription {
-    font-size: 18px;
-    color: #666;
-    margin-bottom: 40px;
-}
-
-.main {
+.anticipate-overview {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 50px;
     gap: 20px;
+    height: 40vh;
 }
 
-.step {
+.anticipate-step {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.step .box {
+.anticipate-step .box {
     width: 200px;
     height: 150px;
-    background-color: #ccc;
+    /* background-color: #ccc; */
     margin-bottom: 10px;
 }
 
-.step .stepH2 {
+.anticipate-step .stepH2 {
     font-size: 16px;
     font-weight: bold;
     text-align: center;
@@ -65,18 +46,18 @@
     align-items: center;
 }
 
-.footer {
+.login-buttons {
     display: flex;
     justify-content: center;
     gap: 20px;
     margin-top: 50px;
 }
 
-.footer button {
+/* .login-buttons button {
     background-color: #fff;
     border: 1px solid #ccc;
     color: #333;
-}
+} */
 
 button {
     padding: 10px 20px;
