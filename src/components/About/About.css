@@ -1,0 +1,15 @@
+.expert-profile-picture {
+    width: 200px;
+    height: 200px;
+}
+
+.about-profile-picture img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.about-card {
+    min-height: 150px;
+}

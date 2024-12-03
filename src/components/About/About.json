@@ -3,32 +3,38 @@
         {
             "name": "Katharina Reinecke",
             "title": "Wildlab Director and Associate Professor",
-            "link": "https://homes.cs.washington.edu/~reinecke/"
+            "link": "https://homes.cs.washington.edu/~reinecke/",
+            "profilePicture": "https://s3-us-west-2.amazonaws.com/www-cse-public/images/portraits/reinecke_sm.jpg"
         },
         {
             "name": "Alice Gao",
             "title": "PhD Student",
-            "link": "https://atgao.github.io/"
+            "link": "https://atgao.github.io/",
+            "profilePicture": "https://wildlab.cs.washington.edu/images/AliceGao.jpg"
         },
         {
             "name": "Nino Migineishvili",
             "title": "PhD Student",
-            "link": ""
+            "link": "https://niniko1997.github.io/",
+            "profilePicture": "https://wildlab.cs.washington.edu/images/NinoMigineishvili.png"
         },
         {
             "name": "Rock Yuren Pang",
             "title": "PhD Student",
-            "link": "https://homes.cs.washington.edu/~ypang2/"
+            "link": "https://homes.cs.washington.edu/~ypang2/",
+            "profilePicture": "https://wildlab.cs.washington.edu/images/RockPang.jpg"
         },
         {
             "name": "Rohit Maheshwari",
             "title": "Undergraduate Student",
-            "link": "https://www.linkedin.com/in/rohitmaheshwari0"
+            "link": "https://www.linkedin.com/in/rohitmaheshwari0",
+            "profilePicture": "https://wildlab.cs.washington.edu/images/RohitMaheshwari.jpg"
         },
         {
             "name": "Julie Yu",
             "title": "Undergraduate Student",
-            "link": "https://www.linkedin.com/in/julie-yu-b252b0139/"
+            "link": "https://www.linkedin.com/in/julie-yu-b252b0139/",
+            "profilePicture": "https://wildlab.cs.washington.edu/images/JulieYu.jpeg"
         }
     ]
 }
