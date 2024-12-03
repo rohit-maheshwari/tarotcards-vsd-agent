@@ -69,7 +69,6 @@ class App extends Component<Props, AppState> {
         plugin_name: 'TarotCardsVSD'
     }).then(() => {
         this.auth = window.gapi.auth2.getAuthInstance();
-
         // Handle initial sign-in state.
         this.updateSigninStatus(false, null);
     }).catch((error) => {
@@ -129,7 +128,6 @@ class App extends Component<Props, AppState> {
   }
 
   updateLandingNextPage = (bool: boolean) => {
-    console.log(bool)
     this.setState({landingNextPage: bool})
   }
 
