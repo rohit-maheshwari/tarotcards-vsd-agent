@@ -30,8 +30,8 @@ class Landing extends Component<LandingProps, LandingState> {
       :
         <ProjectDescription returnToPrevPage={() => this.props.updateNextPage(false)} returnToHomePage={() => this.props.updateNextPage(false)} user={null} projectId={null}/>
       ):
-        <div className="landingBody">
-          <div className="container">
+        <div className="bg-light">
+          <div className="container mt-0 tasks">
               <div className="landingheader">
                 <h1 className="PEACE">PEACE</h1>
                 <h2 className="subheader">where you <u>P</u>roactively <u>E</u>xplore and <u>A</u>nticipate <u>C</u>onsequences and <u>E</u>thics</h2>
