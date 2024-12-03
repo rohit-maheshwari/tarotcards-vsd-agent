@@ -1,0 +1,22 @@
+.expert {
+    min-height: 200px;
+}
+
+.expert-profile-picture {
+    width: 200px;
+    height: 200px;
+}
+
+.expert-profile-picture img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.ethics-board-description {
+    font-size: 18px;
+    color: #666; 
+    line-height: 1.5;
+    text-align: left;
+}
