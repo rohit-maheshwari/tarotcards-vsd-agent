@@ -24,7 +24,7 @@ const TechnologyCard: React.FC<TechnologyCardProps> = ({ data }) => {
       <div className="card-body">
         <div className="mb-3">
           <div className="d-flex justify-content-between align-items-center mb-2">
-            <div className="d-flex align-items-center gap-2">
+            <div className="d-flex align-items-center gap-2"> 
               <span className="badge bg-primary rounded-pill">{data.ID}</span>
               <span className="text-muted small fw-medium">{data.Subfield}</span>
             </div>
@@ -100,7 +100,7 @@ const TechnologyDashboard: React.FC = () => {
   }
 
   return (
-    <div className="min-vh-100 bg-light">
+    <div className="bg-light">
       <div className="container mt-0 tasks">
             {/* Page Header */}
             <div className="page-header">
