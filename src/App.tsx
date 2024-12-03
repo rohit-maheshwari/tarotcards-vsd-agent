@@ -69,34 +69,27 @@ class App extends Component<Props, AppState> {
         plugin_name: 'TarotCardsVSD'
     }).then(() => {
         this.auth = window.gapi.auth2.getAuthInstance();
-
-        // Listen for sign-in state changes.
-        this.auth.isSignedIn.listen(this.updateSigninStatus);
-
         // Handle initial sign-in state.
-        this.updateSigninStatus(false);
+        this.updateSigninStatus(false, null);
     }).catch((error) => {
       // Handle the error here if initialization fails
       console.error('Error initializing the Google API client:', error);
   });
   }
 
-  updateSigninStatus = (loggedIn: boolean) => {
+  updateSigninStatus = (loggedIn: boolean, user: any) => {
     if (loggedIn) {
-      // console.log('The user is signed in');
-      // You can access user profile info with:
-      // this.auth.currentUser.get().getBasicProfile();
-      this.setState({loggedIn: true})
+      this.setState({loggedIn: true, user: user, landingNextPage: true})
     } else {
-      // console.log('The user is not signed in');
-      this.setState({loggedIn: false, user: null})
+      this.setState({loggedIn: false, user: user, landingNextPage: false})
     }
   }
 
   handleLogin = () => {
+    console.log("state before any login stuff: ", this.state)
     console.log('step 1');
     console.log(this.auth.currentUser.get())
-    this.auth.signIn({prompt: 'select_account'}).then(this.handleVerifyUser).catch((error: any) => console.log(error));
+    this.auth.signIn({prompt: 'select_account'}).then(() => this.handleVerifyUser()).catch((error: any) => console.log(error));
   }
 
   handleVerifyUser = () => {
@@ -110,20 +103,19 @@ class App extends Component<Props, AppState> {
         'Content-Type': 'application/json',
       },
     })
-    .then((res) => this.handleVerifiedUser(res))
+    .then((res) => {this.handleVerifiedUser(res)})
     .catch(() => console.log("/verify: Failed to connect to server"));
   }
 
   handleVerifiedUser = (res: any) => {
+    console.log('step 3');
     res.json()
-    .then((data: any) => {
-      this.setState({loggedIn: true, user: data.userInfo, landingNextPage: true})
-    })
-    console.log('setted state')
-  }
-
+      .then((data: any) => {
+          this.updateSigninStatus(true, data.userInfo);
+      });
+};
   handleLogout = () => {
-    this.auth.signOut().then(this.updateSigninStatus(false)).catch((error: any) => console.log(error));
+    this.auth.signOut().then(() => this.updateSigninStatus(false, null)).catch((error: any) => console.log(error));
   }
 
   handlePageChange = (page: pages): void => {
@@ -136,7 +128,6 @@ class App extends Component<Props, AppState> {
   }
 
   updateLandingNextPage = (bool: boolean) => {
-    console.log(bool)
     this.setState({landingNextPage: bool})
   }
 

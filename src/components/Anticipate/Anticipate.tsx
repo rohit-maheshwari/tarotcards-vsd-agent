@@ -32,6 +32,12 @@ class Anticipate extends Component<AnticipateProps, AnticipateState> {
   render = (): JSX.Element => {
     console.log(this.state, this.props)
     return (
+      this.props.nextPage ?
+      (this.props.loggedIn ?
+        <Projects user={this.props.user} returnToHomePage={() => this.props.updateNextPage(false)} />
+      :
+        <ProjectDescription returnToPrevPage={() => this.props.updateNextPage(false)} returnToHomePage={() => this.props.updateNextPage(false)} user={null} projectId={null}/>
+      ):
       <div className="bg-light">
         <div className="container mt-0 tasks">
             <div className="page-header">
