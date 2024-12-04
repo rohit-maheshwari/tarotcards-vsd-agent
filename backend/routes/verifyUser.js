@@ -6,6 +6,7 @@ const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
+const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
 
 async function verify(token) {
   const ticket = await client.verifyIdToken({
@@ -25,7 +26,7 @@ router.get("/verify", async (req, res) => {
     console.log("Handling GET request for /verify");
     const userInfo = await verify(idToken);
     try {
-      const response = await axios.post('http://localhost:8000/api/user/create', {
+      const response = await axios.post(backendURL + '/api/user/create', {
         name: userInfo.name,
         emailAddress: userInfo.email,
         classStanding: 'not specified yet',

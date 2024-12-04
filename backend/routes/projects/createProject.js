@@ -9,7 +9,7 @@ const ObjectID = require('mongodb').ObjectId;
 
 
 router.post('/project/create', async (req, res) => {
-    console.log('Handling /project/create')
+    console.log('Handling /project/create');
     const projectId = new ObjectID();
     try {
         const { personEmailAddress } = req.body;

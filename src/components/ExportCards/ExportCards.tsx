@@ -4,6 +4,8 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import Doc from './PDF/PDF';
 import PageButtons from '../PageButtons/PageButtons';
+import env from '../../environment.json';
+const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
 
 type ExportCardsProps = {
     finalCards: any[],
@@ -28,7 +30,7 @@ class ExportCards extends Component<ExportCardsProps, ExportCardsState> {
     }
 
     componentDidMount(): void {
-        fetch('/api/project/get?projectId='+this.props.projectId, {
+        fetch(backendURL + '/api/project/get?projectId='+this.props.projectId, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

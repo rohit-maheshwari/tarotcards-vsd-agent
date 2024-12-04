@@ -16,7 +16,7 @@ import Footer from './components/Footer/Footer';
 
 const env = require('./environment.json');
 // const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
-// const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
+const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
 
 type Props = {
   
@@ -97,7 +97,7 @@ class App extends Component<Props, AppState> {
     // instead, get idToken and then send that to backend
     console.log('step 2')
     const idToken = this.auth.currentUser.get().getAuthResponse().id_token;
-    fetch(`/api/verify?idToken=${idToken}`, {
+    fetch(`${backendURL}/api/verify?idToken=${idToken}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

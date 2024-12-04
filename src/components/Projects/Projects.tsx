@@ -4,6 +4,10 @@ import ProjectDescription from "../ProjectDescription/ProjectDescription";
 import editbutton from './editbutton.svg'
 import deletebutton from './deletebutton.svg'
 
+import env from '../../environment.json';
+const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
+
+
 type ProjectsProps = {
   user: any;
   returnToHomePage: () => void;
@@ -24,7 +28,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
     }
 
     componentDidMount(): void {
-        fetch('/api/project/getUsers?emailAddress='+this.props.user.email, {
+        fetch(backendURL + '/api/project/getUsers?emailAddress='+this.props.user.email, {
           method: "GET",
           headers: {
             'Accept': 'application/json',
@@ -52,7 +56,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
     }
 
     createProject = async () => {
-      await fetch('/api/project/create', {
+      await fetch(backendURL + '/api/project/create', {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -75,7 +79,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
 
     deleteProject = async (projectId: number) => {
       console.log(projectId)
-      await fetch('/api/project/delete?personEmailAddress=' + this.props.user.email + '&projectId='+projectId, {
+      await fetch(backendURL + '/api/project/delete?personEmailAddress=' + this.props.user.email + '&projectId='+projectId, {
         method: "DELETE",
         headers: {
           'Accept': 'application/json',

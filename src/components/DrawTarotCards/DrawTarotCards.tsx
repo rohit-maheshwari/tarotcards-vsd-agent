@@ -7,6 +7,8 @@ import drawCardLogo from "./drawCardLogo.svg";
 import ReviewCards from './ReviewCards/ReviewCards';
 import ReorderCards from '../ReorderCards/ReorderCards';
 import PageButtons from '../PageButtons/PageButtons';
+import env from '../../environment.json';
+const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
 
 const lodash = require('lodash');
 
@@ -56,7 +58,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
     }
 
     setFinishedCardsFromDB = async () => {
-        fetch('/api/project/getCards?projectId='+this.props.projectId, {
+        fetch(backendURL + '/api/project/getCards?projectId='+this.props.projectId, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -120,7 +122,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
     }
 
     saveResponse = async () => {
-        fetch('/api/project/addOrUpdateCard', {
+        fetch(backendURL + '/api/project/addOrUpdateCard', {
             method: "PUT",
             body: JSON.stringify({
                 projectId: this.props.projectId,
@@ -178,7 +180,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
     deleteCard = (card: any, calledFromOtherPage: boolean) => {
         console.log(card)
         
-        fetch('/api/project/removeCard', {
+        fetch(backendURL + '/api/project/removeCard', {
             method: "DELETE",
             body: JSON.stringify({
                 projectId: this.props.projectId,

@@ -37,7 +37,7 @@ const getAllCardsRoute = require('./routes/cards/getAllCards.js')
 
 const verifyUserRoute = require('./routes/verifyUser.js');
 
-const env = require("../src/environment.json");
+const env = require("./environment.json");
 const MONGO_URI = env.MONGO_URI || "";
 // MONGO_URI = process.env.MONGO_URI || "";
 
@@ -45,6 +45,12 @@ const PORT =  env.BACKEND.PORT || 8000;
 // PORT = process.env.PORT || process.env.BACKEND_PORT || 8000;
 
 // Middleware
+app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    next();
+});
+
 app.use(bodyParser.json());
 
 app.use(cors());
@@ -83,6 +89,7 @@ mongoose.connect(MONGO_URI, {
 })
   .then(() => {
     console.log('MongoDB Connected');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    console.log(`Server running on ${env.BACKEND.URL} port ${PORT}`);
+    app.listen(PORT, () => console.log(`Server running on ${env.BACKEND.URL} port ${PORT}`));
     })
   .catch(err => console.log(err));
