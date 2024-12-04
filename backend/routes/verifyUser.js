@@ -1,5 +1,5 @@
 const { OAuth2Client } = require('google-auth-library');
-const env = require('../../src/environment.json');
+const env = require('../environment.json');
 const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
 // GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || "";
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
@@ -25,7 +25,8 @@ router.get("/verify", async (req, res) => {
     console.log("Handling GET request for /verify");
     const userInfo = await verify(idToken);
     try {
-      const response = await axios.post('http://localhost:8000/api/user/create', {
+      // const response = await axios.post('http://localhost:8000/api/user/create', {
+      const response = await axios.post('https://phonic-studio-396709.uw.r.appspot.com/api/user/create', {
         name: userInfo.name,
         emailAddress: userInfo.email,
         classStanding: 'not specified yet',

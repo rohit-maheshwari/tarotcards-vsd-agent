@@ -14,8 +14,8 @@ import AdvisePage from './components/Advise/Advise';
 import Anticipate from './components/Anticipate/Anticipate';
 
 const env = require('./environment.json');
-// const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
-// const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
+const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
+const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
 
 type Props = {
   
@@ -94,7 +94,7 @@ class App extends Component<Props, AppState> {
 
   handleLogin = () => {
     console.log('step 1');
-    console.log(this.auth.currentUser.get())
+    console.log(this.auth.currentUser.get());
     this.auth.signIn({prompt: 'select_account'}).then(this.handleVerifyUser).catch((error: any) => console.log(error));
   }
 
@@ -103,7 +103,7 @@ class App extends Component<Props, AppState> {
     // instead, get idToken and then send that to backend
     console.log('step 2')
     const idToken = this.auth.currentUser.get().getAuthResponse().id_token;
-    fetch(`/api/verify?idToken=${idToken}`, {
+    fetch(`${backendURL}/api/verify?idToken=${idToken}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

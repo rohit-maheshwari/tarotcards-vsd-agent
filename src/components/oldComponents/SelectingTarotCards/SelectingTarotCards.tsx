@@ -7,8 +7,8 @@ import { TarotCardComponent } from "../TarotCard/TarotCard";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Doc from './PDF/PDF';
 
-// const env = require('../../environment.json')
-// const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
+const env = require('../../environment.json')
+const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
 
 type pages = "ProjectDescription" | "SelectingTarotCards";
 
@@ -53,7 +53,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
       this.setState({finishedCards: {}, responses: {}});
     } else {
       const googleId = this.props.user.googleId;
-      fetch(`/api/cards?uid=${googleId}`, {
+      fetch(`${backendURL}/api/cards?uid=${googleId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

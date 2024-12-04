@@ -37,7 +37,7 @@ const getAllCardsRoute = require('./routes/cards/getAllCards.js')
 
 const verifyUserRoute = require('./routes/verifyUser.js');
 
-const env = require("../src/environment.json");
+const env = require("./environment.json");
 const MONGO_URI = env.MONGO_URI || "";
 // MONGO_URI = process.env.MONGO_URI || "";
 
@@ -47,7 +47,9 @@ const PORT =  env.BACKEND.PORT || 8000;
 // Middleware
 app.use(bodyParser.json());
 
-app.use(cors());
+// app.use(cors()); 
+// allow all origins
+app.use(cors({ origin: '*' }));
 app.use('/api', homeRoute);
 // app.use('/api', recordCardRoute);
 app.use('/api', verifyUserRoute);

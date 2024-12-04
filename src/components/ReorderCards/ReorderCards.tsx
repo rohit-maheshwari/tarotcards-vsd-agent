@@ -6,8 +6,10 @@ import editbutton from './editbutton.svg'
 import deletebutton from './deletebutton.svg'
 import ExportCards from '../ExportCards/ExportCards';
 import PageButtons from '../PageButtons/PageButtons';
+import env from '../../environment.json';
 
-const lodash = require('lodash')
+const lodash = require('lodash');
+const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
 
 type ReorderCardsProps = {
     setCard: (card: any) => void;
@@ -49,7 +51,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
     
 
     componentDidMount(): void {
-        fetch('/api/project/getCards?projectId='+this.props.projectId, {
+        fetch(backendURL + '/api/project/getCards?projectId='+this.props.projectId, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -74,7 +76,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
             console.log(error)
         })
 
-        fetch('/api/project/get?projectId='+this.props.projectId, {
+        fetch(backendURL + '/api/project/get?projectId='+this.props.projectId, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -132,7 +134,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
     };
 
     saveProject = () => {
-        fetch('/api/project/update', {
+        fetch(backendURL + '/api/project/update', {
           method: "PUT",
           headers: {
             'Accept': 'application/json',
