@@ -35,6 +35,7 @@ class ProgressBar extends Component<ProgressBarProps, {}> {
                         <span className="step-text">Review and Reorder</span>
                     </li>
                 </ul>
+                <hr/>   
             </div>
         );
     }
