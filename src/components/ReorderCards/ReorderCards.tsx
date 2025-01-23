@@ -189,7 +189,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
         console.log(this.state.cardsWithResponse)
         return (
             !this.state.nextPage ?
-            <div className="reorder-body">
+            <div className="reorder-body bg-light tasks">
                 <ProgressBar step={3} />
                 <h1 className="title">Review and rank the unintended consequences you identified.</h1>
                 <h3 className="description">You can review, edit, and rank the tarot cards in the order you think is most important.</h3>

@@ -100,7 +100,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
       console.log(this.state)
       return (
         !this.state.nextPage ?
-          <div className='projects'>
+          <div className='projects container'>
             <div className='project-header'>
               <h1>Hello {this.props.user.name} !</h1>
             </div>

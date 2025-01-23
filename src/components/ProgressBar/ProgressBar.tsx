@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import './ProgressBar.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './ProgressBar.css';  // We'll add some custom CSS
 
 type ProgressBarProps = {
     step: number
