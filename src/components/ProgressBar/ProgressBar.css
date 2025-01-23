@@ -1,4 +1,4 @@
-.progress-bar {
+.progress-bar-custom {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -7,13 +7,13 @@
     margin: 0 0 20px 0;
 }
 
-.progress-bar li {
+.progress-bar-custom li {
     flex: 1;
     position: relative;
     text-align: center;
 }
 
-.progress-bar li::before {
+.progress-bar-custom li::before {
     content: attr(data-step);
     display: block;
     margin: 0 auto 10px;
@@ -28,7 +28,7 @@
     position: relative;
 }
 
-.progress-bar li::after {
+.progress-bar-custom li::after {
     content: '';
     position: absolute;
     top: 15px;
@@ -39,36 +39,36 @@
     z-index: 3;
 }
 
-.progress-bar li:last-child::after {
+.progress-bar-custom li:last-child::after {
     content: none;
 }
 
-.progress-bar li.incomplete::before {
+.progress-bar-custom li.incomplete::before {
     border-color: #ccc;
     background-color: #fff;
     color: #ccc;
 }
 
-.progress-bar li.incomplete::after {
+.progress-bar-custom li.incomplete::after {
     background-color: #ccc;
 }
 
-.progress-bar li.active::before {
+.progress-bar-custom li.active::before {
     border-color: #007bff;
     background-color: #fff;
     color: #007bff;
 }
 
-.progress-bar li.completed::before {
+.progress-bar-custom li.completed::before {
     border-color: #007bff;
     background-color: #007bff;
     color: #fff;
 }
 
-.progress-bar li.completed::after {
+.progress-bar-custom li.completed::after {
     background-color: #007bff;
 }
 
-.progress-bar li.completed li::after {
+.progress-bar-custom li.completed li::after {
     background-color: #007bff;
 }

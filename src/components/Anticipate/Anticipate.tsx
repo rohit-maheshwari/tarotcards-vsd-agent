@@ -75,6 +75,7 @@ class Anticipate extends Component<AnticipateProps, AnticipateState> {
               <button className="button" onClick={this.props.loggedIn ? this.props.handleLogout : this.props.handleLogin}>{this.props.loggedIn ? "Sign Out" : "Sign in with Google"}</button>
               {!this.props.loggedIn && <button className="button" onClick={() => this.props.updateNextPage(true)}>Guest</button>}
             </div>
+            {this.props.loggedIn && <PageButtons back={null} next={() => this.props.updateNextPage(true)} />}
         </div>
       </div>
     )
