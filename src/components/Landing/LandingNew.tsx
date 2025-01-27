@@ -45,7 +45,7 @@ class Landing extends Component<LandingProps, LandingState> {
                     <div className="cardText">
                     {/* <h4 className="cardHeader">See Past Outcomes</h4> */}
                       <h4 className="cardHeader">Learn from the past</h4>
-                      <h2 className="cardTitle">Learn how other researchers have addressed undesirable consequences in the past.</h2>
+                      <h2 className="cardTitle">Learn about undesirable consequences that have emerged from computing innovations in industry and research in the past.</h2>
                     </div>
                     <button className="button" onClick={() => this.props.pageChange("Learn")}>Learn</button>
                 </div>
