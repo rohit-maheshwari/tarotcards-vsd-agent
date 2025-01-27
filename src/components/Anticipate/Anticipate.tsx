@@ -79,6 +79,7 @@ class Anticipate extends Component<AnticipateProps, AnticipateState> {
                 ) :
                 (
                   <>
+                    <div className="login-text">Sign in to get started!</div>
                     <button className="button" onClick={this.props.handleLogin}>Sign in with Google</button>
                     <button className="button" onClick={() => this.props.updateNextPage(true)}>Guest</button>
                   </>
