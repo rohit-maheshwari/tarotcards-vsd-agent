@@ -105,7 +105,8 @@ const TechnologyDashboard: React.FC = () => {
             {/* Page Header */}
             <div className="page-header">
               <h3 className="page-header-title">Learn</h3>
-              <h4 className="page-subheader">Learn about how some undesirable consequences for other research projects and how other researchers have addressed them.</h4>
+              <h4 className="page-subheader">Learn about undesirable consequences that resulted from CS research innovations in academia and industry, along with how the researchers reacted and mitigated the undesirable consequences once they found out. </h4>
+              <p>You may be surprised that pretty much every field within computer science has experienced incidences of negative societal impacts! We list some of these incidences here so that we can all learn from them and prevent similar undesirable consequences in the future.</p>
             </div>
 
             {/* Research Field Filter */}
