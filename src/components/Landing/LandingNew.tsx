@@ -36,7 +36,8 @@ class Landing extends Component<LandingProps, LandingState> {
                 <h1 className="PEACE">PEACE</h1>
                 <h2 className="subheader">where you <u>P</u>roactively <u>E</u>xplore and <u>A</u>nticipate <u>C</u>onsequences and <u>E</u>thics</h2>
                 <p className="landingDescription">
-                    The PEACE Initiative aims to support Allen school researchers to routinely and proactively address undesirable consequences of their research innovations.
+                    The PEACE Initiative aims to support Allen school researchers to routinely and proactively address undesirable consequences of their research innovations. 
+                    We believe that all computing researchers, no matter their subdiscipline, should regularly think about undesirable consequences of their computing innovations, and do this early enough that making changes is still possible. We have found that having some guidance in anticipating consequences is beneficial for preventing negative social impacts, but also commonly results in exciting new research ideas. Our resources below are designed to help you in this process.
                 </p>
               </div>
               <div className="landingCards">
