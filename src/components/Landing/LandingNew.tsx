@@ -36,7 +36,7 @@ class Landing extends Component<LandingProps, LandingState> {
                 <h1 className="PEACE">PEACE</h1>
                 <h2 className="subheader">where you <u>P</u>roactively <u>E</u>xplore and <u>A</u>nticipate <u>C</u>onsequences and <u>E</u>thics</h2>
                 <p className="landingDescription">
-                    The PEACE Initiative aims to support Allen school researchers to routinely and proactively address undesirable consequences of their research innovations. This initiative is funded by NSF Institutional Transformation fund.
+                    The PEACE Initiative aims to support Allen school researchers to routinely and proactively address undesirable consequences of their research innovations.
                 </p>
               </div>
               <div className="landingCards">
