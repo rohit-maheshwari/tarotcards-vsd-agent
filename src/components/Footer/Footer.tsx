@@ -6,11 +6,11 @@ const Footer: React.FC = () => {
     <footer className="footer bg-light text-center">
       <div className="container">
         <p className="mb-0">© 2024 The PEACE Initiative at University of Washington. All rights reserved.</p>
-        <p className="mb-0">
+        {/* <p className="mb-0">
           Contact: 
           <a href="mailto:katharina@example.com" className="footer-link"> Katharina Reinecke</a> | 
           <a href="mailto:rock@example.com" className="footer-link"> Rock Pang</a>
-        </p>
+        </p> */}
       </div>
     </footer>
   );

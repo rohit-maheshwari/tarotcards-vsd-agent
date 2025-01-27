@@ -47,7 +47,7 @@ const AdvisePage: FC = () => {
       <div className="container mt-0 tasks">
         <div className="page-header">
           <h3 className="page-header-title">Consult</h3>
-          <h4 className="page-subheader">We provide support to connect you with our ethics advisory board to chat about social impact of your projects!</h4>
+          <h4 className="page-subheader">We recognize that thinking about potential undesirable consequences by yourself is not always sufficient. Our Ethics Advisory Board is there to help you with any additional questions and concerns. Email us at ethicsadvisory.cs.washington.edu and we will triage your request.</h4>
           <hr/>
         </div>
 

@@ -43,7 +43,8 @@ class Landing extends Component<Props, LandingState> {
                 
                 <div className="row">
                     <div className="col-md-12">
-                        <h4 className="page-subheader"><strong>Get in touch?</strong></h4>
+                        <h4 className="page-subheader"><strong>Contact us!</strong></h4>
+                        <p className="ethics-board-description">This initiative is funded by NSF Institutional Transformation fund #2315937, PI: <a href="https://homes.cs.washington.edu/~reinecke" target="_blank">Katharina Reinecke</a>, Co-PIs: <a href="https://homes.cs.washington.edu/~yoshi" target="_blank">Tadayoshi Kohno</a> and <a href="https://homes.cs.washington.edu/~djg" target="_blank">Dan Grossman</a>.</p>
                         <p className="ethics-board-description">Please contact Katharina Reinecke (reinecke@cs.washington.edu) or Rock Pang (ypang2@cs.washington.edu).</p>
                     </div>
                 </div>

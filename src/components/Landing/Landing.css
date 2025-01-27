@@ -47,6 +47,7 @@
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
+    align-items: stretch;
 }
 
 .card {
@@ -57,6 +58,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .card:hover {
@@ -65,6 +69,7 @@
 
 .cardText {
     margin-bottom: 20px;
+    flex-grow: 1;
 }
 
 .cardTitle {

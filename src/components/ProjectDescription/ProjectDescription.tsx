@@ -135,7 +135,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
 
       return (
         !this.state.nextPage ? 
-          <div className="project">
+          <div className="project bg-light tasks">
             <ProgressBar step={1}/>
             <h2 className="project-description-title">Enter title and description of your project. This will help us generate your export later.</h2>
             <div className="project-description-content">

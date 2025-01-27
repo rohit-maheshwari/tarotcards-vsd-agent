@@ -42,7 +42,7 @@ class Anticipate extends Component<AnticipateProps, AnticipateState> {
         <div className="container mt-0 tasks">
             <div className="page-header">
               <h3 className="page-header-title">Anticipate</h3>
-              <h4 className="page-subheader">Brainstorm the social impact of your project using the Tarot Cards of Tech. You can export your result as a PDF in the end!</h4>
+              <h4 className="page-subheader">Brainstorm potential negative societal impacts of your research project(s) using the Tarot Cards of Tech. You can do this by yourself or with other people. At the end, you can export your results to use in annual review reports, grant applications, when consulting our ethics advisory board, or simply for discussion with colleagues.</h4>
             </div>
 
             <div className="anticipate-overview">
@@ -72,9 +72,21 @@ class Anticipate extends Component<AnticipateProps, AnticipateState> {
                 </div>
             </div>
             <div className="login-buttons">
-              <button className="button" onClick={this.props.loggedIn ? this.props.handleLogout : this.props.handleLogin}>{this.props.loggedIn ? "Sign Out" : "Sign in with Google"}</button>
-              {!this.props.loggedIn && <button className="button" onClick={() => this.props.updateNextPage(true)}>Guest</button>}
+              {
+                this.props.loggedIn ?
+                (
+                  <button className="button" onClick={() => this.props.updateNextPage(true)}>Go to your projects</button>
+                ) :
+                (
+                  <>
+                    <div className="login-text">Sign in to get started!</div>
+                    <button className="button" onClick={this.props.handleLogin}>Sign in with Google</button>
+                    <button className="button" onClick={() => this.props.updateNextPage(true)}>Guest</button>
+                  </>
+                )
+              }
             </div>
+            {this.props.loggedIn && <PageButtons back={null} next={() => this.props.updateNextPage(true)} />}
         </div>
       </div>
     )

@@ -220,11 +220,16 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
             <ReviewCards toggle={this.toggle} setCard={this.setCard} finishedCardsWithResponse={this.state.finishedCardsWithResponse} deleteCard={this.deleteCard} sortCards={this.sortCards}/>
         :
         !this.state.nextPage ?
-            <div className="draw-tarot-cards">
+            <div className="draw-tarot-cards bg-light tasks">
                 <ProgressBar step={2}/>
-                <header className='header-brainstorm'>
+                {/* <header className='header-brainstorm'>
                     <h1 className='title'>Please draw a card from the stack.</h1>
                     <h3 className='description'>Each card will guide you to anticipate impacts from different perspectives. Write down your reflection.</h3>
+                </header> */}
+                <header className="container">
+                    <h4 className="page-subheader">Please draw a card from the stack.</h4>
+                    <p className="ethics-board-description">Each card will guide you to anticipate impacts from different perspectives. Write down your reflection.</p>
+                    <br></br>
                 </header>
                 <div className='draw-card-row'>
                     <div className="card-draw">

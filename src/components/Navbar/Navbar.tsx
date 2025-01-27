@@ -31,7 +31,7 @@ class Navbar extends Component<NavbarProps, NavbarState> {
                     <li className="navbar-item" onClick={() => {this.props.pageChange("Landing"); this.props.updateNextPage(false)}}>PEACE</li>
                 </ul>
                 <ul className="navbar-list">
-                    <li className="navbar-item" onClick={() => {this.props.pageChange("Landing"); this.props.updateNextPage(false)}}>Home</li>
+                    {/* <li className="navbar-item" onClick={() => {this.props.pageChange("Landing"); this.props.updateNextPage(false)}}>Home</li> */}
                     <li className="navbar-item" onClick={() => this.props.pageChange("Learn")}>Learn</li>
                     <li className="navbar-item" onClick={() => {this.props.pageChange("Anticipate"); this.props.updateNextPage(false)}} >Anticipate</li>
                     <li className="navbar-item" onClick={() => this.props.pageChange("Advise")}>Consult</li>
