@@ -48,24 +48,23 @@ class Landing extends Component<Props, LandingState> {
                         <p className="ethics-board-description">Please contact Katharina Reinecke (reinecke@cs.washington.edu) or Rock Pang (ypang2@cs.washington.edu).</p>
                     </div>
                 </div>
+                <div className="row d-flex align-items-stretch">
+                {aboutInformation.people.map((person) => (
+                    <div key={person.name} className="col-12 col-sm-6 col-md-4 mb-4">
+                        <a href={person.link !== "" ? person.link : undefined} target="_blank" rel="noopener noreferrer" className="text-decoration-none">
+                            <div className="about-card card w-100 shadow-sm border rounded d-flex flex-row align-items-center p-3 h-100">
+                                <div className="about-profile-picture me-3">
+                                    <img src={person.profilePicture} alt={person.name} />
+                                </div>
 
-                <div className="row">
-                    {aboutInformation.people.map((person) => (
-                        <div key={person.name} className="col-md-4 mb-4">
-                            <a href={person.link !== "" ? person.link : undefined} target="_blank" rel="noopener noreferrer" className="text-decoration-none">
-                                <div className="about-card card w-100 shadow-sm border rounded d-flex flex-row align-items-center p-3">
-                                    <div className="about-profile-picture me-3">
-                                        <img src={person.profilePicture} alt={person.name} className="rounded-circle" />
-                                    </div>
-
-                                    <div className="card-body">
-                                        <h5 className="mb-1mb-1mb-1">{person.name}</h5>
-                                        <p className="card-text mb-1">{person.title}</p>
-                                        </div>
-                                    </div>
-                            </a>
-                        </div>
-                    ))}
+                                <div className="card-body">
+                                    <h5 className="mb-1">{person.name}</h5>
+                                    <p className="card-text mb-1">{person.title}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                ))}
                 </div>
             </div>
         </div>
