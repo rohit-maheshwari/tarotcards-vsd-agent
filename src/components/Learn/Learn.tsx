@@ -107,6 +107,7 @@ const TechnologyDashboard: React.FC = () => {
               <h3 className="page-header-title">Learn</h3>
               <h4 className="page-subheader">Learn about undesirable consequences that resulted from CS research innovations in academia and industry, along with how the researchers reacted and mitigated the undesirable consequences once they found out. </h4>
               <p>You may be surprised that pretty much every field within computer science has experienced incidences of negative societal impacts! We list some of these incidences here so that we can all learn from them and prevent similar undesirable consequences in the future.</p>
+              <p>Interested in learning about undesirable consequences that resulted from digital technology broadly, e.g., social networks, virtual reality, or conversational AI? Have a look at our <a href="https://dl.acm.org/doi/full/10.1145/3613904.3642054" target="_blank">tool</a>!</p>
             </div>
 
             {/* Research Field Filter */}
