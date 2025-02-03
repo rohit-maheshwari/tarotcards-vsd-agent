@@ -37,7 +37,7 @@ const getAllCardsRoute = require('./routes/cards/getAllCards.js')
 
 const verifyUserRoute = require('./routes/verifyUser.js');
 
-const env = require("../src/environment.json");
+const env = require("../frontend/src/environment.json");
 const MONGO_URI = env.MONGO_URI || "";
 // MONGO_URI = process.env.MONGO_URI || "";
 
