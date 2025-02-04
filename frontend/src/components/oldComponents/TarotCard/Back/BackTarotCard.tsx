@@ -60,7 +60,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
             if (userCheck) {
                 if (this.state.response !== "") {
                     this.props.updateCard(this.props.tarotcard, this.state.response);
-                    fetch (`/api/record`, {
+                    fetch(`${process.env.REACT_APP_API_URL}/api/record`, {
                         method: 'PUT',
                         body: JSON.stringify(requestData),
                         headers: {
@@ -70,7 +70,7 @@ export class BackTarotCardComponent extends Component <TarotCardProps, TarotCard
                     .then((res) => this.doButtonClickResponse(res))
                     .catch(() => this.doError("/record: Failed to connect to server"));
                 } else {
-                    fetch (`/api/delete?uid=${requestData.user_id}&card=${requestData.card}`, {
+                    fetch(`${process.env.REACT_APP_API_URL}/api/delete?uid=${requestData.user_id}&card=${requestData.card}`, {
                         method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',

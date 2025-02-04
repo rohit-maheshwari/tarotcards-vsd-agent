@@ -53,7 +53,7 @@ class SelectingTarotCards extends Component<SelectingTarotCardsProps, SelectingT
       this.setState({finishedCards: {}, responses: {}});
     } else {
       const googleId = this.props.user.googleId;
-      fetch(`/api/cards?uid=${googleId}`, {
+      fetch(`${process.env.REACT_APP_API_URL}/api/cards?uid=${googleId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -28,7 +28,7 @@ class ExportCards extends Component<ExportCardsProps, ExportCardsState> {
     }
 
     componentDidMount(): void {
-        fetch('/api/project/get?projectId='+this.props.projectId, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/project/get?projectId=${this.props.projectId}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

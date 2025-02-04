@@ -24,7 +24,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
     }
 
     componentDidMount(): void {
-        fetch('/api/project/getUsers?emailAddress='+this.props.user.email, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/project/getUsers?emailAddress=${this.props.user.email}`, {
           method: "GET",
           headers: {
             'Accept': 'application/json',
@@ -52,7 +52,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
     }
 
     createProject = async () => {
-      await fetch('/api/project/create', {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/project/create`, {
         method: "POST",
         headers: {
           'Accept': 'application/json',
@@ -75,7 +75,7 @@ class Projects extends Component<ProjectsProps, ProjectsState> {
 
     deleteProject = async (projectId: number) => {
       console.log(projectId)
-      await fetch('/api/project/delete?personEmailAddress=' + this.props.user.email + '&projectId='+projectId, {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/project/delete?personEmailAddress=${this.props.user.email}&projectId=${projectId}`, {
         method: "DELETE",
         headers: {
           'Accept': 'application/json',

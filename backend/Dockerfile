@@ -1,18 +1,20 @@
 # Use Node.js base image
 FROM node:18
 
-# Set working directory
+# Set correct working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
+# Copy package.json first (leverage Docker caching)
 COPY package.json ./
-RUN npm install --production
 
-# Copy backend files
+# Install dependencies inside Docker container
+RUN npm install --legacy-peer-deps
+
+# Copy the rest of the backend files
 COPY . .
 
-# Expose the backend port
+# Expose backend port
 EXPOSE 8000
 
-# Start the backend
+# Start backend service
 CMD ["node", "server.js"]

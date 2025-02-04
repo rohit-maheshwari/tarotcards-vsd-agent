@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Build the frontend
-RUN npm build
+RUN npm run build
 
 # Expose frontend port
 EXPOSE 3000

@@ -97,7 +97,7 @@ class App extends Component<Props, AppState> {
     // instead, get idToken and then send that to backend
     console.log('step 2')
     const idToken = this.auth.currentUser.get().getAuthResponse().id_token;
-    fetch(`/api/verify?idToken=${idToken}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/verify?idToken=${idToken}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

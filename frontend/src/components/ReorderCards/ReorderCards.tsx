@@ -49,7 +49,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
     
 
     componentDidMount(): void {
-        fetch('/api/project/getCards?projectId='+this.props.projectId, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/project/getCards?projectId=${this.props.projectId}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -74,7 +74,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
             console.log(error)
         })
 
-        fetch('/api/project/get?projectId='+this.props.projectId, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/project/get?projectId=${this.props.projectId}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -132,7 +132,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
     };
 
     saveProject = () => {
-        fetch('/api/project/update', {
+        fetch(`${process.env.REACT_APP_API_URL}/api/project/update`, {
           method: "PUT",
           headers: {
             'Accept': 'application/json',

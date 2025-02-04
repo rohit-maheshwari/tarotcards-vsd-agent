@@ -56,7 +56,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
     }
 
     setFinishedCardsFromDB = async () => {
-        fetch('/api/project/getCards?projectId='+this.props.projectId, {
+        fetch(`${process.env.REACT_APP_API_URL}/api/project/getCards?projectId=${this.props.projectId}`, {
             method: 'GET',
             headers: {
                 Accept: 'application/json',
@@ -120,7 +120,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
     }
 
     saveResponse = async () => {
-        fetch('/api/project/addOrUpdateCard', {
+        fetch(`${process.env.REACT_APP_API_URL}/api/project/addOrUpdateCard`, {
             method: "PUT",
             body: JSON.stringify({
                 projectId: this.props.projectId,
@@ -178,7 +178,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
     deleteCard = (card: any, calledFromOtherPage: boolean) => {
         console.log(card)
         
-        fetch('/api/project/removeCard', {
+        fetch(`${process.env.REACT_APP_API_URL}/api/project/removeCard`, {
             method: "DELETE",
             body: JSON.stringify({
                 projectId: this.props.projectId,

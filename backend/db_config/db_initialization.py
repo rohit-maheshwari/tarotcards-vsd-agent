@@ -5,7 +5,7 @@ from pymongo import MongoClient
 with open('./db_config/db_config.json') as f:
     data = json.load(f)
 
-with open('../src/environment.json') as f:
+with open('../environment.json') as f:
     env = json.load(f)
 
 MONGO_URI = env["MONGO_URI"]

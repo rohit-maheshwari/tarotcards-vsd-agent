@@ -37,7 +37,7 @@ const getAllCardsRoute = require('./routes/cards/getAllCards.js')
 
 const verifyUserRoute = require('./routes/verifyUser.js');
 
-const env = require("../frontend/src/environment.json");
+const env = require("./environment.json");
 const MONGO_URI = env.MONGO_URI || "";
 // MONGO_URI = process.env.MONGO_URI || "";
 
@@ -83,6 +83,6 @@ mongoose.connect(MONGO_URI, {
 })
   .then(() => {
     console.log('MongoDB Connected');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port 8000`));
     })
   .catch(err => console.log(err));
