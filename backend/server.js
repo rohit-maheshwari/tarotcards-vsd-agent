@@ -41,8 +41,8 @@ const env = require("./environment.json");
 const MONGO_URI = env.MONGO_URI || "";
 // MONGO_URI = process.env.MONGO_URI || "";
 
-const PORT =  env.BACKEND.PORT || 8000;
-// PORT = process.env.PORT || process.env.BACKEND_PORT || 8000;
+const PORT =  env.BACKEND.PORT || 8080;
+// PORT = process.env.PORT || process.env.BACKEND_PORT || 8080;
 
 // Middleware
 app.use(bodyParser.json());
@@ -83,6 +83,6 @@ mongoose.connect(MONGO_URI, {
 })
   .then(() => {
     console.log('MongoDB Connected');
-    app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port 8000`));
+    app.listen(PORT, "0.0.0.0", () => console.log(`Server running on port ${PORT}`));
     })
   .catch(err => console.log(err));

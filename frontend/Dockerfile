@@ -1,21 +1,23 @@
 # Use Node.js base image
-FROM node:18
+FROM node:19-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files and install dependencies
-COPY package.json yarn.lock ./
-RUN npm install
-
-# Copy the rest of the frontend code
+# Copy all files in the current directory into the container
 COPY . .
 
-# Build the frontend
+# Set the environment variable for the application's port
+# (Be sure to replace '3000' with your application's specific port number if different)
+ENV PORT=3000
+
+# Install 'serve', a static file serving package globally in the container
+RUN npm install -g serve
+
+# Install all the node modules required by the React app
+RUN npm install
+# Build the React app
 RUN npm run build
 
-# Expose frontend port
-EXPOSE 3000
-
-# Start the frontend server
-CMD ["npm", "start"]
+# Serve the 'build' directory on port 3000 using 'serve'
+CMD ["serve", "-s", "-l", "3000", "./build"]

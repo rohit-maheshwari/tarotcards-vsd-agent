@@ -8,12 +8,12 @@ services:
     depends_on:
       - backend
     environment:
-      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_API_URL=http://localhost:8080
 
   backend:
     build: ./backend
     ports:
-      - "8000:8000"
+      - "8080:8080"
     depends_on:
       - mongo
     environment:

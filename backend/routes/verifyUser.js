@@ -25,7 +25,7 @@ router.get("/verify", async (req, res) => {
     console.log("Handling GET request for /verify");
     const userInfo = await verify(idToken);
     try {
-      const response = await axios.post('http://localhost:8000/api/user/create', {
+      const response = await axios.post('http://localhost:8080/api/user/create', {
         name: userInfo.name,
         emailAddress: userInfo.email,
         classStanding: 'not specified yet',
