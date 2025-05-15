@@ -1,68 +1,98 @@
 [
-    {
+  {
       "ID": "",
-      "Subfield": "Hardware",
-      "Name": "Mites@CMU",
-      "Description_of_Technology": "Super-sensing devices and their software systems installed at the academic building.",
-      "Desired_Consequence": "Deployment of Mites shows the effective operation and management of ubiquitous large-scale sensors in real-world environments.",
-      "Undesired_Consequence": "Mites also collects sounds which include private conversations in the entire building.",
-      "Description_of_Mitigation_Strategy": "The original researcher released a public report explaining common concerns and questions. They also claimed that private data are anonymized by several techniques, making personal and private information intractable."
-    },
-    {
+      "Subfield": "Ubiquitous Computing",
+      "Name": "Smart sensing devices collect private conversations in academic buildings.",
+      "Description_of_Technology": "A group of researchers deployed smart sensing devices (mites) across an acadmic building.",
+      "Desired_Consequence": "The deployment of the smart sensing devices showed that ubiquitous large-scale sensors could be managed and operational in real-world environments.",
+      "Undesired_Consequence": "The smart sensing devices also collected audio data, including private conversations in the entire building. Faculty members and students who used that building felt that they had not consented to their data being collected.",
+      "Description_of_Mitigation_Strategy": "The original researchers released a public report explaining common concerns and questions. They also claimed that private data were anonymized, making personal and private information intractable.",
+      "Links": [
+          "https://www.technologyreview.com/2023/04/10/1071177/behind-the-scenes-carnegie-mellons-privacy-dispute-mites/",
+          "https://mites.io/"
+      ]
+  },
+  {
       "ID": "",
-      "Subfield": "Hardware",
-      "Name": "RowHammering@Intel/CMU",
-      "Description_of_Technology": "A scalable memory chip that aims to develop high-density and high-performance computing systems.",
+      "Subfield": "Computer Systems",
+      "Name": "Bug in DRAM creates data vulnerabilities.",
+      "Description_of_Technology": "Researchers created DRAM, a scalable memory chip to be used it high-density and high-performance computing systems.",
       "Desired_Consequence": "The invention of DRAM facilitated the development of compact devices with efficient data storage and retrieval capabilities. Nowadays, DRAM is used in most computing devices.",
       "Undesired_Consequence": "A group of researchers found out that repeatedly accessing a row in DRAM can cause potential data corruption and security breaches, called RowHammering. Although the authors provided strategies to prevent and mitigate RowHammering, the community showed that cyber-attacks can easily bypass their preventions.",
-      "Description_of_Mitigation_Strategy": "Members of the community continuously disclosed Rowhammering strategies. The original author wrote a survey paper on different types of RowHammering vulnerabilities and their mitigation strategies, arguing for cooperation between systems and DRAM fields."
+      "Description_of_Mitigation_Strategy": "Members of the community continuously disclosed Rowhammering strategies. The original author wrote a survey paper on different types of RowHammering vulnerabilities and their mitigation strategies, arguing for cooperation between systems and DRAM fields.",
+      "Links": [
+          "http://computationalculture.net/creative-malfunction-finding-fault-with-rowhammer/",
+          "https://googleprojectzero.blogspot.com/2015/03/exploiting-dram-rowhammer-bug-to-gain.html"
+      ]
     },
-    {
+  {
       "ID": "",
       "Subfield": "Computer Systems",
-      "Name": "VxWorks@Wind River Systems",
-      "Description_of_Technology": "A real-time operating system developed for industries like aerospace, defense, and medical devices where embedded systems are required.",
+      "Name": "Operating system used in high-stakes industries contained security vulnerability.",
+      "Description_of_Technology": "VxWorks is an operating system developed for industries like aerospace, defense, and medical devices that require embedded systems.",
       "Desired_Consequence": "VxWorks enables the development of high-performance, reliable embedded systems that ensure timely and predictable responses.",
-      "Undesired_Consequence": "The internal research team found a vulnerability called Urgent11. It affected versions of VxWorks released over the previous 13 years, potentially impacting over 200 million devices. The affected systems could have suffered from severe information leaks, posing significant security risks considering the target industry.",
-      "Description_of_Mitigation_Strategy": "The company released patches and security updates to address issues. The company spokesman also suggested controlling the list of devices connected to the system. Removing any vulnerable devices would result in better mitigation."
+      "Undesired_Consequence": "The internal research team found a vulnerability called Urgent11. It affected versions of VxWorks released over the previous 13 years, potentially impacting over 200 million devices. The bug could lead to severe information leaks, posing significant security risk. This was especially true since the VxWorks was deployed in high-stakes industries such as aerospace.",
+      "Description_of_Mitigation_Strategy": "The company released patches and security updates to address the vulnerability. The company spokesman also suggested controlling the list of devices connected to the system. Removing any vulnerable devices would result in better mitigation.",
+      "Links": [
+          "https://www.tenable.com/blog/critical-vulnerabilities-dubbed-urgent11-place-devices-running-vxworks-at-risk-of-rce-attacks",
+          "https://www.windriver.com/solutions/aerospace-and-defense?utm_source=google&utm_medium=cpc&utm_campaign=General-A&D-AMER-Prospecting&utm_content=Exact%20-%20General%20A&D&utm_ad=694062220261&utm_term=vxworks&matchtype=e&device=c&GeoLoc=9033309&placement=&network=g&campaign_id=21115816510&adset_id=158723242543&ad_id=694062220261&utm_source=google&device=c&utm_campaign=21115816510&utm_medium=sem&utm_term=vxworks&gad_source=1&gad_campaignid=21115816510&gbraid=0AAAAAD8-B2w6_7EnYHSA2IDiyg0d6arzm&gclid=Cj0KCQjwrPHABhCIARIsAFW2XBPCFk7Sh3vU6Qg7vb8mMh3wu3qEvMfYXC9B25vQBC-KLXPrNyTTCJMaAl-cEALw_wcB"
+      ]
+  
     },
-    {
+  {
       "ID": "",
-      "Subfield": "Computer Systems",
-      "Name": "Autonomous vehicles@Uber",
-      "Description_of_Technology": "Self-driving cars equipped with sensors, cameras, and artificial intelligence algorithms that enable them to navigate and operate without human support.",
-      "Desired_Consequence": "It is intended to enhance road safety by reducing human error, improving traffic efficiency, and providing mobility support to those who do not have access to private cars.",
-      "Undesired_Consequence": "In 2018, Uber’s autonomous vehicle struck and killed a pedestrian in Arizona. Investigations revealed that the vehicle's software failed to correctly identify the pedestrian and did not initiate braking in time.",
-      "Description_of_Mitigation_Strategy": "With the huge public backlash, Uber apologized and ceased autonomous vehicle testing, and released detailed safety reports that also claimed the potential benefit of self-driving cars compared to human errors."
+      "Subfield": "Computer Vision",
+      "Name": "Autonomous vehicle program suspended for killing a pedestrian.",
+      "Description_of_Technology": "Uber depployed a program of self-driving cars, equipped with sensors, cameras, and computer vision algorithms that enable them to navigate and operate without human support in 2016.",
+      "Desired_Consequence": "The program was intended to enhance road safety by reducing human error, improving traffic efficiency, and providing mobility support to those who do not have access to private cars.",
+      "Undesired_Consequence": "In 2018, the self-driving car struck and killed a pedestrian. Investigations revealed that the vehicle's software had failed to correctly identify the pedestrian and did not initiate braking in time. This raised questions about the accountability and responsibility over the failure of AI systems.",
+      "Description_of_Mitigation_Strategy": "After receiving huge public backlash, Uber apologized and ceased autonomous vehicle testing. The company released detailed safety reports that emphasized the potential benefit of self-driving cars compared to human errors.",
+      "Links": [
+        "https://www.nytimes.com/interactive/2018/03/20/us/self-driving-uber-pedestrian-killed.html",
+        "https://www.wired.com/story/ubers-fatal-self-driving-car-crash-saga-over-operator-avoids-prison/"
+
+      ]
+  },
+  {
+      "ID": "",
+      "Subfield": "Networking",
+      "Name": "Common internet network protocol hacked.",
+      "Description_of_Technology": "Border Gateway Protocol is a network protocol used to exchange routing information between autonomous systems on the internet.",
+      "Desired_Consequence": "The protocol is designed to find the most efficient path for data to travel across the complex web space. The protocol allows the internet to function as a cohesive network rather than a list of web pages.",
+      "Undesired_Consequence": "In 2017, BGP routes were hijacked, and traffic for major tech companies such as Google, Apple, and Facebook was misrouted through Russian ports, raising security and privacy concerns.",
+      "Description_of_Mitigation_Strategy": "The community responded with several automated frameworks including Resource Public Key Infrastructures. An initiative to promote best practices among network operators was launched as well.",
+      "Links": [
+        "https://www.securityweek.com/russian-telco-hijacked-internet-traffic-major-networks-accident-or-malicious-action/#:~:text=A%20huge%20BGP%20hijack%20by,been%20accidental%2C%20it%20may%20not.",
+        "https://dl.acm.org/doi/10.17487/rfc4271"
+      ]
     },
-    {
+  {
       "ID": "",
-      "Subfield": "Networks",
-      "Name": "Border Gateway Protocol 4",
-      "Description_of_Technology": "Border Gateway Protocol is the network protocol used to exchange routing information between autonomous systems (ASes) on the internet.",
-      "Desired_Consequence": "It finds the most efficient paths for data to travel across the complex web space. Such a protocol allows the internet to function as a cohesive network rather than a list of web pages.",
-      "Undesired_Consequence": "In 2017, BGP routes got hijacked, and traffic for major tech companies such as Google, Apple, and Facebook was misrouted through Russian ports, raising concerns about security and privacy concerns.",
-      "Description_of_Mitigation_Strategy": "The community responded with several automated frameworks including Resource Public Key Infrastructures. An initiative to promote best practices among network operators was launched as well."
-    },
-    {
+      "Subfield": "Networking",
+      "Name": "Cloud platform susceptible to malware attack.",
+      "Description_of_Technology": "The Google Cloud Platform is a suite of cloud computing services that runs a range of services such as computing, data storage, data analytics.",
+      "Desired_Consequence": "The Google Cloud Platform provides scalable and reliable cloud services, allowing organizations to reduce infrastructure costs to develop and launch their own products.",
+      "Undesired_Consequence": "In 2018, two different malware, Meltdown and Spectre, were discovered by Google's internal research team. They noted that hardware failures influenced the leakage of sensitive data.",
+      "Description_of_Mitigation_Strategy": "The research team patched the vulnerability. Immediately after releasing the patch, the researchers also wrote a public blog post answering FAQs.",
+      "Links": [
+        "https://www.infosecinstitute.com/resources/malware-analysis/meltdown-spectre-patches-story-delays-lies-failures/",
+        "https://cloud.google.com/blog/topics/inside-google-cloud/answering-your-questions-about-meltdown-and-spectre"
+      ]
+  },
+  {
       "ID": "",
-      "Subfield": "Networks",
-      "Name": "Google Cloud Platform (GCP)@Google",
-      "Description_of_Technology": "GCP is a suite of cloud computing services that runs a range of services such as computing, data storage, data analytics",
-      "Desired_Consequence": "GCP provides scalable and reliable cloud services, allowing organizations to reduce infrastructure costs to develop and launch their products.",
-      "Undesired_Consequence": "In 2018, two malware “Meltdown and Spectre” were discovered by Google's internal research team, suggesting that hardware failures influence the leakage of sensitive data.",
-      "Description_of_Mitigation_Strategy": "Immediately after releasing the patch, they also wrote a blog post answering the FAQs."
-    },
-    {
-      "ID": "",
-      "Subfield": "Software and its engineering",
-      "Name": "BitTorrent",
+      "Subfield": "Software Engineering",
+      "Name": "Data pirating platform sued over copyright infringement.",
       "Description_of_Technology": "BitTorrent is a peer-to-peer (P2P) file-sharing platform that distributes large files by dividing them into smaller pieces.",
       "Desired_Consequence": "BitTorrent facilitates the rapid and efficient sharing of large files, such as software distributions, media content, and datasets.",
-      "Undesired_Consequence": "The BitTorrent protocol has been accused with unauthorized sharing of copyrighted material, leading to numerous copyright infringement lawsuits during 2019.",
-      "Description_of_Mitigation_Strategy": "The BitTorrent organizers obtained licenses to distribute copyrighted content legally, giving artists and creators a legitimate platform to share their work using the BitTorrent protocol. In some cases, however, content creators add large amounts of unused data to 'poison' torrent files."
-    },
-    {
+      "Undesired_Consequence": "BitTorrent users have been accused of sharing copyrighted material without proper authorization. This has lead to numerous copyright infringement lawsuits levied against the users of the platform.",
+      "Description_of_Mitigation_Strategy": "The BitTorrent organizers obtained a license to distribute copyrighted content legally, giving artists and creators a legitimate platform to share their work using the BitTorrent protocol. In some cases, however, content creators added large amounts of unused data to 'poison' torrent files.",
+      "Links": [
+        "https://repository.law.umich.edu/cgi/viewcontent.cgi?article=1094&context=mlr",
+        "https://www.darslaw.com/business-planning-transactions/bittorrent-users-targeted-in-copyright-infringement-lawsuits/"
+      ]
+  },
+  {
       "ID": "",
       "Subfield": "Software and its engineering",
       "Name": "HeartBleed@OpenSSL",
@@ -70,8 +100,8 @@
       "Desired_Consequence": "The library facilitated the development of secured API services and got integrated into numerous products.",
       "Undesired_Consequence": "A researcher made a change to the SSL library but overlooked validating length-related variables, leading to serious vulnerabilities, including the leakage of API keys.",
       "Description_of_Mitigation_Strategy": "Author apologized for the mistake but clarified that it was by mistake. Community followed up with a paper suggesting on actions to prevent next HeartBleed"
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Theory of Computation",
       "Name": "Quantum Computing",
@@ -79,8 +109,8 @@
       "Desired_Consequence": "Quantum Computing is considered to have the potential to revolutionize fields like cryptography and optimization. Especially, it is expected to factor large numbers exponentially faster, allowing encryption methods to be more sophisticated.",
       "Undesired_Consequence": "It is also considered a significant threat to current cryptographic systems, as massive computing power also helps decrypt faster.",
       "Description_of_Mitigation_Strategy": "Researchers are designing Post-Quantum Cryptography, an algorithm resistant to quantum attacks. Another community-wise approach is using Quantum Key Distribution, which serves as a secure communication channel using Quantum Computing."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Theory of Computation",
       "Name": "Finite State Morphological Analyzer",
@@ -88,8 +118,8 @@
       "Desired_Consequence": "Transition between their finite states can serve as a basic parsing algorithm, which is useful for languages with less data.",
       "Undesired_Consequence": "A researcher developed a Finite State Morphological Analyzer (FSMA) for San Mateo Huave, an endangered language in Mexico. However, limited data and computational capability of FSMA prevent it from fully capturing the language, leaving room for misinterpretation.",
       "Description_of_Mitigation_Strategy": "Community-wise publications on incorporating permission, opinions, and values from language communities when building a tool for them."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Mathematics of Computing",
       "Name": "PaigeRankAlgorithm@Google",
@@ -97,8 +127,8 @@
       "Desired_Consequence": "The implementation of the PageRank algorithm significantly improved the quality of search engine results, providing users with more relevant and salient information.",
       "Undesired_Consequence": "In 2014, Mario Costeja González, frustrated by persistent search results displaying unwanted information about him, requested its removal, leading to a landmark lawsuit that established the 'right to be forgotten.'",
       "Description_of_Mitigation_Strategy": "The European Court of Justice ruled that individuals have the right to request the removal of personal information from search engine results under certain conditions. Google, which initially refused to remove the information, later implemented a feature to allow removal based on user requests."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Mathematics of Computing",
       "Name": "Word2Vec@Google",
@@ -106,8 +136,8 @@
       "Desired_Consequence": "Word2Vec translates words into high-dimensional numeric vectors, allowing machines to process human language more effectively. It significantly improved the model’s performance on most natural language processing tasks.",
       "Undesired_Consequence": "Researchers found that Word2Vec encodes and even amplifies existing societal biases in the training data. For instance, the model associates the word “doctor” more closely with “man” and “nurse” with “woman”, reflecting and perpetuating gender stereotypes.",
       "Description_of_Mitigation_Strategy": "The community came up with many follow-up papers describing debiasing techniques by identifying a bias subspace within the word embeddings and adjusting the vectors to reduce bias. Several benchmarks were also introduced to evaluate the models based on fairness."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Information Systems",
       "Name": "Electronic Health Records@Institute of Medicine",
@@ -115,8 +145,8 @@
       "Desired_Consequence": "The systems provide real-time records that become available instantly and securely to authorized users. It improved patient care by reducing medical errors and improving coordination among healthcare providers.",
       "Undesired_Consequence": "However, clinicians reported an increased cognitive load when using EHR systems. In 2004, some researchers highlighted new types of errors, such as overreliance on the system and communication breakdowns, which lead into clinician dissatisfaction",
       "Description_of_Mitigation_Strategy": "Institute members emphasized the importance of training programs to help healthcare providers become proficient with EHR systems, recommending to integrate such training to all future healthcare professionals."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Information Systems",
       "Name": "MovieLens@UMN",
@@ -124,8 +154,8 @@
       "Desired_Consequence": "MovieLen’s datasets, which consist of user ratings and preferences, were widely used to train and test recommendation algorithms.",
       "Undesired_Consequence": "Despite anonymization efforts, researchers have demonstrated that users from the datasets could be identified by cross-referencing it with external information such as IMDb dataset and online forums.",
       "Description_of_Mitigation_Strategy": "There are community follow-ups on creating realistic evaluations without having information leakage. One of the strategies suggests mixing data from different time schemes for training a model to avoid re-identification."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Security and privacy",
       "Name": "Bitcoin",
@@ -133,8 +163,8 @@
       "Desired_Consequence": "Bitcoin offers a decentralized financial system that enables borderless transactions. It has introduced financial inclusion opportunities for individuals from underdeveloped countries which lack a banking system.",
       "Undesired_Consequence": "Since it operates on a blockchain, miners must solve complex mathematical problems to validate their transactions and secure the network. The carbon footprint of this mining reached 173.42 Terawatt hours of electricity. If Bitcoin were a country, its energy consumption would have ranked 27th globally.",
       "Description_of_Mitigation_Strategy": "The original author stated that he chose economic liberty over conservation, arguing that Bitcoin would be less wasteful than traditional banking systems. The community, however, responded by advocating for mining with renewable energy sources and more efficient mining techniques."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Security and privacy",
       "Name": "Chip and Pin is Broken@EMV",
@@ -142,8 +172,8 @@
       "Desired_Consequence": "The research was designed to reveal flaws in the EMV protocols used in their credit and debit cards, preventing potential attacks.",
       "Undesired_Consequence": "Following the disclosure, a group of criminals allegedly exploited these vulnerabilities, stealing £450,000 through 7,000 unauthorized transactions.",
       "Description_of_Mitigation_Strategy": "The original author denied any allegation between the crime and their research, stating that 'perhaps they (bank) would have found some others too’. However, the cybersecurity community continues to develop best practices for disclosure, such as creating cheat sheets and guidelines for researchers to collaborate with stakeholders and vendors."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Human-centered computing",
       "Name": "WildLab@UW",
@@ -151,8 +181,8 @@
       "Desired_Consequence": "It allows the researchers to conduct experiments with a larger and wider range of participants throughout the glove without losing the data quality.",
       "Undesired_Consequence": "Users of the LabinTheWild took cognitive performance and behavioral functional tests to diagnose their suspected cognitive or mental disabilities.",
       "Description_of_Mitigation_Strategy": "The researchers interviewed participants to understand their motivation for participating and locate the source of misinterpretation. The researcher ended up writing a research paper about it that includes updated design principle for preventing such case, which later incorporated to their online study platform as well."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Human-centered computing",
       "Name": "Animal Tracking Map@UW/EarthRanger",
@@ -160,8 +190,8 @@
       "Desired_Consequence": "Interactive animal-tracking maps for giraffes and sharks allow users to follow their locations, lowering the barrier for the public to engage in conservation efforts and awareness.",
       "Undesired_Consequence": "Since the map and data information are open to the public, bad actors can use the map’s information to illegally capture the wild animals.",
       "Description_of_Mitigation_Strategy": "The original authors recommend that most shelters and organizations avoid sharing past data to protect wildlife. They suggest implementing differential privacy techniques—such as adding jitter to location data—to enhance security. For live data, however, some level of human monitoring is still crucial. Another potential solution could be delaying the data display by two weeks to ensure the safety of wild animals"
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Computing Methodologies",
       "Name": "Laion 400M Dataset\n@Laion.ai",
@@ -169,8 +199,8 @@
       "Desired_Consequence": "Laion 400M was used for numerous open and proprietry models including Google ImageGen",
       "Undesired_Consequence": "The dataset also contains explicit images and text pairs of rape, pornography, malign stereotypes, racist and ethnic slurs, and other extremely problematic content.",
       "Description_of_Mitigation_Strategy": "As a reply to a Reddit post, the original author mentioned that they will release a safer subset. During this time, their visualization tool will filter out the “unsafe pictures.”"
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Computing Methodologies",
       "Name": "Laion 5B Dataset\n@Laion.ai",
@@ -178,8 +208,8 @@
       "Desired_Consequence": "Laion 5B allows researchers from all over the world to train state-of-the art language-vision models such as Stable Diffusion",
       "Undesired_Consequence": "The dataset also contains 3,226 suspected instances of child sexual abuse material, 1,008 of which were externally validated.",
       "Description_of_Mitigation_Strategy": "Company published a press release on further actions: temporarily removing both 400M and 5B data before ensuring safety. They invited external reviewers from universities and NGO to evaluate their filtering system."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Computing Methodologies",
       "Name": "PULSE@Duke",
@@ -187,8 +217,8 @@
       "Desired_Consequence": "Pulse can assist researchers in fields like medicine and astronomy in overcoming the hardship of obtaining high-resolution images.",
       "Undesired_Consequence": "However, their project was biased toward people of color, returning white-faced Barack Obama from the blurred image of him.",
       "Description_of_Mitigation_Strategy": "The authors added comments on Github repo and new Bias section on the paper. The authors also added a model card in the paper appendix."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Computing Methodologies",
       "Name": "Delphi@Ai2",
@@ -196,8 +226,8 @@
       "Desired_Consequence": "Delphi aims to teach AI systems to understand and apply human moral principles, promoting responsible AI behavior.",
       "Undesired_Consequence": "Delphi’s suggestions, however, turn out to be biased and wrong. For instance, it answered “yes” to committing genocide if it makes everyone happy.",
       "Description_of_Mitigation_Strategy": "The researchers have updated Delphi with new data, put explicit disclaimers about intended use such as the research prototype, added an offensive speech detector feature, implemented a terms and conditions page, included FAQs, and showed example queries to guide users and log those updates for the public. Finally, the authors wrote a blog post debriefing the success and failure of Delphi."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Applied Computing",
       "Name": "CameraTrap@Corbett Tiger Reserve",
@@ -205,8 +235,8 @@
       "Desired_Consequence": "Cameras monitor the movements of elephants and tigers in the Corbett Tiger Reserve to collect data and track their populations.",
       "Undesired_Consequence": "The cameras, which were established discreetly, captured the private life of members of a nearby local village. The staff members posted private pictures on WhatsApp and Facebook.",
       "Description_of_Mitigation_Strategy": "The community responded by presenting a code of conduct on using cameras in wildlife research, urging to follow best practices such as obtaining consent from nearby communities, maintaining transparency on how the technology will be used, not using human images opportunistically, and using technology only when there's no alternative, less-intrusive way of collecting data."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Applied Computing",
       "Name": "SleepApena@UW",
@@ -214,8 +244,8 @@
       "Desired_Consequence": "The app allows the detecting of sleep apnea without adding sensors and instruments to the house or beds, reducing burdens for patients.",
       "Undesired_Consequence": "The app emits an acoustic pulse through a microphone, identifying the user's location inside the house, which can be used by attackers to know whether a person is at home and sleeping.",
       "Description_of_Mitigation_Strategy": "After running a test with patients in the medical center, the researcher wrote a follow-up paper discussing a set of privacy risks about sleep apnea-detecting technologies in general that companies and policymakers should consider before their deployment."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Social and professional topics",
       "Name": "WorkerExploitation@OpenAI",
@@ -223,14 +253,17 @@
       "Desired_Consequence": "ChatGPT allows users to interact with large language models more easily, assisting users in numerous tasks such as content creation, searching, etc.",
       "Undesired_Consequence": "Workers in Kenya were employed to filter toxic content for developing ChatGPT’s training data with compensation as low as $1.32 to $2 per hour. These workers were exposed to distressing material, leading to psychological distress and raising concerns about labor exploitation.",
       "Description_of_Mitigation_Strategy": "Company acknowledged the hard nature of the work and claimed that they had established and shared ethical and wellness standards with its data annotators. The community responded with papers and statements advocating for improved labor standards, which eventually contributed to an executive order from the White House directing the development of best practices and principles to address AI-related harms, including labor standards."
-    },
-    {
+  },
+  {
       "ID": "",
       "Subfield": "Social and professional topics",
-      "Name": "Broden Participation in Computing@NSF",
-      "Description_of_Technology": "NSF project to integrate CS education in K-12 students Curricula",
-      "Desired_Consequence": "The project aims to foster digital literacy and diversify the workforce for the technology industry.",
+      "Name": "Efforts to improve participation in computing perpetuate discrimination.",
+      "Description_of_Technology": "NSF invested $48 million to promote the integration of computer science education in K-12 students curricula.",
+      "Desired_Consequence": "The project aimed to foster digital literacy and diversify the workforce presently in the technology industry.",
       "Undesired_Consequence": "Schools supporting marginalized communities often struggle with a lack of funding, qualified teachers, and infrastructure to integrate CS education, exacerbating educational inequalities.",
-      "Description_of_Mitigation_Strategy": "The community responded with a paper illustrating important considerations for incorporating education policy into the field, highlighting the diversity in leadership, understanding of data, and sustainable funding."
-    }
-  ]
+      "Description_of_Mitigation_Strategy": "The community responded with a paper illustrating important considerations for incorporating education policy into the field, highlighting the diversity in leadership, understanding of data, and sustainable funding.",
+      "Links": [
+        "https://www.nsf.gov/news/nsf-investing-48m-broaden-participation-computing"
+      ]
+  }
+]
