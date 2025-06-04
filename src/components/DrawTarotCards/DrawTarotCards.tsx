@@ -37,7 +37,7 @@ type DrawTarotCardsState = {
 
 const cards: Card[] = tarotcards;
 
-class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState> {
+class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState & { isShuffling: boolean }> {
 
     constructor(props: DrawTarotCardsProps) {
         super(props);
@@ -49,7 +49,8 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
             showReviewCards: false,
             finishedCardsWithResponse: [],
             unfinishedCards: cards,
-            nextPage: false
+            nextPage: false,
+            isShuffling: false
         };
 
         this.saveResponse = lodash.debounce(this.saveResponse.bind(this), 500)
@@ -214,6 +215,14 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
         this.setState({showReviewCards: !this.state.showReviewCards})
     }
 
+    handleDrawCardWithShuffle = () => {
+        this.setState({ isShuffling: true });
+        setTimeout(() => {
+            this.drawCard();
+            this.setState({ isShuffling: false });
+        }, 400);
+    }
+
     render() {
         return (
         this.state.showReviewCards ? 
@@ -227,11 +236,67 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
                     <h3 className='description'>Each card will guide you to anticipate impacts from different perspectives. Write down your reflection.</h3>
                 </header> */}
                 <header className="container">
-                    <h4 className="page-subheader">Please draw a card from the stack.</h4>
-                    <p className="ethics-board-description">Each card will guide you to anticipate impacts from different perspectives. Write down your reflection.</p>
+                    <h4 className="page-subheader">What are the potential societal impact of your project?</h4>
+                    <p className="ethics-board-description">The Tarot Cards of Tech have been used to help tech creators fully consider the impact of technology. They'll not only help you anticipate unintended consequences, but also reveal opportunities for creating positive change. Draw a card and note down your thoughts. </p>
                     <br></br>
                 </header>
-                <div className='draw-card-row'>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="card-draw" style={{position: 'relative', height: '350px', width: '250px', margin: '0 auto'}}>
+                                {/* Deck effect: show up to 4 cards behind the main card */}
+                                {this.state.unfinishedCards.slice(1, 5).map((card, idx) => (
+                                    <div
+                                        key={card.title}
+                                        className={`deck-card${this.state.isShuffling ? ' shuffling' : ''}`}
+                                        style={{
+                                            position: 'absolute',
+                                            top: `${20 + idx * 10}px`,
+                                            left: `${20 - idx * 10}px`,
+                                            width: '210px',
+                                            height: '310px',
+                                            backgroundColor: card.color,
+                                            borderRadius: '12px',
+                                            boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+                                            zIndex: idx,
+                                        }}
+                                    />
+                                ))}
+                                {/* Main card on top */}
+                                {this.state.currentCard && (
+                                    <div
+                                        className={`main-card${this.state.isShuffling ? ' shuffling' : ''}`}
+                                        style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            width: '210px',
+                                            height: '310px',
+                                            backgroundColor: this.state.currentCard.color,
+                                            borderRadius: '12px',
+                                            boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
+                                            zIndex: 10,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            justifyContent: 'flex-end',
+                                            overflow: 'hidden',
+                                        }}
+                                    >
+                                        <img src={this.state.currentCard.frontimage} alt="Tarot Card" style={{width: '100%', height: '80%', objectFit: 'cover', borderTopLeftRadius: '12px', borderTopRightRadius: '12px'}}/>
+                                        <button className="draw-card-btn" style={{width: '90%', margin: '12px 0', padding: '10px', borderRadius: '8px', border: '1px solid #333', background: '#eee', fontSize: '1.1em', cursor: 'pointer'}} onClick={this.handleDrawCardWithShuffle}>
+                                            Draw a new card
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className="col-md-8">
+                            
+                        </div>
+                    </div>
+                </div>
+                {/* <div className='draw-card-row'>
                     <div className="card-draw">
                         <button className='review-all-cards-button' onClick={() => this.toggle()}>Review All Cards</button>
                         <img className="draw-card-logo" src={drawCardLogo} />
@@ -249,7 +314,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState>
                         placeholder="Your response is ..."
                         />
                     </div>
-                </div>
+                </div> */}
                 <PageButtons back={this.props.returnToPrevPage} next={() => this.setState({nextPage: true})} />
             </div>
         :
