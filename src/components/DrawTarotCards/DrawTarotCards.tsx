@@ -32,7 +32,9 @@ type DrawTarotCardsState = {
     showReviewCards: boolean,
     finishedCardsWithResponse: any[],
     unfinishedCards: Card[],
-    nextPage: boolean
+    nextPage: boolean,
+    cardThoughts: { [cardTitle: string]: string[] },
+    newThought: string
 }
 
 const cards: Card[] = tarotcards;
@@ -53,7 +55,9 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
             isShuffling: false,
             isDrawing: false,
             showCardContent: false,
-            showCardsOverview: false
+            showCardsOverview: false,
+            cardThoughts: {},
+            newThought: ''
         };
 
         this.saveResponse = lodash.debounce(this.saveResponse.bind(this), 500)
@@ -171,6 +175,54 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
 
     handleResponseChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         this.setState({response: e.target.value}, () => this.saveResponse())
+    };
+
+    addThoughtToCard = (cardTitle: string, thought: string) => {
+        if (!thought.trim()) return;
+        
+        const currentThoughts = this.state.cardThoughts[cardTitle] || [];
+        this.setState({
+            cardThoughts: {
+                ...this.state.cardThoughts,
+                [cardTitle]: [...currentThoughts, thought.trim()]
+            },
+            newThought: ''
+        });
+    };
+
+    editThoughtInCard = (cardTitle: string, thoughtIndex: number, newThought: string) => {
+        const currentThoughts = this.state.cardThoughts[cardTitle] || [];
+        const updatedThoughts = [...currentThoughts];
+        updatedThoughts[thoughtIndex] = newThought.trim();
+        
+        this.setState({
+            cardThoughts: {
+                ...this.state.cardThoughts,
+                [cardTitle]: updatedThoughts
+            }
+        });
+    };
+
+    deleteThoughtFromCard = (cardTitle: string, thoughtIndex: number) => {
+        const currentThoughts = this.state.cardThoughts[cardTitle] || [];
+        const updatedThoughts = currentThoughts.filter((_, index) => index !== thoughtIndex);
+        
+        this.setState({
+            cardThoughts: {
+                ...this.state.cardThoughts,
+                [cardTitle]: updatedThoughts
+            }
+        });
+    };
+
+    handleNewThoughtChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({ newThought: e.target.value });
+    };
+
+    handleNewThoughtSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter' && this.state.currentCard) {
+            this.addThoughtToCard(this.state.currentCard.title, this.state.newThought);
+        }
     };
 
     setCard = (card: any) => {
@@ -432,7 +484,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                         </div>
                         <div className="col-md-8">
                             {/* Response section */}
-                            {this.state.currentCard && this.state.showCardContent && !this.state.showCardsOverview && (
+                            {this.state.currentCard && !this.state.showCardsOverview && (
                                 <div className="response-section" style={{
                                     padding: '20px',
                                     opacity: this.state.showCardContent ? 1 : 0,
@@ -440,64 +492,387 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                     transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                                     transitionDelay: '1.2s',
                                 }}>
-                                    <h3 style={{
-                                        marginBottom: '16px',
-                                        fontSize: '1.3em',
-                                        fontWeight: '600',
-                                        color: '#333',
+                                    {/* Current Card Thoughts Input */}
+                                    <div style={{
+                                        marginBottom: '32px',
+                                        padding: '20px',
+                                        backgroundColor: '#f8f9fa',
+                                        borderRadius: '12px',
+                                        border: `3px solid ${this.state.currentCard.color}`,
                                     }}>
-                                        What is your response to the questions?
-                                    </h3>
-                                    <textarea
-                                        className='response-textarea'
-                                        value={this.state.response}
-                                        onChange={this.handleResponseChange}
-                                        placeholder="Your reflection and thoughts..."
-                                        style={{
-                                            width: '100%',
-                                            minHeight: '200px',
-                                            padding: '16px',
-                                            borderRadius: '12px',
-                                            border: '2px solid #e1e5e9',
-                                            fontSize: '1em',
-                                            lineHeight: '1.5',
-                                            resize: 'vertical',
-                                            transition: 'border-color 0.3s ease',
-                                            outline: 'none',
-                                        }}
-                                        onFocus={(e) => {
-                                            e.currentTarget.style.borderColor = '#667eea';
-                                        }}
-                                        onBlur={(e) => {
-                                            e.currentTarget.style.borderColor = '#e1e5e9';
-                                        }}
-                                    />
-                                    <button 
-                                        className='review-all-cards-button' 
-                                        onClick={() => this.toggle()}
-                                        style={{
-                                            marginTop: '16px',
-                                            padding: '12px 24px',
-                                            borderRadius: '8px',
-                                            border: '2px solid #667eea',
-                                            background: 'transparent',
-                                            color: '#667eea',
-                                            fontSize: '1em',
+                                        <h3 style={{
+                                            marginBottom: '12px',
+                                            fontSize: '1.3em',
                                             fontWeight: '600',
-                                            cursor: 'pointer',
-                                            transition: 'all 0.3s ease',
-                                        }}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.background = '#667eea';
-                                            e.currentTarget.style.color = '#fff';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.background = 'transparent';
-                                            e.currentTarget.style.color = '#667eea';
-                                        }}
-                                    >
-                                        Review All Cards
-                                    </button>
+                                            color: '#333',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                        }}>
+                                            <div style={{
+                                                width: '12px',
+                                                height: '12px',
+                                                borderRadius: '50%',
+                                                backgroundColor: this.state.currentCard.color,
+                                            }}></div>
+                                            Your Thoughts
+                                        </h3>
+                                        
+                                        {/* Current card's thoughts */}
+                                        <div style={{ marginBottom: '16px' }}>
+                                            {(this.state.cardThoughts[this.state.currentCard.title] || []).map((thought, index) => (
+                                                <div key={index} style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    marginBottom: '8px',
+                                                    padding: '8px 12px',
+                                                    backgroundColor: '#fff',
+                                                    borderRadius: '8px',
+                                                    border: '1px solid #e1e5e9',
+                                                }}>
+                                                    <span style={{ fontSize: '12px', marginRight: '8px', color: '#999' }}>•</span>
+                                                    <input
+                                                        type="text"
+                                                        value={thought}
+                                                        onChange={(e) => this.editThoughtInCard(this.state.currentCard!.title, index, e.target.value)}
+                                                        style={{
+                                                            flex: 1,
+                                                            border: 'none',
+                                                            outline: 'none',
+                                                            fontSize: '14px',
+                                                            color: '#333',
+                                                            backgroundColor: 'transparent',
+                                                        }}
+                                                    />
+                                                    <button
+                                                        onClick={() => this.deleteThoughtFromCard(this.state.currentCard!.title, index)}
+                                                        style={{
+                                                            background: 'none',
+                                                            border: 'none',
+                                                            color: '#999',
+                                                            cursor: 'pointer',
+                                                            fontSize: '12px',
+                                                            padding: '4px',
+                                                        }}
+                                                    >
+                                                        ✕
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Add new thought */}
+                                        <div style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                        }}>
+                                            <input
+                                                type="text"
+                                                value={this.state.newThought}
+                                                onChange={this.handleNewThoughtChange}
+                                                onKeyPress={this.handleNewThoughtSubmit}
+                                                placeholder="Add a new thought..."
+                                                style={{
+                                                    flex: 1,
+                                                    padding: '10px 12px',
+                                                    borderRadius: '8px',
+                                                    border: '2px solid #e1e5e9',
+                                                    fontSize: '14px',
+                                                    outline: 'none',
+                                                    transition: 'border-color 0.3s ease',
+                                                }}
+                                                onFocus={(e) => {
+                                                    e.currentTarget.style.borderColor = this.state.currentCard?.color || '#667eea';
+                                                }}
+                                                onBlur={(e) => {
+                                                    e.currentTarget.style.borderColor = '#e1e5e9';
+                                                }}
+                                            />
+                                            <button
+                                                onClick={() => this.state.currentCard && this.addThoughtToCard(this.state.currentCard.title, this.state.newThought)}
+                                                style={{
+                                                    padding: '10px 16px',
+                                                    borderRadius: '8px',
+                                                    border: 'none',
+                                                    backgroundColor: this.state.currentCard.color,
+                                                    color: '#fff',
+                                                    fontSize: '14px',
+                                                    fontWeight: '600',
+                                                    cursor: 'pointer',
+                                                    transition: 'opacity 0.3s ease',
+                                                }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.opacity = '0.8';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.opacity = '1';
+                                                }}
+                                            >
+                                                + Add
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Previous Cards' Thoughts - Compact Card Stack */}
+                                    {Object.keys(this.state.cardThoughts).some(cardTitle => 
+                                        this.state.cardThoughts[cardTitle].length > 0
+                                    ) && (
+                                        <div style={{ marginBottom: '24px' }}>
+                                            <h3 style={{
+                                                marginBottom: '16px',
+                                                fontSize: '1.2em',
+                                                fontWeight: '600',
+                                                color: '#333',
+                                            }}>
+                                                Your Reflection Journey
+                                            </h3>
+                                            
+                                            {Object.keys(this.state.cardThoughts)
+                                                .filter(cardTitle => cardTitle !== this.state.currentCard?.title && this.state.cardThoughts[cardTitle].length > 0)
+                                                .map((cardTitle) => {
+                                                    const card = tarotcards.find(c => c.title === cardTitle);
+                                                    const thoughts = this.state.cardThoughts[cardTitle];
+                                                    
+                                                    return (
+                                                        <div key={cardTitle} style={{
+                                                            marginBottom: '16px',
+                                                            padding: '16px',
+                                                            backgroundColor: '#fff',
+                                                            borderRadius: '12px',
+                                                            border: `2px solid ${card?.color || '#ddd'}`,
+                                                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                                        }}>
+                                                            <div style={{
+                                                                display: 'flex',
+                                                                alignItems: 'center',
+                                                                marginBottom: '12px',
+                                                            }}>
+                                                                <div style={{
+                                                                    width: '12px',
+                                                                    height: '12px',
+                                                                    borderRadius: '50%',
+                                                                    backgroundColor: card?.color || '#ddd',
+                                                                    marginRight: '8px',
+                                                                }}></div>
+                                                                <h4 style={{
+                                                                    margin: 0,
+                                                                    fontSize: '1em',
+                                                                    fontWeight: '600',
+                                                                    color: '#333',
+                                                                }}>
+                                                                    {cardTitle}
+                                                                </h4>
+                                                            </div>
+                                                            
+                                                            <div>
+                                                                {thoughts.map((thought, index) => (
+                                                                    <div key={index} style={{
+                                                                        display: 'flex',
+                                                                        alignItems: 'center',
+                                                                        marginBottom: '6px',
+                                                                        fontSize: '14px',
+                                                                        color: '#666',
+                                                                    }}>
+                                                                        <span style={{ marginRight: '8px' }}>•</span>
+                                                                        <span>{thought}</span>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })
+                                            }
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Default state when no card is drawn */}
+                            {!this.state.currentCard && !this.state.showCardsOverview && (
+                                <div className="default-state" style={{
+                                    padding: '40px 20px',
+                                    textAlign: 'center',
+                                    maxWidth: '600px',
+                                    margin: '0 auto',
+                                }}>
+                                    <div style={{
+                                        marginBottom: '32px',
+                                        padding: '40px',
+                                        backgroundColor: '#f8f9fa',
+                                        borderRadius: '20px',
+                                        border: '2px dashed #d1d5db',
+                                        position: 'relative',
+                                        overflow: 'hidden',
+                                    }}>
+                                        {/* Decorative background elements */}
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: '20px',
+                                            right: '20px',
+                                            fontSize: '24px',
+                                            opacity: 0.1,
+                                        }}>✨</div>
+                                        <div style={{
+                                            position: 'absolute',
+                                            bottom: '20px',
+                                            left: '20px',
+                                            fontSize: '20px',
+                                            opacity: 0.1,
+                                        }}>🔮</div>
+                                        
+                                        <h2 style={{
+                                            fontSize: '2em',
+                                            fontWeight: '700',
+                                            color: '#333',
+                                            marginBottom: '16px',
+                                            position: 'relative',
+                                        }}>
+                                            Ready to Begin Your Ethical Journey?
+                                        </h2>
+                                        
+                                        <p style={{
+                                            fontSize: '1.1em',
+                                            color: '#666',
+                                            lineHeight: '1.6',
+                                            marginBottom: '24px',
+                                            position: 'relative',
+                                        }}>
+                                            Draw your first tarot card to start exploring the potential societal impact of your project. 
+                                            Each card will present thought-provoking questions to help you consider different perspectives.
+                                        </p>
+                                        
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            gap: '20px',
+                                            marginTop: '24px',
+                                            flexWrap: 'wrap',
+                                        }}>
+                                            <div style={{
+                                                padding: '16px 20px',
+                                                backgroundColor: '#fff',
+                                                borderRadius: '12px',
+                                                border: '1px solid #e1e5e9',
+                                                fontSize: '14px',
+                                                color: '#555',
+                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                            }}>
+                                                📝 <strong>Reflect</strong> on each question
+                                            </div>
+                                            <div style={{
+                                                padding: '16px 20px',
+                                                backgroundColor: '#fff',
+                                                borderRadius: '12px',
+                                                border: '1px solid #e1e5e9',
+                                                fontSize: '14px',
+                                                color: '#555',
+                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                            }}>
+                                                💭 <strong>Add</strong> multiple thoughts
+                                            </div>
+                                            <div style={{
+                                                padding: '16px 20px',
+                                                backgroundColor: '#fff',
+                                                borderRadius: '12px',
+                                                border: '1px solid #e1e5e9',
+                                                fontSize: '14px',
+                                                color: '#555',
+                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                                            }}>
+                                                🎯 <strong>Build</strong> comprehensive insights
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    {/* Getting Started Tips */}
+                                    <div style={{
+                                        textAlign: 'left',
+                                        backgroundColor: '#fff',
+                                        padding: '24px',
+                                        borderRadius: '12px',
+                                        boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+                                        border: '1px solid #e1e5e9',
+                                    }}>
+                                        <h3 style={{
+                                            fontSize: '1.2em',
+                                            fontWeight: '600',
+                                            color: '#333',
+                                            marginBottom: '16px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                        }}>
+                                            💡 How it works
+                                        </h3>
+                                        
+                                        <div style={{ color: '#666', lineHeight: '1.6' }}>
+                                            <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                                                <span style={{ 
+                                                    minWidth: '24px', 
+                                                    height: '24px', 
+                                                    backgroundColor: '#667eea', 
+                                                    color: '#fff', 
+                                                    borderRadius: '50%', 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    justifyContent: 'center', 
+                                                    fontSize: '12px', 
+                                                    fontWeight: '600',
+                                                    marginTop: '2px',
+                                                }}>1</span>
+                                                <span><strong>Draw a card</strong> from the deck to reveal an ethical perspective</span>
+                                            </div>
+                                            <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                                                <span style={{ 
+                                                    minWidth: '24px', 
+                                                    height: '24px', 
+                                                    backgroundColor: '#667eea', 
+                                                    color: '#fff', 
+                                                    borderRadius: '50%', 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    justifyContent: 'center', 
+                                                    fontSize: '12px', 
+                                                    fontWeight: '600',
+                                                    marginTop: '2px',
+                                                }}>2</span>
+                                                <span><strong>Add thoughts</strong> as you reflect on the card's questions</span>
+                                            </div>
+                                            <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                                                <span style={{ 
+                                                    minWidth: '24px', 
+                                                    height: '24px', 
+                                                    backgroundColor: '#667eea', 
+                                                    color: '#fff', 
+                                                    borderRadius: '50%', 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    justifyContent: 'center', 
+                                                    fontSize: '12px', 
+                                                    fontWeight: '600',
+                                                    marginTop: '2px',
+                                                }}>3</span>
+                                                <span><strong>Continue drawing</strong> to explore different ethical dimensions</span>
+                                            </div>
+                                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                                                <span style={{ 
+                                                    minWidth: '24px', 
+                                                    height: '24px', 
+                                                    backgroundColor: '#667eea', 
+                                                    color: '#fff', 
+                                                    borderRadius: '50%', 
+                                                    display: 'flex', 
+                                                    alignItems: 'center', 
+                                                    justifyContent: 'center', 
+                                                    fontSize: '12px', 
+                                                    fontWeight: '600',
+                                                    marginTop: '2px',
+                                                }}>4</span>
+                                                <span><strong>View all cards</strong> by clicking the deck to see the full collection</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             )}
                         </div>
@@ -671,7 +1046,33 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                         </div>
                     </div>
                 )}
-                <PageButtons back={this.props.returnToPrevPage} next={() => this.setState({nextPage: true})} />
+                {/* <button 
+                                        className='review-all-cards-button' 
+                                        onClick={() => this.toggle()}
+                                        style={{
+                                            marginTop: '16px',
+                                            padding: '12px 24px',
+                                            borderRadius: '8px',
+                                            border: '2px solid #667eea',
+                                            background: 'transparent',
+                                            color: '#667eea',
+                                            fontSize: '1em',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.3s ease',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.background = '#667eea';
+                                            e.currentTarget.style.color = '#fff';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.background = 'transparent';
+                                            e.currentTarget.style.color = '#667eea';
+                                        }}
+                                    >
+                                        Review All Cards
+                                    </button> */}
+                {/* <PageButtons back={this.props.returnToPrevPage} next={() => this.setState({nextPage: true})} /> */}
             </div>
         :
             <ReorderCards setCard={this.setCard} returnToPrevPage={() => this.setState({nextPage: false})} user={this.props.user} returnToHomePage={this.props.returnToHomePage} projectId={this.props.projectId} />
