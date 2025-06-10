@@ -767,6 +767,109 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                                 + Add
                                             </button>
                                         </div>
+
+                                        {/* Hear What Others Might Say - Roundtable Section */}
+                                        {this.state.currentCard && Object.keys(this.state.cardThoughts).some(cardTitle => 
+                                            this.state.cardThoughts[cardTitle].length > 0
+                                        ) && !this.state.showCardsOverview && (
+                                            <div style={{
+                                                marginTop: '24px',
+                                                padding: '16px',
+                                                backgroundColor: '#f8f9fa',
+                                                borderRadius: '12px',
+                                                border: '1px solid #e1e5e9',
+                                                opacity: this.state.showCardContent ? 1 : 0,
+                                                transform: this.state.showCardContent ? 'translateY(0)' : 'translateY(20px)',
+                                                transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                                transitionDelay: '1.4s',
+                                            }}>
+                                                <div style={{
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'space-between',
+                                                    gap: '16px',
+                                                }}>
+                                                    <div style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '12px',
+                                                    }}>
+                                                        <div style={{
+                                                            display: 'flex',
+                                                            gap: '6px',
+                                                        }}>
+                                                            <div style={{
+                                                                width: '20px',
+                                                                height: '20px',
+                                                                borderRadius: '50%',
+                                                                backgroundColor: '#667eea',
+                                                                marginLeft: '-2px',
+                                                            }}></div>
+                                                            <div style={{
+                                                                width: '20px',
+                                                                height: '20px',
+                                                                borderRadius: '50%',
+                                                                backgroundColor: '#f39c12',
+                                                                marginLeft: '-6px',
+                                                            }}></div>
+                                                            <div style={{
+                                                                width: '20px',
+                                                                height: '20px',
+                                                                borderRadius: '50%',
+                                                                backgroundColor: '#e74c3c',
+                                                                marginLeft: '-6px',
+                                                            }}></div>
+                                                        </div>
+                                                        <div>
+                                                            <div style={{
+                                                                fontSize: '14px',
+                                                                fontWeight: '600',
+                                                                color: '#333',
+                                                                marginBottom: '2px',
+                                                            }}>
+                                                                Get different perspectives?
+                                                            </div>
+                                                            <div style={{
+                                                                fontSize: '12px',
+                                                                color: '#666',
+                                                            }}>
+                                                                Curious what others might think? This is a simulated conversation, so for real insights, we encourage you to connect directly the stakeholders for in-depth conversations.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <button
+                                                        style={{
+                                                            padding: '8px 16px',
+                                                            borderRadius: '8px',
+                                                            border: '1px solid #667eea',
+                                                            background: '#fff',
+                                                            color: '#667eea',
+                                                            fontSize: '13px',
+                                                            fontWeight: '500',
+                                                            cursor: 'pointer',
+                                                            transition: 'all 0.3s ease',
+                                                            whiteSpace: 'nowrap',
+                                                        }}
+                                                        onMouseEnter={(e) => {
+                                                            e.currentTarget.style.background = '#667eea';
+                                                            e.currentTarget.style.color = '#fff';
+                                                        }}
+                                                        onMouseLeave={(e) => {
+                                                            e.currentTarget.style.background = '#fff';
+                                                            e.currentTarget.style.color = '#667eea';
+                                                        }}
+                                                        onClick={() => {
+                                                            // TODO: Implement roundtable navigation
+                                                            console.log('Start conversation clicked');
+                                                            alert('Roundtable feature coming soon! This will show different stakeholder perspectives on your project.');
+                                                        }}
+                                                    >
+                                                        Start conversation
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Previous Cards' Thoughts - Compact Card Stack */}
@@ -842,6 +945,8 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                     )}
                                 </div>
                             )}
+
+                            
 
                             {/* Default state when no card is drawn */}
                             {!this.state.currentCard && !this.state.showCardsOverview && (
