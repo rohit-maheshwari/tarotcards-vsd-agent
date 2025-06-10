@@ -75,9 +75,10 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
             if (response.ok) {
                 return response.json();
             }
+            throw new Error('Failed to fetch cards');
         })
         .then((data) => {
-            const usersTarotCards = data.cards;
+            const usersTarotCards = data.cards || [];
             const userTarotCardsNames = usersTarotCards.map((card: any) => card.cardName)
             const matchingCardsWithResponse = tarotcards
             .filter(card => userTarotCardsNames.includes(card.title))
@@ -92,15 +93,29 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
 
             const unfinishedCards = tarotcards.filter(card => !matchingCardsWithResponse.map(card => card.title).includes(card.title))
             console.log(unfinishedCards)
-            const unfinishedRandomCard = unfinishedCards[Math.floor(Math.random() * unfinishedCards.length)];
             
-            this.setState({finishedCards: data.cards, finishedCardsWithResponse: matchingCardsWithResponse, unfinishedCards: unfinishedCards, currentCard: unfinishedRandomCard})
+            // Set currentCard to null initially, will be set by user action
+            let unfinishedRandomCard = null;
+            
+            this.setState({
+                finishedCards: data.cards || [], 
+                finishedCardsWithResponse: matchingCardsWithResponse, 
+                unfinishedCards: unfinishedCards, 
+                currentCard: unfinishedRandomCard
+            })
         })
         .then(() => {
             
         })
         .catch((error) => {
             console.error(error)
+            // If API fails, just set up with all cards as unfinished
+            this.setState({
+                finishedCards: [], 
+                finishedCardsWithResponse: [], 
+                unfinishedCards: tarotcards, 
+                currentCard: null
+            })
         })
     }
 
@@ -332,54 +347,194 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                 <div className="container">
                     <div className="row">
                         <div className="col-md-4">
-                            <div className="card-draw-container" style={{position: 'relative', height: '500px', width: '300px', margin: '0 auto', perspective: '1000px'}}>
-                                {/* Deck effect: show up to 4 cards behind the main card */}
-                                {this.state.unfinishedCards.slice(1, 5).map((card, idx) => (
-                                    <div
-                                        key={`${card.title}-${idx}`}
-                                        className={`deck-card${this.state.isShuffling ? ' shuffling' : ''}`}
-                                        onClick={this.handleDeckClick}
+                            {/* Default card area state */}
+                            {!this.state.currentCard && (
+                                <div style={{
+                                    height: '500px',
+                                    width: '300px',
+                                    margin: '0 auto',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    padding: '20px',
+                                    backgroundColor: '#f8f9fa',
+                                    borderRadius: '20px',
+                                    border: '3px dashed #667eea',
+                                    position: 'relative',
+                                    textAlign: 'center',
+                                }}>
+                                    {/* Decorative elements */}
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '15px',
+                                        right: '15px',
+                                        fontSize: '20px',
+                                        opacity: 0.3,
+                                    }}>✨</div>
+                                    <div style={{
+                                        position: 'absolute',
+                                        top: '15px',
+                                        left: '15px',
+                                        fontSize: '18px',
+                                        opacity: 0.3,
+                                    }}>🔮</div>
+                                    
+                                    {/* Card stack illustration */}
+                                    <div style={{ marginBottom: '20px', position: 'relative' }}>
+                                        <div style={{
+                                            width: '120px',
+                                            height: '180px',
+                                            backgroundColor: '#667eea',
+                                            borderRadius: '12px',
+                                            position: 'relative',
+                                            transform: 'rotate(-5deg)',
+                                            opacity: 0.8,
+                                        }}>
+                                            <div style={{
+                                                position: 'absolute',
+                                                top: '-8px',
+                                                left: '8px',
+                                                width: '120px',
+                                                height: '180px',
+                                                backgroundColor: '#764ba2',
+                                                borderRadius: '12px',
+                                                transform: 'rotate(10deg)',
+                                                opacity: 0.6,
+                                            }}></div>
+                                            <div style={{
+                                                position: 'absolute',
+                                                top: '50%',
+                                                left: '50%',
+                                                transform: 'translate(-50%, -50%) rotate(5deg)',
+                                                color: '#fff',
+                                                fontSize: '14px',
+                                                fontWeight: '600',
+                                            }}>
+                                                ?
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <h3 style={{
+                                        fontSize: '1.3em',
+                                        fontWeight: '600',
+                                        color: '#333',
+                                        marginBottom: '12px',
+                                    }}>
+                                        Draw Your First Card
+                                    </h3>
+                                    
+                                    <p style={{
+                                        fontSize: '0.9em',
+                                        color: '#666',
+                                        lineHeight: '1.4',
+                                        marginBottom: '20px',
+                                    }}>
+                                        Click the button below to reveal an ethical perspective for your project
+                                    </p>
+                                    
+                                    <button 
+                                        className="draw-card-btn" 
                                         style={{
-                                            position: 'absolute',
-                                            top: `${30 + idx * 8}px`,
-                                            left: `${30 - idx * 8}px`,
-                                            width: '240px',
-                                            height: '360px',
-                                            backgroundColor: '#1a1a2e',
-                                            borderRadius: '16px',
-                                            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                                            zIndex: idx,
-                                            border: '1px solid rgba(255,255,255,0.1)',
-                                            transform: this.state.isShuffling ? `translateY(${Math.random() * 20 - 10}px) rotate(${Math.random() * 10 - 5}deg)` : 'none',
-                                            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                                            padding: '14px 24px',
+                                            borderRadius: '12px',
+                                            border: 'none',
+                                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                            fontSize: '1em',
+                                            fontWeight: '600',
+                                            color: '#fff',
                                             cursor: 'pointer',
+                                            letterSpacing: '0.5px',
+                                            boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+                                            transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                            transform: 'translateY(0)',
                                         }}
-                                    />
-                                ))}
-                                
-                                {/* Drawing card animation */}
-                                {this.state.isDrawing && (
-                                    <div
-                                        className="drawing-card"
-                                        style={{
-                                            position: 'absolute',
-                                            top: '62px',
-                                            left: '6px',
-                                            width: '240px',
-                                            height: '360px',
-                                            backgroundColor: '#1a1a2e',
-                                            borderRadius: '16px',
-                                            boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
-                                            zIndex: 15,
-                                            border: '1px solid rgba(255,255,255,0.1)',
-                                            transform: 'translateY(-40px) translateX(15px) scale(1.05)',
-                                            transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                        onClick={this.handleDrawCardWithShuffle}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(-2px)';
+                                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
                                         }}
-                                    />
-                                )}
-                                
-                                {/* Main card */}
-                                {this.state.currentCard && (
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(0)';
+                                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+                                        }}
+                                    >
+                                        🎴 Draw your first card
+                                    </button>
+                                    
+                                    <div style={{
+                                        marginTop: '20px',
+                                        fontSize: '0.8em',
+                                        color: '#999',
+                                    }}>
+                                        Or click here to{' '}
+                                        <button 
+                                            onClick={this.handleDeckClick}
+                                            style={{
+                                                background: 'none',
+                                                border: 'none',
+                                                color: '#667eea',
+                                                textDecoration: 'underline',
+                                                cursor: 'pointer',
+                                                fontSize: 'inherit',
+                                            }}
+                                        >
+                                            view all cards
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                            
+                            {/* Existing card container - only show when card is drawn */}
+                            {this.state.currentCard && (
+                                <div className="card-draw-container" style={{position: 'relative', height: '500px', width: '300px', margin: '0 auto', perspective: '1000px'}}>
+                                    {/* Deck effect: show up to 4 cards behind the main card */}
+                                    {this.state.unfinishedCards.slice(1, 5).map((card, idx) => (
+                                        <div
+                                            key={`${card.title}-${idx}`}
+                                            className={`deck-card${this.state.isShuffling ? ' shuffling' : ''}`}
+                                            onClick={this.handleDeckClick}
+                                            style={{
+                                                position: 'absolute',
+                                                top: `${30 + idx * 8}px`,
+                                                left: `${30 - idx * 8}px`,
+                                                width: '240px',
+                                                height: '360px',
+                                                backgroundColor: '#1a1a2e',
+                                                borderRadius: '16px',
+                                                boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                                                zIndex: idx,
+                                                border: '1px solid rgba(255,255,255,0.1)',
+                                                transform: this.state.isShuffling ? `translateY(${Math.random() * 20 - 10}px) rotate(${Math.random() * 10 - 5}deg)` : 'none',
+                                                transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                cursor: 'pointer',
+                                            }}
+                                        />
+                                    ))}
+                                    
+                                    {/* Drawing card animation */}
+                                    {this.state.isDrawing && (
+                                        <div
+                                            className="drawing-card"
+                                            style={{
+                                                position: 'absolute',
+                                                top: '62px',
+                                                left: '6px',
+                                                width: '240px',
+                                                height: '360px',
+                                                backgroundColor: '#1a1a2e',
+                                                borderRadius: '16px',
+                                                boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                                                zIndex: 15,
+                                                border: '1px solid rgba(255,255,255,0.1)',
+                                                transform: 'translateY(-40px) translateX(15px) scale(1.05)',
+                                                transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                            }}
+                                        />
+                                    )}
+                                    
+                                    {/* Main card */}
                                     <div
                                         className="main-card"
                                         style={{
@@ -439,48 +594,48 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                             </div>
                                         </div>
                                     </div>
-                                )}
-                                
-                                {/* Draw Button - Always visible below the card */}
-                                <div className="button-container" style={{
-                                    position: 'absolute',
-                                    bottom: '20px',
-                                    left: '30px',
-                                    width: '240px',
-                                    padding: '0',
-                                    zIndex: 25,
-                                }}>
-                                    <button 
-                                        className="draw-card-btn" 
-                                        style={{
-                                            width: '100%',
-                                            padding: '14px',
-                                            borderRadius: '12px',
-                                            border: 'none',
-                                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                                            fontSize: '1em',
-                                            fontWeight: '600',
-                                            color: '#fff',
-                                            cursor: 'pointer',
-                                            letterSpacing: '0.5px',
-                                            boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
-                                            transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-                                            transform: 'translateY(0)',
-                                        }}
-                                        onClick={this.handleDrawCardWithShuffle}
-                                        onMouseEnter={(e) => {
-                                            e.currentTarget.style.transform = 'translateY(-2px)';
-                                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
-                                        }}
-                                        onMouseLeave={(e) => {
-                                            e.currentTarget.style.transform = 'translateY(0)';
-                                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
-                                        }}
-                                    >
-                                        Draw a new card
-                                    </button>
+                                    
+                                    {/* Draw Button - Always visible below the card */}
+                                    <div className="button-container" style={{
+                                        position: 'absolute',
+                                        bottom: '20px',
+                                        left: '30px',
+                                        width: '240px',
+                                        padding: '0',
+                                        zIndex: 25,
+                                    }}>
+                                        <button 
+                                            className="draw-card-btn" 
+                                            style={{
+                                                width: '100%',
+                                                padding: '14px',
+                                                borderRadius: '12px',
+                                                border: 'none',
+                                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                                fontSize: '1em',
+                                                fontWeight: '600',
+                                                color: '#fff',
+                                                cursor: 'pointer',
+                                                letterSpacing: '0.5px',
+                                                boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+                                                transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                                transform: 'translateY(0)',
+                                            }}
+                                            onClick={this.handleDrawCardWithShuffle}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.transform = 'translateY(-2px)';
+                                                e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.transform = 'translateY(0)';
+                                                e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+                                            }}
+                                        >
+                                            Draw a new card
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                         <div className="col-md-8">
                             {/* Response section */}
@@ -625,7 +780,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                                 fontWeight: '600',
                                                 color: '#333',
                                             }}>
-                                                Your Reflection Journey
+                                                Reflection History
                                             </h3>
                                             
                                             {Object.keys(this.state.cardThoughts)
@@ -691,9 +846,8 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                             {/* Default state when no card is drawn */}
                             {!this.state.currentCard && !this.state.showCardsOverview && (
                                 <div className="default-state" style={{
-                                    padding: '40px 20px',
                                     textAlign: 'center',
-                                    maxWidth: '600px',
+                                    maxWidth: '800px',
                                     margin: '0 auto',
                                 }}>
                                     <div style={{
@@ -728,65 +882,10 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                             marginBottom: '16px',
                                             position: 'relative',
                                         }}>
-                                            Ready to Begin Your Ethical Journey?
+                                            Ready to Begin Brainstorming societal impacts of your project?
                                         </h2>
                                         
-                                        <p style={{
-                                            fontSize: '1.1em',
-                                            color: '#666',
-                                            lineHeight: '1.6',
-                                            marginBottom: '24px',
-                                            position: 'relative',
-                                        }}>
-                                            Draw your first tarot card to start exploring the potential societal impact of your project. 
-                                            Each card will present thought-provoking questions to help you consider different perspectives.
-                                        </p>
-                                        
                                         <div style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            gap: '20px',
-                                            marginTop: '24px',
-                                            flexWrap: 'wrap',
-                                        }}>
-                                            <div style={{
-                                                padding: '16px 20px',
-                                                backgroundColor: '#fff',
-                                                borderRadius: '12px',
-                                                border: '1px solid #e1e5e9',
-                                                fontSize: '14px',
-                                                color: '#555',
-                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                                            }}>
-                                                📝 <strong>Reflect</strong> on each question
-                                            </div>
-                                            <div style={{
-                                                padding: '16px 20px',
-                                                backgroundColor: '#fff',
-                                                borderRadius: '12px',
-                                                border: '1px solid #e1e5e9',
-                                                fontSize: '14px',
-                                                color: '#555',
-                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                                            }}>
-                                                💭 <strong>Add</strong> multiple thoughts
-                                            </div>
-                                            <div style={{
-                                                padding: '16px 20px',
-                                                backgroundColor: '#fff',
-                                                borderRadius: '12px',
-                                                border: '1px solid #e1e5e9',
-                                                fontSize: '14px',
-                                                color: '#555',
-                                                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                                            }}>
-                                                🎯 <strong>Build</strong> comprehensive insights
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Getting Started Tips */}
-                                    <div style={{
                                         textAlign: 'left',
                                         backgroundColor: '#fff',
                                         padding: '24px',
@@ -794,7 +893,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                         boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
                                         border: '1px solid #e1e5e9',
                                     }}>
-                                        <h3 style={{
+                                        {/* <h3 style={{
                                             fontSize: '1.2em',
                                             fontWeight: '600',
                                             color: '#333',
@@ -804,7 +903,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                             gap: '8px',
                                         }}>
                                             💡 How it works
-                                        </h3>
+                                        </h3> */}
                                         
                                         <div style={{ color: '#666', lineHeight: '1.6' }}>
                                             <div style={{ marginBottom: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
@@ -853,26 +952,14 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                                     fontWeight: '600',
                                                     marginTop: '2px',
                                                 }}>3</span>
-                                                <span><strong>Continue drawing</strong> to explore different ethical dimensions</span>
+                                                <span><strong>Continue drawing</strong> to explore different perspectives</span>
                                             </div>
-                                            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                                                <span style={{ 
-                                                    minWidth: '24px', 
-                                                    height: '24px', 
-                                                    backgroundColor: '#667eea', 
-                                                    color: '#fff', 
-                                                    borderRadius: '50%', 
-                                                    display: 'flex', 
-                                                    alignItems: 'center', 
-                                                    justifyContent: 'center', 
-                                                    fontSize: '12px', 
-                                                    fontWeight: '600',
-                                                    marginTop: '2px',
-                                                }}>4</span>
-                                                <span><strong>View all cards</strong> by clicking the deck to see the full collection</span>
-                                            </div>
+                                            
                                         </div>
                                     </div>
+                                    </div>
+                                    
+                                    
                                 </div>
                             )}
                         </div>
