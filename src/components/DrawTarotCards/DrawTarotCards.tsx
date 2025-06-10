@@ -37,7 +37,7 @@ type DrawTarotCardsState = {
 
 const cards: Card[] = tarotcards;
 
-class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState & { isShuffling: boolean }> {
+class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState & { isShuffling: boolean, isDrawing: boolean, showCardContent: boolean, showCardsOverview: boolean }> {
 
     constructor(props: DrawTarotCardsProps) {
         super(props);
@@ -50,7 +50,10 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
             finishedCardsWithResponse: [],
             unfinishedCards: cards,
             nextPage: false,
-            isShuffling: false
+            isShuffling: false,
+            isDrawing: false,
+            showCardContent: false,
+            showCardsOverview: false
         };
 
         this.saveResponse = lodash.debounce(this.saveResponse.bind(this), 500)
@@ -163,7 +166,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
 
     drawCard = () => {
         const randomCard = this.state.unfinishedCards[Math.floor(Math.random() * this.state.unfinishedCards.length)];
-        this.setState({currentCard: randomCard, response: ''})
+        this.setState({currentCard: randomCard, response: '', showCardContent: false})
     };
 
     handleResponseChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -216,11 +219,49 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
     }
 
     handleDrawCardWithShuffle = () => {
-        this.setState({ isShuffling: true });
+        this.setState({ 
+            isShuffling: true, 
+            isDrawing: true, 
+            showCardContent: false 
+        });
+        
+        // First shuffle animation
         setTimeout(() => {
             this.drawCard();
             this.setState({ isShuffling: false });
-        }, 400);
+        }, 600);
+        
+        // Then card drawing animation
+        setTimeout(() => {
+            this.setState({ isDrawing: false });
+        }, 1200);
+        
+        // Finally reveal card content
+        setTimeout(() => {
+            this.setState({ showCardContent: true });
+        }, 1800);
+    }
+
+    handleDeckClick = () => {
+        this.setState({ showCardsOverview: true });
+    }
+
+    closeCardsOverview = () => {
+        this.setState({ showCardsOverview: false });
+    }
+
+    selectCardFromOverview = (card: Card) => {
+        this.setState({ 
+            currentCard: card, 
+            response: '',
+            showCardContent: false,
+            showCardsOverview: false 
+        });
+        
+        // Trigger the reveal animation after selecting
+        setTimeout(() => {
+            this.setState({ showCardContent: true });
+        }, 300);
     }
 
     render() {
@@ -231,10 +272,6 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
         !this.state.nextPage ?
             <div className="draw-tarot-cards bg-light tasks">
                 <ProgressBar step={2}/>
-                {/* <header className='header-brainstorm'>
-                    <h1 className='title'>Please draw a card from the stack.</h1>
-                    <h3 className='description'>Each card will guide you to anticipate impacts from different perspectives. Write down your reflection.</h3>
-                </header> */}
                 <header className="container">
                     <h4 className="page-subheader">What are the potential societal impact of your project?</h4>
                     <p className="ethics-board-description">The Tarot Cards of Tech have been used to help tech creators fully consider the impact of technology. They'll not only help you anticipate unintended consequences, but also reveal opportunities for creating positive change. Draw a card and note down your thoughts. </p>
@@ -243,78 +280,397 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                 <div className="container">
                     <div className="row">
                         <div className="col-md-4">
-                            <div className="card-draw" style={{position: 'relative', height: '350px', width: '250px', margin: '0 auto'}}>
+                            <div className="card-draw-container" style={{position: 'relative', height: '500px', width: '300px', margin: '0 auto', perspective: '1000px'}}>
                                 {/* Deck effect: show up to 4 cards behind the main card */}
                                 {this.state.unfinishedCards.slice(1, 5).map((card, idx) => (
                                     <div
-                                        key={card.title}
+                                        key={`${card.title}-${idx}`}
                                         className={`deck-card${this.state.isShuffling ? ' shuffling' : ''}`}
+                                        onClick={this.handleDeckClick}
                                         style={{
                                             position: 'absolute',
-                                            top: `${20 + idx * 10}px`,
-                                            left: `${20 - idx * 10}px`,
-                                            width: '210px',
-                                            height: '310px',
-                                            backgroundColor: card.color,
-                                            borderRadius: '12px',
-                                            boxShadow: '0 4px 12px rgba(0,0,0,0.12)',
+                                            top: `${30 + idx * 8}px`,
+                                            left: `${30 - idx * 8}px`,
+                                            width: '240px',
+                                            height: '360px',
+                                            backgroundColor: '#1a1a2e',
+                                            borderRadius: '16px',
+                                            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
                                             zIndex: idx,
+                                            border: '1px solid rgba(255,255,255,0.1)',
+                                            transform: this.state.isShuffling ? `translateY(${Math.random() * 20 - 10}px) rotate(${Math.random() * 10 - 5}deg)` : 'none',
+                                            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
+                                            cursor: 'pointer',
                                         }}
                                     />
                                 ))}
-                                {/* Main card on top */}
-                                {this.state.currentCard && (
+                                
+                                {/* Drawing card animation */}
+                                {this.state.isDrawing && (
                                     <div
-                                        className={`main-card${this.state.isShuffling ? ' shuffling' : ''}`}
+                                        className="drawing-card"
                                         style={{
                                             position: 'absolute',
-                                            top: 0,
-                                            left: 0,
-                                            width: '210px',
-                                            height: '310px',
+                                            top: '62px',
+                                            left: '6px',
+                                            width: '240px',
+                                            height: '360px',
+                                            backgroundColor: '#1a1a2e',
+                                            borderRadius: '16px',
+                                            boxShadow: '0 8px 32px rgba(0,0,0,0.2)',
+                                            zIndex: 15,
+                                            border: '1px solid rgba(255,255,255,0.1)',
+                                            transform: 'translateY(-40px) translateX(15px) scale(1.05)',
+                                            transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                        }}
+                                    />
+                                )}
+                                
+                                {/* Main card */}
+                                {this.state.currentCard && (
+                                    <div
+                                        className="main-card"
+                                        style={{
+                                            position: 'absolute',
+                                            top: '20px',
+                                            left: '30px',
+                                            width: '240px',
+                                            height: '360px',
                                             backgroundColor: this.state.currentCard.color,
-                                            borderRadius: '12px',
-                                            boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
-                                            zIndex: 10,
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                            justifyContent: 'flex-end',
+                                            borderRadius: '16px',
+                                            boxShadow: '0 12px 40px rgba(0,0,0,0.25)',
+                                            zIndex: 20,
                                             overflow: 'hidden',
+                                            transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                            transform: this.state.showCardContent ? 'rotateY(0deg)' : 'rotateY(-15deg)',
+                                            opacity: this.state.showCardContent ? 1 : 0.9,
                                         }}
                                     >
-                                        <img src={this.state.currentCard.frontimage} alt="Tarot Card" style={{width: '100%', height: '80%', objectFit: 'cover', borderTopLeftRadius: '12px', borderTopRightRadius: '12px'}}/>
-                                        <button className="draw-card-btn" style={{width: '90%', margin: '12px 0', padding: '10px', borderRadius: '8px', border: '1px solid #333', background: '#eee', fontSize: '1.1em', cursor: 'pointer'}} onClick={this.handleDrawCardWithShuffle}>
-                                            Draw a new card
-                                        </button>
+                                        <div className="card-content" style={{
+                                            height: '100%',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            position: 'relative',
+                                            transform: this.state.showCardContent ? 'scale(1)' : 'scale(0.95)',
+                                            transition: 'transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                        }}>
+                                            {/* Card Back Image and Content */}
+                                            <div className="card-back-content" style={{
+                                                flex: 1,
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                opacity: this.state.showCardContent ? 1 : 0,
+                                                transform: this.state.showCardContent ? 'translateY(0)' : 'translateY(20px)',
+                                                transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                                transitionDelay: this.state.showCardContent ? '0.3s' : '0s',
+                                            }}>
+                                                {/* Back Image */}
+                                                <div className="card-image-container" style={{
+                                                    height: '100%',
+                                                    overflow: 'hidden',
+                                                    borderTopLeftRadius: '16px',
+                                                    borderTopRightRadius: '16px',
+                                                }}>
+                                                    <img 
+                                                        src={this.state.currentCard.backimage} 
+                                                        alt="Tarot Card Back" 
+                                                        style={{
+                                                            width: '100%', 
+                                                            height: '100%', 
+                                                            objectFit: 'cover',
+                                                            transform: this.state.showCardContent ? 'scale(1)' : 'scale(1.1)',
+                                                            transition: 'transform 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                                            transitionDelay: '0.4s',
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 )}
+                                
+                                {/* Draw Button - Always visible below the card */}
+                                <div className="button-container" style={{
+                                    position: 'absolute',
+                                    bottom: '20px',
+                                    left: '30px',
+                                    width: '240px',
+                                    padding: '0',
+                                    zIndex: 25,
+                                }}>
+                                    <button 
+                                        className="draw-card-btn" 
+                                        style={{
+                                            width: '100%',
+                                            padding: '14px',
+                                            borderRadius: '12px',
+                                            border: 'none',
+                                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                            fontSize: '1em',
+                                            fontWeight: '600',
+                                            color: '#fff',
+                                            cursor: 'pointer',
+                                            letterSpacing: '0.5px',
+                                            boxShadow: '0 4px 15px rgba(0,0,0,0.2)',
+                                            transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                            transform: 'translateY(0)',
+                                        }}
+                                        onClick={this.handleDrawCardWithShuffle}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(-2px)';
+                                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.transform = 'translateY(0)';
+                                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+                                        }}
+                                    >
+                                        Draw a new card
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-8">
-                            
+                            {/* Response section */}
+                            {this.state.currentCard && this.state.showCardContent && !this.state.showCardsOverview && (
+                                <div className="response-section" style={{
+                                    padding: '20px',
+                                    opacity: this.state.showCardContent ? 1 : 0,
+                                    transform: this.state.showCardContent ? 'translateY(0)' : 'translateY(30px)',
+                                    transition: 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                    transitionDelay: '1.2s',
+                                }}>
+                                    <h3 style={{
+                                        marginBottom: '16px',
+                                        fontSize: '1.3em',
+                                        fontWeight: '600',
+                                        color: '#333',
+                                    }}>
+                                        What is your response to the questions?
+                                    </h3>
+                                    <textarea
+                                        className='response-textarea'
+                                        value={this.state.response}
+                                        onChange={this.handleResponseChange}
+                                        placeholder="Your reflection and thoughts..."
+                                        style={{
+                                            width: '100%',
+                                            minHeight: '200px',
+                                            padding: '16px',
+                                            borderRadius: '12px',
+                                            border: '2px solid #e1e5e9',
+                                            fontSize: '1em',
+                                            lineHeight: '1.5',
+                                            resize: 'vertical',
+                                            transition: 'border-color 0.3s ease',
+                                            outline: 'none',
+                                        }}
+                                        onFocus={(e) => {
+                                            e.currentTarget.style.borderColor = '#667eea';
+                                        }}
+                                        onBlur={(e) => {
+                                            e.currentTarget.style.borderColor = '#e1e5e9';
+                                        }}
+                                    />
+                                    <button 
+                                        className='review-all-cards-button' 
+                                        onClick={() => this.toggle()}
+                                        style={{
+                                            marginTop: '16px',
+                                            padding: '12px 24px',
+                                            borderRadius: '8px',
+                                            border: '2px solid #667eea',
+                                            background: 'transparent',
+                                            color: '#667eea',
+                                            fontSize: '1em',
+                                            fontWeight: '600',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.3s ease',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.background = '#667eea';
+                                            e.currentTarget.style.color = '#fff';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.background = 'transparent';
+                                            e.currentTarget.style.color = '#667eea';
+                                        }}
+                                    >
+                                        Review All Cards
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
-                {/* <div className='draw-card-row'>
-                    <div className="card-draw">
-                        <button className='review-all-cards-button' onClick={() => this.toggle()}>Review All Cards</button>
-                        <img className="draw-card-logo" src={drawCardLogo} />
-                        <button className='draw-new-card-button' onClick={this.drawCard}>Draw a new card</button>
+
+                {/* Cards Overview Modal - MOVED OUTSIDE CONTAINER */}
+                {this.state.showCardsOverview && (
+                    <div 
+                        className="cards-overview-modal"
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100vw',
+                            height: '100vh',
+                            backgroundColor: 'rgba(0,0,0,0.85)',
+                            zIndex: 1000,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backdropFilter: 'blur(8px)',
+                            animation: 'modalFadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                            overflow: 'hidden',
+                        }}
+                        onClick={this.closeCardsOverview}
+                    >
+                        <div 
+                            className="modal-content"
+                            style={{
+                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                borderRadius: '24px',
+                                padding: '24px',
+                                width: '85vw',
+                                height: '85vh',
+                                maxWidth: '1200px',
+                                maxHeight: '1000px',
+                                overflow: 'auto',
+                                boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
+                                transform: 'scale(1)',
+                                animation: 'modalScaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                                display: 'flex',
+                                flexDirection: 'column',
+                            }}
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div style={{
+                                textAlign: 'center',
+                                marginBottom: '24px',
+                                flexShrink: 0
+                            }}>
+                                <h2 style={{
+                                    color: '#fff',
+                                    fontSize: '2em',
+                                    fontWeight: '700',
+                                    margin: '0 0 8px 0',
+                                    textShadow: '0 2px 10px rgba(0,0,0,0.3)',
+                                }}>
+                                    ✨ All Tarot Cards ✨
+                                </h2>
+                                <p style={{
+                                    color: 'rgba(255,255,255,0.9)',
+                                    fontSize: '1em',
+                                    margin: 0,
+                                }}>
+                                    Click any card to select it for your reflection
+                                </p>
+                            </div>
+                            
+                            <div className="cards-grid" style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(4, 1fr)',
+                                gap: '30px',
+                                flex: 1,
+                                minHeight: '1100px',
+                                overflow: 'hidden',
+                                paddingRight: '8px',
+                            }}>
+                                {tarotcards.map((card, idx) => (
+                                    <div
+                                        key={card.title}
+                                        className="overview-card"
+                                        onClick={() => this.selectCardFromOverview(card)}
+                                        style={{
+                                            backgroundColor: card.color,
+                                            borderRadius: '12px',
+                                            overflow: 'hidden',
+                                            cursor: 'pointer',
+                                            transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                            transform: 'scale(1)',
+                                            boxShadow: '0 6px 20px rgba(0,0,0,0.15)',
+                                            animation: `cardSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${idx * 0.02}s both`,
+                                            aspectRatio: '2/3',
+                                            minHeight: 0,
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.transform = 'scale(1.02) translateY(-4px)';
+                                            e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.25)';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.transform = 'scale(1)';
+                                            e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.15)';
+                                        }}
+                                    >
+                                        <div style={{ height: '100%', position: 'relative' }}>
+                                            <img 
+                                                src={card.frontimage} 
+                                                alt={card.title}
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover',
+                                                }}
+                                            />
+                                            <div style={{
+                                                position: 'absolute',
+                                                bottom: 0,
+                                                left: 0,
+                                                right: 0,
+                                                background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+                                                padding: '12px 8px 8px',
+                                                color: '#fff',
+                                            }}>
+                                                <h4 style={{
+                                                    margin: 0,
+                                                    fontSize: '0.8em',
+                                                    fontWeight: '600',
+                                                    textAlign: 'center',
+                                                    textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+                                                    lineHeight: '1.2',
+                                                }}>
+                                                    {card.title}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            
+                            <div style={{ 
+                                textAlign: 'center', 
+                                marginTop: '20px',
+                                flexShrink: 0,
+                            }}>
+                                <button
+                                    onClick={this.closeCardsOverview}
+                                    style={{
+                                        background: 'rgba(255,255,255,0.2)',
+                                        border: '2px solid rgba(255,255,255,0.3)',
+                                        borderRadius: '12px',
+                                        padding: '10px 28px',
+                                        color: '#fff',
+                                        fontSize: '1em',
+                                        fontWeight: '600',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s ease',
+                                        backdropFilter: 'blur(10px)',
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.background = 'rgba(255,255,255,0.3)';
+                                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
+                                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+                                    }}
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    {this.state.currentCard && (
-                        <div className='draw-card-tarotcard'><TarotCardComponent tarotcard={this.state.currentCard}/></div>
-                    )}
-                    <div className="response">
-                        <h3>What is your response to the questions?</h3>
-                        <textarea
-                        className='response-textarea'
-                        value={this.state.response}
-                        onChange={this.handleResponseChange}
-                        placeholder="Your response is ..."
-                        />
-                    </div>
-                </div> */}
+                )}
                 <PageButtons back={this.props.returnToPrevPage} next={() => this.setState({nextPage: true})} />
             </div>
         :
