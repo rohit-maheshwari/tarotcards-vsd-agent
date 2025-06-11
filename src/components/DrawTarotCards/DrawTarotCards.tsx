@@ -185,7 +185,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
 
     drawCard = () => {
         const randomCard = this.state.unfinishedCards[Math.floor(Math.random() * this.state.unfinishedCards.length)];
-        this.setState({currentCard: randomCard, response: '', showCardContent: false})
+        this.setState({currentCard: randomCard, response: '', showCardContent: false, newThought: ''})
     };
 
     handleResponseChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
