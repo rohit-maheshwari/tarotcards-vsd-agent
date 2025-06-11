@@ -7,6 +7,7 @@ import drawCardLogo from "./drawCardLogo.svg";
 import ReviewCards from './ReviewCards/ReviewCards';
 import ReorderCards from '../ReorderCards/ReorderCards';
 import PageButtons from '../PageButtons/PageButtons';
+import RoundtableConversation from './RoundtableConversation/RoundtableConversation';
 
 const lodash = require('lodash');
 
@@ -34,7 +35,8 @@ type DrawTarotCardsState = {
     unfinishedCards: Card[],
     nextPage: boolean,
     cardThoughts: { [cardTitle: string]: string[] },
-    newThought: string
+    newThought: string,
+    showRoundtable: boolean
 }
 
 const cards: Card[] = tarotcards;
@@ -57,7 +59,8 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
             showCardContent: false,
             showCardsOverview: false,
             cardThoughts: {},
-            newThought: ''
+            newThought: '',
+            showRoundtable: false
         };
 
         this.saveResponse = lodash.debounce(this.saveResponse.bind(this), 500)
@@ -771,7 +774,7 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                         {/* Hear What Others Might Say - Roundtable Section */}
                                         {this.state.currentCard && Object.keys(this.state.cardThoughts).some(cardTitle => 
                                             this.state.cardThoughts[cardTitle].length > 0
-                                        ) && !this.state.showCardsOverview && (
+                                        ) && !this.state.showCardsOverview && !this.state.showRoundtable && (
                                             <div style={{
                                                 marginTop: '24px',
                                                 padding: '16px',
@@ -860,14 +863,33 @@ class DrawTarotCards extends Component<DrawTarotCardsProps, DrawTarotCardsState 
                                                             e.currentTarget.style.color = '#667eea';
                                                         }}
                                                         onClick={() => {
-                                                            // TODO: Implement roundtable navigation
-                                                            console.log('Start conversation clicked');
-                                                            alert('Roundtable feature coming soon! This will show different stakeholder perspectives on your project.');
+                                                            this.setState({ showRoundtable: true });
                                                         }}
                                                     >
                                                         Start conversation
                                                     </button>
                                                 </div>
+                                            </div>
+                                        )}
+
+                                        {/* Roundtable Conversation Component */}
+                                        {this.state.showRoundtable && this.state.currentCard && (
+                                            <div style={{
+                                                marginTop: '24px',
+                                                opacity: this.state.showCardContent ? 1 : 0,
+                                                transform: this.state.showCardContent ? 'translateY(0)' : 'translateY(20px)',
+                                                transition: 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                                            }}>
+                                                <RoundtableConversation
+                                                    currentCard={{
+                                                        title: this.state.currentCard.title,
+                                                        color: this.state.currentCard.color,
+                                                        backimage: this.state.currentCard.backimage
+                                                    }}
+                                                    userThoughts={this.state.cardThoughts[this.state.currentCard.title] || []}
+                                                    onAddThought={(thought: string) => this.addThoughtToCard(this.state.currentCard!.title, thought)}
+                                                    onClose={() => this.setState({ showRoundtable: false })}
+                                                />
                                             </div>
                                         )}
                                     </div>
