@@ -175,6 +175,18 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
     }
   };
 
+  const makeStakeholderSpeak = (stakeholderId: string) => {
+    // Find the stakeholder
+    const stakeholder = stakeholders.find(s => s.id === stakeholderId);
+    if (!stakeholder) return;
+
+    // Generate a message for this stakeholder
+    const response = generateResponse(stakeholder);
+    
+    // Make this stakeholder speak
+    speakForStakeholder(stakeholder, response);
+  };
+
   const getStakeholderPosition = (index: number, total: number) => {
     const containerRef = document.querySelector('.table-container');
     const containerRect = containerRef?.getBoundingClientRect();
@@ -418,11 +430,19 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
                   {stakeholder.avatar}
                 </div>
                 <div className="stakeholder-nameplate">
-                  <div className="name">{stakeholder.name}</div>
-                  <div className="role">{stakeholder.role}</div>
+                  <div className="name-role">
+                    <div className="name">{stakeholder.name}</div>
+                    <div className="role">{stakeholder.role}</div>
+                  </div>
+                  <button
+                    className="stakeholder-speak-button"
+                    onClick={() => makeStakeholderSpeak(stakeholder.id)}
+                    title={`Make ${stakeholder.name} speak`}
+                  >
+                    💬
+                  </button>
                 </div>
                 
-                {/* typing indicator removed */}
               </div>
             );
           })}
@@ -442,10 +462,15 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
               // The speakerPos is the center of the stakeholder-seat (avatar + nameplate)
               // We need to offset upward to get the actual center of the avatar
               const avatarOffset = -20; // Offset upward to center of avatar (avatar is above seat center)
-              const startX = 300 + speakerPos.x; // Avatar center X
-              const startY = 300 + speakerPos.y + avatarOffset; // Actual avatar center Y
-              const endX = 300 + bubblePos.x;
-              const endY = 300 + bubblePos.y;
+              const container = document.querySelector('.table-container');
+              const containerRect = container?.getBoundingClientRect();
+              const svgSize = Math.min(containerRect?.width || 600, containerRect?.height || 600);
+              const center = svgSize / 2;
+
+              const startX = center + speakerPos.x; // Avatar center X
+              const startY = center + speakerPos.y + avatarOffset; // Actual avatar center Y
+              const endX = center + bubblePos.x;
+              const endY = center + bubblePos.y;
               
               // Create elegant curved path
               const controlX = (startX + endX) / 2;
@@ -458,8 +483,8 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
-                    width: '600px',
-                    height: '600px',
+                    width: `${svgSize}px`,
+                    height: `${svgSize}px`,
                     transform: 'translate(-50%, -50%)',
                     pointerEvents: 'none',
                     zIndex: 350, // Behind stakeholder avatars
