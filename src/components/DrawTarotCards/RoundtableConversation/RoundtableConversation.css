@@ -7,7 +7,7 @@
   padding: 24px;
   animation: containerMaterialize 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 
 @keyframes containerMaterialize {
@@ -26,17 +26,18 @@
 /* Table Container */
 .table-container {
   position: relative;
-  height: 600px;
+  height: min(600px, 60vh);
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 0; /* Button is now outside, no extra space needed */
 }
 
 .table-surface {
   position: relative;
-  width: 240px;
-  height: 240px;
+  width: min(240px, 40vw);
+  height: min(240px, 40vw);
   background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
   border-radius: 50%;
   box-shadow: 
@@ -108,6 +109,7 @@
   align-items: center;
   opacity: 0;
   animation: stakeholderEntrance 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s both;
+  z-index: 500; /* Above connection lines */
 }
 
 @keyframes stakeholderEntrance {
@@ -179,33 +181,71 @@
 
 /* Active Speaker Effects */
 .stakeholder-seat.active .stakeholder-avatar {
-  transform: scale(1.15);
+  transform: scale(1.2);
   box-shadow: 
-    0 0 20px rgba(255,255,255,0.8),
-    0 0 40px currentColor,
-    0 8px 20px rgba(0,0,0,0.15);
-  animation: speakerPulse 2s infinite;
+    0 0 25px rgba(255,255,255,0.9),
+    0 0 50px currentColor,
+    0 8px 25px rgba(0,0,0,0.2);
+  animation: speakerPulse 1.5s infinite;
+  border-width: 4px;
 }
 
 @keyframes speakerPulse {
   0%, 100% { 
+    transform: scale(1.2);
     box-shadow: 
-      0 0 20px rgba(255,255,255,0.8),
-      0 0 40px currentColor,
-      0 8px 20px rgba(0,0,0,0.15);
+      0 0 25px rgba(255,255,255,0.9),
+      0 0 50px currentColor,
+      0 8px 25px rgba(0,0,0,0.2);
   }
   50% { 
+    transform: scale(1.25);
     box-shadow: 
-      0 0 30px rgba(255,255,255,1),
-      0 0 60px currentColor,
-      0 12px 30px rgba(0,0,0,0.2);
+      0 0 35px rgba(255,255,255,1),
+      0 0 70px currentColor,
+      0 12px 35px rgba(0,0,0,0.25);
   }
 }
 
 .stakeholder-seat.active .stakeholder-nameplate {
   background: rgba(255,255,255,1);
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  transform: scale(1.08);
+  box-shadow: 
+    0 6px 20px rgba(0,0,0,0.15),
+    0 0 15px currentColor;
+  animation: nameplateGlow 1.5s infinite;
+}
+
+@keyframes nameplateGlow {
+  0%, 100% {
+    box-shadow: 
+      0 6px 20px rgba(0,0,0,0.15),
+      0 0 15px currentColor;
+  }
+  50% {
+    box-shadow: 
+      0 8px 25px rgba(0,0,0,0.2),
+      0 0 25px currentColor;
+  }
+}
+
+/* Speech bubble glow effect that matches speaker color */
+.speech-bubble.stakeholder .bubble-content {
+  animation: bubbleGlow 2s infinite;
+}
+
+@keyframes bubbleGlow {
+  0%, 100% {
+    box-shadow: 
+      0 2px 12px rgba(0,0,0,0.1),
+      0 6px 20px rgba(0,0,0,0.08);
+  }
+  50% {
+    box-shadow: 
+      0 4px 16px rgba(0,0,0,0.12),
+      0 8px 24px rgba(0,0,0,0.1),
+      0 0 20px currentColor;
+  }
 }
 
 /* Typing Indicator Bubble */
@@ -256,51 +296,172 @@
   }
 }
 
-/* Add Stakeholder Button */
-.add-stakeholder-seat {
+/* Central Control Buttons */
+.central-controls {
   position: absolute;
   top: 50%;
   left: 50%;
-  opacity: 0;
-  animation: addButtonAppear 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2s both;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  justify-content: center;
+  animation: centralControlsAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 2s both;
 }
 
-@keyframes addButtonAppear {
-  0% {
-    opacity: 0;
-    transform: translate(calc(-50% + var(--pos-x, 0px)), calc(-50% + var(--pos-y, 0px))) scale(0);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(calc(-50% + var(--pos-x, 0px)), calc(-50% + var(--pos-y, 0px))) scale(1);
-  }
-}
-
-.add-button {
-  width: 40px;
-  height: 40px;
+.central-button {
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  border: 2px solid rgba(255,255,255,0.3);
+  backdrop-filter: blur(10px);
 }
 
-.add-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+.central-button.add-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 22px;
+  font-weight: 300;
+}
+
+.central-button.next-button {
+  background: rgba(255,255,255,0.95);
+  color: #333;
+  font-size: 16px;
+}
+
+.central-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.central-button.add-button:hover {
   background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
+.central-button.next-button:hover {
+  background: rgba(255,255,255,1);
+  color: #667eea;
+}
+
+@keyframes centralControlsAppear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Elegant Designerly Connection */
+.elegant-connector {
+  animation: connectorAppear 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.connection-path {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: connectionDraw 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s forwards;
+}
+
+.connection-start {
+  animation: dotPulseStart 2s infinite ease-in-out, dotAppearStart 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+.connection-end {
+  animation: dotPulseEnd 2s infinite ease-in-out 0.5s, dotAppearEnd 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s both;
+}
+
+@keyframes connectorAppear {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes connectionDraw {
+  0% {
+    stroke-dashoffset: 400;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes dotAppearStart {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+
+@keyframes dotAppearEnd {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  70% {
+    opacity: 0.8;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+}
+
+@keyframes dotPulseStart {
+  0%, 100% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes dotPulseEnd {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.1);
+  }
+}
+  
 /* Speech Bubbles Around Table */
 .speech-bubble {
+  transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px)));
   animation: speechBubbleAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   pointer-events: none;
 }
@@ -308,28 +469,40 @@
 @keyframes speechBubbleAppear {
   0% {
     opacity: 0;
-    transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(0.3);
+    transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(0.6) translateY(10px);
+  }
+  60% {
+    opacity: 0.95;
+    transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(1.02) translateY(-2px);
   }
   100% {
     opacity: 1;
-    transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(1);
+    transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px))) scale(1) translateY(0px);
   }
 }
 
 .bubble-content {
-  padding: 12px 16px;
-  border-radius: 18px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  padding: 16px 20px 18px 20px;
+  border-radius: 24px;
+  box-shadow: 
+    0 3px 16px rgba(0,0,0,0.08),
+    0 8px 28px rgba(0,0,0,0.06),
+    0 0 0 1px rgba(255,255,255,0.1);
   position: relative;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(20px);
+  border: none;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  min-height: 40px;
-  min-width: 180px;
+  min-height: 48px;
+  min-width: 280px;
+  max-width: 500px;
   width: 100%;
   box-sizing: border-box;
-  line-height: 1.4;
+  line-height: 1.6;
+  font-size: 14px;
+  font-weight: 400;
+  transform: scale(1);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .speech-bubble.system .bubble-content {
@@ -340,15 +513,38 @@
 }
 
 .speaker-name {
-  font-size: 11px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  opacity: 0.8;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  opacity: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: rgba(255,255,255,1);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 .message-text {
-  font-size: 13px;
-  line-height: 1.4;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Hover effect for bubbles */
+.speech-bubble:hover .bubble-content {
+  transform: scale(1.02) translateY(-2px);
+  box-shadow: 
+    0 6px 24px rgba(0,0,0,0.12),
+    0 12px 32px rgba(0,0,0,0.08),
+    0 0 0 1px rgba(255,255,255,0.15);
+}
+
+/* Enhanced speaker name styling */
+.speech-bubble.stakeholder .speaker-name {
+  background: rgba(0,0,0,0.1);
+  padding: 4px 8px;
+  border-radius: 8px;
+  margin: -4px -4px 8px -4px;
+  backdrop-filter: blur(10px);
 }
 
 .speech-bubble.user .message-text,
@@ -356,66 +552,13 @@
   color: white;
 }
 
-/* Speech Bubble Tail */
-.bubble-tail {
-  position: absolute;
-  width: 0;
-  height: 0;
-}
 
-/* Default: tail points down (placement="top") */
-.speech-bubble[data-placement="top"] .bubble-tail {
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: 8px solid;
-}
 
-/* Tail points up (placement="bottom") */
-.speech-bubble[data-placement="bottom"] .bubble-tail {
-  top: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid;
-}
 
-/* Tail points left (placement="right") */
-.speech-bubble[data-placement="right"] .bubble-tail {
-  top: 50%;
-  right: -8px;
-  transform: translateY(-50%);
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-left: 8px solid;
-}
-
-/* Tail points right (placement="left") */
-.speech-bubble[data-placement="left"] .bubble-tail {
-  top: 50%;
-  left: -8px;
-  transform: translateY(-50%);
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right: 8px solid;
-}
-
-.speech-bubble.system .bubble-tail {
-  top: -8px;
-  bottom: auto;
-  left: 50%;
-  transform: translateX(-50%);
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-top: none;
-  border-bottom: 8px solid;
-}
 
 /* User Input Bubble */
 .user-input-bubble {
+  transform: translate(calc(-50% + var(--x, 0px)), calc(-50% + var(--y, 0px)));
   animation: inputBubbleAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -502,33 +645,7 @@
   transform: translateY(0);
 }
 
-/* Conversation Controls */
-.conversation-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 16px;
-}
 
-.close-conversation {
-  padding: 8px 20px;
-  border: 2px solid rgba(102, 126, 234, 0.3);
-  border-radius: 20px;
-  background: rgba(255,255,255,0.8);
-  color: #667eea;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.close-conversation:hover {
-  background: #667eea;
-  color: white;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-}
 
 .conversation-status {
   font-size: 12px;
@@ -543,12 +660,13 @@
   }
   
   .table-container {
-    height: 350px;
+    height: min(400px, 50vh);
+    margin-bottom: 0;
   }
   
   .table-surface {
-    width: 200px;
-    height: 200px;
+    width: min(200px, 35vw);
+    height: min(200px, 35vw);
   }
   
   .stakeholder-avatar {
@@ -557,11 +675,62 @@
     font-size: 16px;
   }
   
+  .stakeholder-nameplate {
+    padding: 4px 8px;
+    min-width: 60px;
+  }
+  
+  .stakeholder-nameplate .name {
+    font-size: 11px;
+  }
+  
+  .stakeholder-nameplate .role {
+    font-size: 9px;
+  }
+  
   .bubble-content {
     font-size: 12px;
+    padding: 10px 14px;
+    min-width: 140px;
+  }
+  
+  .close-icon {
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    font-size: 18px;
   }
   
   .input-container {
-    min-width: 200px;
+    min-width: 180px;
   }
+}
+
+
+
+.close-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: rgba(255,255,255,0.9);
+  color: #666;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.close-icon:hover {
+  background: rgba(255,255,255,1);
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 } 

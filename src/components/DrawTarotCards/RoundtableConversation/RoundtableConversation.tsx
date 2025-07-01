@@ -64,13 +64,17 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
 }) => {
   const [stakeholders, setStakeholders] = useState<Stakeholder[]>(defaultStakeholders);
   const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
-  const [userInput, setUserInput] = useState('');
-  const [isUserTurn, setIsUserTurn] = useState(false);
   const [activeSpeaker, setActiveSpeaker] = useState<string | null>(null);
   const [isAnimating, setIsAnimating] = useState(true);
   const [conversationStarted, setConversationStarted] = useState(false);
   const [conversationHistory, setConversationHistory] = useState<Message[]>([]);
-  const [showUserInput, setShowUserInput] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const isPausedRef = useRef(false);
+  const [prevThoughtCount, setPrevThoughtCount] = useState(userThoughts.length);
+
+  useEffect(() => {
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
 
   useEffect(() => {
     // Initial animation sequence
@@ -80,6 +84,14 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
       startConversation();
     }, 1800);
   }, []);
+
+  useEffect(() => {
+    if (userThoughts.length > prevThoughtCount) {
+      const latest = userThoughts[userThoughts.length - 1];
+      showUserThought(latest);
+      setPrevThoughtCount(userThoughts.length);
+    }
+  }, [userThoughts, prevThoughtCount]);
 
   const startConversation = () => {
     const initialMessage: Message = {
@@ -125,20 +137,11 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
       return updated;
     });
 
-    // Clear after display duration
-    const displayDuration = 4000;
+    // Automatically pause after each message to require manual continuation
     setTimeout(() => {
-      setCurrentMessage(null);
       setActiveSpeaker(null);
-
-      // Decide if it's the user's turn or continue with another stakeholder
-      if (!isUserTurn && Math.random() > 0.5) {
-        setIsUserTurn(true);
-        setShowUserInput(true);
-      } else {
-        continueConversation();
-      }
-    }, displayDuration);
+      setIsPaused(true); // Always pause after each message
+    }, 3000); // Show message for 3 seconds then pause
   };
 
   const continueConversation = () => {
@@ -159,39 +162,6 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
     return responses[Math.floor(Math.random() * responses.length)];
   };
 
-  const handleUserSubmit = () => {
-    if (!userInput.trim()) return;
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      stakeholderId: 'user',
-      content: userInput,
-      timestamp: Date.now(),
-      type: 'user'
-    };
-
-    setCurrentMessage(userMessage);
-    setConversationHistory(prev => [...prev, userMessage]);
-    setUserInput('');
-    setIsUserTurn(false);
-    setShowUserInput(false);
-
-    // Add to thoughts if meaningful
-    if (userInput.length > 20) {
-      onAddThought(userInput);
-    }
-
-    // Clear user message and have stakeholder respond
-    setTimeout(() => {
-      setCurrentMessage(null);
-      setTimeout(() => {
-        const respondingStakeholder = stakeholders[Math.floor(Math.random() * stakeholders.length)];
-        const response = `That's really insightful! Building on what you said, I think we should also consider how this might affect different communities differently.`;
-        speakForStakeholder(respondingStakeholder, response);
-      }, 1000);
-    }, 3000);
-  };
-
   const addStakeholder = () => {
     const newStakeholderOptions = [
       { id: 'community', name: 'Maya', role: 'Community Leader', avatar: '👩‍🤝‍👩', color: '#9b59b6' },
@@ -206,106 +176,228 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
   };
 
   const getStakeholderPosition = (index: number, total: number) => {
+    const containerRef = document.querySelector('.table-container');
+    const containerRect = containerRef?.getBoundingClientRect();
+    const containerSize = Math.min(containerRect?.width || 600, containerRect?.height || 600);
+    
     const angle = (index / total) * 2 * Math.PI - Math.PI / 2;
-    const radius = 140; // Position around the table edge
+    const radius = containerSize * 0.23; // 23% of container size for responsive positioning
     const x = Math.cos(angle) * radius;
     const y = Math.sin(angle) * radius;
     return { x, y };
   };
 
   const getSpeechBubblePosition = (stakeholderId: string) => {
-    const idx = stakeholders.findIndex(s => s.id === stakeholderId);
-    if (idx === -1) return { x: 0, y: 0, placement: 'top', maxWidth: '200px' };
+    const containerRef = document.querySelector('.table-container');
+    const containerRect = containerRef?.getBoundingClientRect();
+    const containerWidth = containerRect?.width || 600;
+    const containerHeight = containerRect?.height || 600;
+    
+    // Calculate responsive dimensions
+    const avatarRadius = Math.min(containerWidth, containerHeight) * 0.23; // ~23% of container size
+    const avatarSize = Math.min(containerWidth, containerHeight) * 0.08; // ~8% for avatar size
+    const minGap = Math.min(containerWidth, containerHeight) * 0.03; // ~3% minimum gap
+    
+    const speakerIdx = stakeholders.findIndex(s => s.id === stakeholderId);
+    if (speakerIdx === -1) return { x: 0, y: 0, placement: 'top', maxWidth: '200px', tailOffset: 0 };
 
-    // 1. Estimate bubble width & height based on text length
+    // Estimate bubble dimensions based on content
     const text = currentMessage?.content || '';
     const charCount = text.length;
-    let width = 200;
-    if (charCount > 150) width = 280;
-    else if (charCount > 100) width = 260;
-    else if (charCount > 60) width = 230;
-    width = Math.max(160, Math.min(280, width));
-
-    // Rough char per line & height
-    const charsPerLine = Math.floor(width / 8); // approx 8px per char
+    const baseWidth = Math.min(containerWidth * 0.4, 280); // Max 40% of container or 280px
+    let width = Math.max(baseWidth * 0.6, Math.min(baseWidth, charCount * 6 + 40));
+    
+    const charsPerLine = Math.floor(width / 8);
     const lineCount = Math.ceil(charCount / Math.max(1, charsPerLine));
-    const height = lineCount * 18 + 28; // 18px line height + padding
+    const height = lineCount * 18 + 40; // 18px line height + padding
 
-    // 2. Geometry constants
-    const avatarRadius = 140; // where avatars sit
-    const startDist = avatarRadius + 40; // start 40px beyond avatar
-    const maxDist = 280; // container half-size minus margin
-    const step = 20;
+    // Get speaker position
+    const speakerAngle = (speakerIdx / stakeholders.length) * 2 * Math.PI - Math.PI / 2;
+    const speakerX = Math.cos(speakerAngle) * avatarRadius;
+    const speakerY = Math.sin(speakerAngle) * avatarRadius;
 
-    // Speaker angle & unit vector
-    const angle = (idx / stakeholders.length) * 2 * Math.PI - Math.PI / 2;
-    const ux = Math.cos(angle);
-    const uy = Math.sin(angle);
+    // Get all stakeholder positions for collision detection
+    const allStakeholderPositions = stakeholders.map((_, idx) => {
+      const angle = (idx / stakeholders.length) * 2 * Math.PI - Math.PI / 2;
+      return {
+        x: Math.cos(angle) * avatarRadius,
+        y: Math.sin(angle) * avatarRadius,
+        radius: avatarSize / 2 + minGap
+      };
+    });
 
-    // Avatar position for tail direction calc
-    const avatarPos = { x: ux * avatarRadius, y: uy * avatarRadius };
+    // Function to check if a bubble position collides with any stakeholder
+    const hasCollision = (bubbleX: number, bubbleY: number, bubbleW: number, bubbleH: number) => {
+      const bubbleRect = {
+        left: bubbleX - bubbleW / 2,
+        right: bubbleX + bubbleW / 2,
+        top: bubbleY - bubbleH / 2,
+        bottom: bubbleY + bubbleH / 2
+      };
 
-    let chosen = { x: 0, y: 0 };
+      return allStakeholderPositions.some(pos => {
+        // Check distance from bubble edges to stakeholder center
+        const closestX = Math.max(bubbleRect.left, Math.min(pos.x, bubbleRect.right));
+        const closestY = Math.max(bubbleRect.top, Math.min(pos.y, bubbleRect.bottom));
+        const distance = Math.sqrt((closestX - pos.x) ** 2 + (closestY - pos.y) ** 2);
+        return distance < pos.radius;
+      });
+    };
+
+    // Function to check if bubble is within container bounds
+    const isWithinBounds = (x: number, y: number, w: number, h: number) => {
+      const margin = Math.min(containerWidth, containerHeight) * 0.02; // 2% margin
+      const maxX = containerWidth / 2 - margin;
+      const maxY = containerHeight / 2 - margin;
+      
+      return (
+        x - w / 2 >= -maxX &&
+        x + w / 2 <= maxX &&
+        y - h / 2 >= -maxY &&
+        y + h / 2 <= maxY
+      );
+    };
+
+    // Try positions in expanding circles around the speaker
+    const maxSearchRadius = Math.min(containerWidth, containerHeight) * 0.4;
+    const searchStep = Math.min(containerWidth, containerHeight) * 0.02;
+    const angleStep = Math.PI / 12; // 15 degree steps
+
+    let bestPosition = { x: speakerX, y: speakerY };
     let found = false;
-    // iterate outward until fits
-    for (let d = startDist; d <= maxDist; d += step) {
-      const cx = ux * d;
-      const cy = uy * d;
-      const left = cx - width / 2;
-      const right = cx + width / 2;
-      const top = cy - height / 2;
-      const bottom = cy + height / 2;
 
-      // inside container
-      if (left < -maxDist || right > maxDist || top < -maxDist || bottom > maxDist) {
-        continue;
+    // Start from minimum distance that clears the speaking stakeholder
+    const minDistance = avatarSize / 2 + minGap + Math.max(width, height) / 2;
+
+    for (let radius = minDistance; radius <= maxSearchRadius && !found; radius += searchStep) {
+      // Try different angles around the speaker
+      for (let angleOffset = 0; angleOffset < 2 * Math.PI; angleOffset += angleStep) {
+        const testX = speakerX + Math.cos(speakerAngle + angleOffset) * radius;
+        const testY = speakerY + Math.sin(speakerAngle + angleOffset) * radius;
+
+        if (isWithinBounds(testX, testY, width, height) && 
+            !hasCollision(testX, testY, width, height)) {
+          bestPosition = { x: testX, y: testY };
+          found = true;
+          break;
+        }
       }
-
-      // keep away from avatar (circle radius 32)
-      const distToAvatarSq = (cx - avatarPos.x) ** 2 + (cy - avatarPos.y) ** 2;
-      const safe = Math.sqrt(distToAvatarSq) > 60; // 60px safety
-      if (!safe) continue;
-
-      chosen = { x: cx, y: cy };
-      found = true;
-      break;
     }
+
+    // If no good position found, place along the radial direction at safe distance
     if (!found) {
-      chosen = { x: ux * maxDist, y: uy * maxDist };
+      const safeDistance = Math.min(maxSearchRadius * 0.8, minDistance * 1.5);
+      bestPosition = {
+        x: speakerX + Math.cos(speakerAngle) * safeDistance,
+        y: speakerY + Math.sin(speakerAngle) * safeDistance
+      };
     }
 
-    // 3. Determine tail placement
-    const dx = avatarPos.x - chosen.x;
-    const dy = avatarPos.y - chosen.y;
+    // Determine tail placement based on bubble position relative to speaker
+    const dx = speakerX - bestPosition.x;
+    const dy = speakerY - bestPosition.y;
     let placement: 'top' | 'bottom' | 'left' | 'right' = 'top';
+    
     if (Math.abs(dx) > Math.abs(dy)) {
-      placement = dx > 0 ? 'left' : 'right';
+      placement = dx > 0 ? 'right' : 'left';
     } else {
-      placement = dy > 0 ? 'top' : 'bottom';
+      placement = dy > 0 ? 'bottom' : 'top';
     }
 
-    return { x: chosen.x, y: chosen.y, placement, maxWidth: `${width}px` };
+    // Calculate tail offset to point toward speaker
+    let tailOffset = 0;
+    if (placement === 'left' || placement === 'right') {
+      const deltaY = speakerY - bestPosition.y;
+      tailOffset = Math.max(-height / 2 + 16, Math.min(height / 2 - 16, deltaY));
+    } else {
+      const deltaX = speakerX - bestPosition.x;
+      tailOffset = Math.max(-width / 2 + 16, Math.min(width / 2 - 16, deltaX));
+    }
+
+    return {
+      x: bestPosition.x,
+      y: bestPosition.y,
+      placement,
+      maxWidth: `${width}px`,
+      tailOffset
+    };
   };
 
   const getUserPosition = () => {
-    // Position user input at bottom of table
-    return { x: 0, y: 180 };
+    const containerRef = document.querySelector('.table-container');
+    const containerRect = containerRef?.getBoundingClientRect();
+    const containerHeight = containerRect?.height || 600;
+    
+    // Position user input at bottom of table, responsive to container size
+    return { x: 0, y: containerHeight * 0.3 };
+  };
+
+  const resumeConversation = () => {
+    if (!isPausedRef.current) return;
+    setIsPaused(false);
+    setCurrentMessage(null); // Clear current message when continuing
+    continueConversation();
+  };
+
+  const togglePause = () => {
+    if (isPausedRef.current) {
+      resumeConversation();
+    } else {
+      setIsPaused(true);
+    }
+  };
+
+  const showUserThought = (content: string) => {
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      stakeholderId: 'user',
+      content,
+      timestamp: Date.now(),
+      type: 'user'
+    };
+
+    setCurrentMessage(userMsg);
+    setConversationHistory(prev => [...prev, userMsg]);
+
+    // Automatically pause after user input to allow for reflection
+    setTimeout(() => {
+      setCurrentMessage(null);
+      setIsPaused(true); // Always pause after user input
+    }, 3000);
   };
 
   return (
-    <div className="roundtable-conversation">
+    <div className="roundtable-conversation" data-paused={isPaused}>
+      {/* Normal close button in top right */}
+      <button className="close-icon" onClick={onClose}>×</button>
+      
+
+      
       {/* Table View */}
       <div className={`table-container ${isAnimating ? 'animating' : ''}`}>
         <div className="table-surface">
-          {/* Central Card */}
-          {stakeholders.length < 6 && (
-            <div 
-              className="add-stakeholder-seat"
-              onClick={addStakeholder}
+          {/* Central Control Buttons */}
+          <div className="central-controls">
+            {/* Add Stakeholder Button */}
+            {stakeholders.length < 6 && (
+              <button 
+                className="central-button add-button"
+                onClick={addStakeholder}
+                title="Add stakeholder"
+              >
+                +
+              </button>
+            )}
+            
+            {/* Next/Continue Button */}
+            <button
+              className="central-button next-button"
+              onClick={togglePause}
+              title="Continue to next message"
             >
-              <div className="add-button">+</div>
-            </div>
-          )}
+              ▶
+            </button>
+          </div>
           
           {/* Stakeholder Seats */}
           {stakeholders.map((stakeholder, index) => {
@@ -336,6 +428,94 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
           })}
           
           
+          {/* Elegant Designerly Connection */}
+          {currentMessage && currentMessage.type === 'stakeholder' && (
+            (() => {
+              const speakerIdx = stakeholders.findIndex(s => s.id === currentMessage.stakeholderId);
+              if (speakerIdx === -1) return null;
+              
+              const speakerPos = getStakeholderPosition(speakerIdx, stakeholders.length);
+              const bubblePos = getSpeechBubblePosition(currentMessage.stakeholderId);
+              const stakeholderColor = stakeholders.find(s => s.id === currentMessage.stakeholderId)?.color || '#667eea';
+              
+              // Calculate the path from avatar center to bubble edge
+              // The speakerPos is the center of the stakeholder-seat (avatar + nameplate)
+              // We need to offset upward to get the actual center of the avatar
+              const avatarOffset = -20; // Offset upward to center of avatar (avatar is above seat center)
+              const startX = 300 + speakerPos.x; // Avatar center X
+              const startY = 300 + speakerPos.y + avatarOffset; // Actual avatar center Y
+              const endX = 300 + bubblePos.x;
+              const endY = 300 + bubblePos.y;
+              
+              // Create elegant curved path
+              const controlX = (startX + endX) / 2;
+              const controlY = Math.min(startY, endY) - 30; // Curve upward
+              
+              return (
+                <svg 
+                  className="elegant-connector"
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    width: '600px',
+                    height: '600px',
+                    transform: 'translate(-50%, -50%)',
+                    pointerEvents: 'none',
+                    zIndex: 350, // Behind stakeholder avatars
+                    overflow: 'visible',
+                  }}
+                >
+                  <defs>
+                    <linearGradient id={`gradient-${currentMessage.stakeholderId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" style={{stopColor: stakeholderColor, stopOpacity: 0.8}} />
+                      <stop offset="50%" style={{stopColor: stakeholderColor, stopOpacity: 0.4}} />
+                      <stop offset="100%" style={{stopColor: stakeholderColor, stopOpacity: 0.8}} />
+                    </linearGradient>
+                    <filter id={`glow-${currentMessage.stakeholderId}`}>
+                      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                      <feMerge> 
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                      </feMerge>
+                    </filter>
+                  </defs>
+                  
+                  {/* Elegant curved connection */}
+                  <path
+                    d={`M ${startX} ${startY} Q ${controlX} ${controlY} ${endX} ${endY}`}
+                    stroke={`url(#gradient-${currentMessage.stakeholderId})`}
+                    strokeWidth="3"
+                    fill="none"
+                    strokeLinecap="round"
+                    filter={`url(#glow-${currentMessage.stakeholderId})`}
+                    className="connection-path"
+                  />
+                  
+                  {/* Connection start dot at avatar */}
+                  <circle
+                    cx={startX}
+                    cy={startY}
+                    r="4"
+                    fill={stakeholderColor}
+                    opacity="0.9"
+                    className="connection-start"
+                  />
+                  
+                  {/* Connection end dot at bubble */}
+                  <circle
+                    cx={endX}
+                    cy={endY}
+                    r="3"
+                    fill={stakeholderColor}
+                    opacity="0.7"
+                    className="connection-end"
+                  />
+                </svg>
+              );
+            })()
+          )}
+ 
           {currentMessage && (
             <div 
               className={`speech-bubble ${currentMessage.type}`}
@@ -343,18 +523,18 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
                 position: 'absolute',
                 top: '50%',
                 left: '50%',
-                transform: (() => {
+                ...((): React.CSSProperties & Record<'--x' | '--y', string> => {
                   if (currentMessage.type === 'user') {
                     const pos = getUserPosition();
-                    return `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`;
+                    return { '--x': `${pos.x}px`, '--y': `${pos.y}px` } as any;
                   } else if (currentMessage.type === 'system') {
-                    return 'translate(-50%, calc(-50% - 80px))';
+                    return { '--x': '0px', '--y': '-80px' } as any;
                   } else {
                     const pos = getSpeechBubblePosition(currentMessage.stakeholderId);
-                    return `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`;
+                    return { '--x': `${pos.x}px`, '--y': `${pos.y}px` } as any;
                   }
                 })(),
-                zIndex: 100,
+                zIndex: 500,
               }}
               data-placement={currentMessage.type === 'stakeholder' ? getSpeechBubblePosition(currentMessage.stakeholderId).placement : 'top'}
             >
@@ -375,70 +555,8 @@ const RoundtableConversation: React.FC<RoundtableConversationProps> = ({
                 <div className="message-text">{currentMessage.content}</div>
               </div>
               
-              {/* Speech bubble tail */}
-              {(() => {
-                const placement = currentMessage.type === 'stakeholder' ? getSpeechBubblePosition(currentMessage.stakeholderId).placement : 'top';
-                const color = currentMessage.type === 'user'
-                  ? currentCard.color
-                  : currentMessage.type === 'system'
-                  ? 'rgba(102, 126, 234, 0.9)'
-                  : stakeholders.find(s => s.id === currentMessage.stakeholderId)?.color || '#fff';
-                const style: React.CSSProperties = {};
-                if (placement === 'top') style.borderTopColor = color;
-                else if (placement === 'bottom') style.borderBottomColor = color;
-                else if (placement === 'left') style.borderRightColor = color;
-                else if (placement === 'right') style.borderLeftColor = color;
-                return <div className="bubble-tail" style={style}></div>;
-              })()}
             </div>
           )}
-
-          {/* User Input Area */}
-          {showUserInput && (
-            <div 
-              className="user-input-bubble"
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: (() => {
-                  const pos = getUserPosition();
-                  return `translate(calc(-50% + ${pos.x}px), calc(-50% + ${pos.y}px))`;
-                })(),
-                zIndex: 100,
-              }}
-            >
-              <div className="input-prompt">💭 Your turn to contribute</div>
-              <div className="input-container">
-                <input
-                  type="text"
-                  value={userInput}
-                  onChange={(e) => setUserInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleUserSubmit()}
-                  placeholder="Share your thoughts..."
-                  className="user-input"
-                  autoFocus
-                />
-                <button 
-                  onClick={handleUserSubmit}
-                  className="send-button"
-                  style={{ backgroundColor: currentCard.color }}
-                >
-                  💬
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Controls */}
-      <div className="conversation-controls">
-        <button onClick={onClose} className="close-conversation">
-          End Conversation
-        </button>
-        <div className="conversation-status">
-          {conversationHistory.length} messages exchanged
         </div>
       </div>
     </div>
