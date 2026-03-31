@@ -1,0 +1,41 @@
+services:
+  # Backend API Service
+  - type: web
+    name: tarotcards-vsd-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+    healthCheckPath: /api/home
+
+  # Frontend Static Site
+  - type: web
+    name: tarotcards-vsd-frontend
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./build
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: no-cache
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: REACT_APP_API_URL
+        fromService:
+          name: tarotcards-vsd-api
+          type: web
+          property: host
+      - key: REACT_APP_GOOGLE_CLIENT_ID
+        sync: false

@@ -12,10 +12,7 @@ import Navbar from './components/Navbar/Navbar';
 import TechnologyDashboard from './components/Learn/Learn';
 import AdvisePage from './components/Advise/Advise';
 import Anticipate from './components/Anticipate/Anticipate';
-
-const env = require('./environment.json');
-// const GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
-// const backendURL = env.BACKEND.URL + ":" + env.BACKEND.PORT
+import config, { getApiUrl } from './config';
 
 type Props = {
   
@@ -48,7 +45,7 @@ class App extends Component<Props, AppState> {
     this.state = {loggedIn: false, user: null, page: "Landing", landingNextPage: false}
 
     this.auth = {} as gapi.auth2.GoogleAuth;
-    this.GOOGLE_CLIENT_ID = env.GOOGLE_CLIENT_ID;
+    this.GOOGLE_CLIENT_ID = config.GOOGLE_CLIENT_ID;
   }
 
   componentDidMount() {
@@ -103,7 +100,7 @@ class App extends Component<Props, AppState> {
     // instead, get idToken and then send that to backend
     console.log('step 2')
     const idToken = this.auth.currentUser.get().getAuthResponse().id_token;
-    fetch(`/api/verify?idToken=${idToken}`, {
+    fetch(getApiUrl(`/api/verify?idToken=${idToken}`), {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

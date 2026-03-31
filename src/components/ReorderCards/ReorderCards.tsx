@@ -6,6 +6,7 @@ import editbutton from './editbutton.svg'
 import deletebutton from './deletebutton.svg'
 import ExportCards from '../ExportCards/ExportCards';
 import PageButtons from '../PageButtons/PageButtons';
+import { getApiUrl } from '../../config';
 
 const lodash = require('lodash')
 
@@ -49,7 +50,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
     
 
     componentDidMount(): void {
-        fetch('/api/project/getCards?projectId='+this.props.projectId, {
+        fetch(getApiUrl('/api/project/getCards?projectId='+this.props.projectId), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -74,7 +75,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
             console.log(error)
         })
 
-        fetch('/api/project/get?projectId='+this.props.projectId, {
+        fetch(getApiUrl('/api/project/get?projectId='+this.props.projectId), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -132,7 +133,7 @@ class ReorderCards extends Component<ReorderCardsProps, ReorderCardsState> {
     };
 
     saveProject = () => {
-        fetch('/api/project/update', {
+        fetch(getApiUrl('/api/project/update'), {
           method: "PUT",
           headers: {
             'Accept': 'application/json',

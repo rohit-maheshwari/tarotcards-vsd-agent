@@ -4,6 +4,7 @@ import ProgressBar from '../ProgressBar/ProgressBar';
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import Doc from './PDF/PDF';
 import PageButtons from '../PageButtons/PageButtons';
+import { getApiUrl } from '../../config';
 
 type ExportCardsProps = {
     finalCards: any[],
@@ -28,7 +29,7 @@ class ExportCards extends Component<ExportCardsProps, ExportCardsState> {
     }
 
     componentDidMount(): void {
-        fetch('/api/project/get?projectId='+this.props.projectId, {
+        fetch(getApiUrl('/api/project/get?projectId='+this.props.projectId), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

@@ -3,6 +3,7 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import './ProjectDescription.css';
 import DrawTarotCards from "../DrawTarotCards/DrawTarotCards";
 import PageButtons from "../PageButtons/PageButtons";
+import { getApiUrl } from '../../config';
 
 const lodash = require('lodash')
 
@@ -40,7 +41,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
       console.log(this.props.projectId)
       console.log(this.props.user)
       if (this.props.user === null) {
-        fetch('/api/project/create', {
+        fetch(getApiUrl('/api/project/create'), {
           method: "POST",
           headers: {
             'Accept': 'application/json',
@@ -61,7 +62,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
         })
       }
       else if (this.props.projectId !== null) {
-        fetch('/api/project/get?projectId='+this.props.projectId, {
+        fetch(getApiUrl('/api/project/get?projectId='+this.props.projectId), {
           method: "GET",
           headers: {
             'Accept': 'application/json',
@@ -104,7 +105,7 @@ class ProjectDescription extends Component<ProjectDescriptionProps, ProjectDescr
     }
 
     saveProject = () => {
-      fetch('/api/project/update', {
+      fetch(getApiUrl('/api/project/update'), {
         method: "PUT",
         headers: {
           'Accept': 'application/json',

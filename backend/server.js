@@ -1,6 +1,8 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 
@@ -37,17 +39,19 @@ const getAllCardsRoute = require('./routes/cards/getAllCards.js')
 
 const verifyUserRoute = require('./routes/verifyUser.js');
 
-const env = require("../src/environment.json");
-const MONGO_URI = env.MONGO_URI || "";
-// MONGO_URI = process.env.MONGO_URI || "";
-
-const PORT =  env.BACKEND.PORT || 8000;
-// PORT = process.env.PORT || process.env.BACKEND_PORT || 8000;
+const MONGO_URI = process.env.MONGO_URI || "";
+const PORT = process.env.PORT || 8000;
 
 // Middleware
 app.use(bodyParser.json());
 
-app.use(cors());
+// CORS configuration
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 app.use('/api', homeRoute);
 // app.use('/api', recordCardRoute);
 app.use('/api', verifyUserRoute);
@@ -74,15 +78,21 @@ app.use('/api', getAllCardsRoute);
 app.use('/api', getCardsForProjectRoute);
 app.use('/api', getCardForProjectRoute);
 
-// Connect to MongoDB
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../build')));
+  
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api')) {
+      res.sendFile(path.join(__dirname, '../build', 'index.html'));
+    }
+  });
+}
 
-mongoose.connect(MONGO_URI, {
-    autoCreate: false,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
+// Connect to MongoDB
+mongoose.connect(MONGO_URI)
   .then(() => {
     console.log('MongoDB Connected');
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    })
+  })
   .catch(err => console.log(err));
